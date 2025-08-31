@@ -1,0 +1,29 @@
+.buttonSlider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10000px;
+  background: #fff;
+  border: none;
+  padding: 6.667px;
+  transition: background 0.2s;
+  cursor: pointer;
+  box-sizing: border-box;
+  gap: 16.667px;
+}
+
+.buttonSlider.hover,
+.buttonSlider:active,
+.buttonSlider:focus-visible {
+  background: #0353a4;
+}
+
+.iconArrowLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}

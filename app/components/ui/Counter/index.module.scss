@@ -1,0 +1,13 @@
+@import "../../styles/variables.scss";
+
+.counter {
+  font-family: $font-inter;
+  font-size: $font-size-12;
+  color: $color-grey-light;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+.error {
+  color: $color-error;
+}

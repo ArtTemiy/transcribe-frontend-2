@@ -1,0 +1,50 @@
+@import "../../styles/variables.scss";
+
+.menu {
+  background: $color-bg-surface-1;
+  border-radius: 0 0 $radius-lg $radius-lg;
+  box-shadow: $shadow-menu;
+  padding: $spacing-2-5 $spacing-2;
+  width: 375px;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2-5 * 2;
+}
+
+.menuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-30;
+}
+
+.menuItem {
+  font-family: $font-inter;
+  font-size: $font-size-16;
+  color: $color-black;
+  cursor: pointer;
+  transition: color 0.2s;
+  &.active {
+    color: $color-blue;
+    font-weight: bold;
+  }
+}
+
+.menuButton {
+  width: 100%;
+  padding: $spacing-1-5 0;
+  background: $color-blue;
+  color: $color-white;
+  border: none;
+  border-radius: $radius-10;
+  font-family: $font-inter;
+  font-size: $font-size-16;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: $spacing-2-5;
+  &:hover {
+    background: $color-blue-hover;
+  }
+}

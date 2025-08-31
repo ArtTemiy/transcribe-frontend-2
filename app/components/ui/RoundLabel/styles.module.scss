@@ -1,0 +1,17 @@
+@use '../../../styles/variables.scss' as *;
+
+.wrapper {
+    display: inline-block;
+}
+
+.label {
+    background-color: $color-blue;
+    border-radius: 1000px;
+    color: $color-white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    padding: 4px;
+    height: 24px;
+}

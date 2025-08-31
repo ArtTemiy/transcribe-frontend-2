@@ -1,0 +1,56 @@
+@use '../../../styles/variables.scss' as *;
+
+text {
+    font-family: $font-inter;
+    color: $color-black;
+    font-weight: 300;
+}
+
+.title {
+    @extend text;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.caption {
+    @extend text;
+    font-size: 16px;
+    color: $color-grey;
+}
+
+.small {
+    @extend text;
+    font-size: 12px;
+}
+
+body {
+    @extend text;
+}
+
+.bodyS {
+    @extend body;
+    font-size: 18px;
+}
+
+.bodyM {
+    @extend body;
+    font-size: 20px;
+}
+
+.bodyL {
+    @extend body;
+    font-size: 30px;
+}
+
+.numbers {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+
+// Colors
+.color_standard {}
+
+.color_light {
+    color: $color-grey;
+}

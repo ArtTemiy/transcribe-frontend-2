@@ -1,0 +1,13 @@
+@use '../../../styles/variables.scss' as *;
+
+.dropzone {
+    border: dashed 2px $color-blue;
+    border-radius: $radius-8;
+    padding: 100px;
+
+    background: $color-grey-bg;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,38 @@
+@use "../../../styles/variables.scss" as *;
+
+.card {
+    background-color: $color-white;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+    width: 100%;
+}
+
+.avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}

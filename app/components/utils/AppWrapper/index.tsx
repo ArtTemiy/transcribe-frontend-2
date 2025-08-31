@@ -1,0 +1,10 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { PropsWithChildren } from "react"
+
+const AppWrapper = ({children} : PropsWithChildren) => {
+    return <QueryClientProvider client={new QueryClient()}>
+        {children}
+    </QueryClientProvider>
+}
+
+export default AppWrapper;

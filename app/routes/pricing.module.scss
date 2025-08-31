@@ -1,0 +1,103 @@
+@use "../styles/variables.scss" as *;
+
+.pricing {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.pricingContainer {
+  padding: 0 80px;
+}
+
+.pricingContent {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.pricingTitle {
+  font-family: $font-inter;
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 1;
+  color: $color-black;
+  margin: 0;
+  width: 100%;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+.cardWrapper {
+  position: relative;
+  width: 302px;
+  flex-shrink: 0;
+}
+
+.currentPlanCard {
+  background: #ecf6ff !important;
+  border: 1px solid $color-blue !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .pricingContainer {
+    padding: 0 40px;
+  }
+  
+  .cardsContainer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .cardWrapper {
+    width: 100%;
+    max-width: 302px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing {
+    gap: 60px;
+  }
+  
+  .pricingContainer {
+    padding: 0 20px;
+  }
+  
+  .pricingTitle {
+    font-size: 40px;
+  }
+  
+  .pricingContent {
+    gap: 30px;
+  }
+  
+  .cardsContainer {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardsContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cardWrapper {
+    width: 100%;
+    max-width: 350px;
+  }
+}

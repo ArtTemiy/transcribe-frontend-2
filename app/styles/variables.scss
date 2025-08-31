@@ -1,0 +1,61 @@
+/* Цвета */
+$color-blue: #0466c8; // Accent/Blue
+$color-blue-hover: #0353a4; // Accent/Hover
+$color-black: #313131; // Text/Color/Black
+$color-grey: #565656; // Text/Color/Grey
+$color-grey-light: #a1a9b8; // Text/Color/Grey Light
+$color-white: #fff; // Text/Color/White
+$color-grey-bg: #f5f7f9; // Background/Grey
+$color-hover-bg: #ecf6ff; // Background/Hover
+$color-error: #ef4444; // error/default
+$color-error-hover: #cb3a3a; // error/hover
+$color-error-active: #a73030; // error/active
+$color-border-light: #44537133; // border/light
+$color-border-default: #44537166; // border/default
+$color-content-disabled: #44537180; // content/disabled
+$color-bg-disabled-light: #4453710d; // bg/disabled-light
+$color-neutral-container-default: #4453711a; // neutral/container-default
+$color-neutral-container-muted: #44537108; // neutral/container-muted
+$color-content-light: #69758e; // content/light
+$color-content-muted: #a1a9b8; // content/muted
+$color-primary-muted: #a7a8f2; // primary/muted
+$color-primary-default: #4345c3; // primary/default
+$color-primary-container-light: #4f51e50d; // primary/container-light
+$color-bg-surface-1: #ffffff; // bg/surface-1
+
+/* Радиусы */
+$radius-md: 6px;
+$radius-lg: 8px;
+$radius-full: 999px;
+$radius-8: 8px;
+$radius-10: 10px;
+
+/* Spacing */
+$spacing-0-5: 4px;
+$spacing-1: 8px;
+$spacing-1-5: 12px;
+$spacing-2: 16px;
+$spacing-2-5: 20px;
+$spacing-3: 24px;
+$spacing-30: 30px;
+$spacing-80: 80px;
+
+/* Размеры иконок */
+$icon-size-md: 20px;
+$icon-size-sm: 16px;
+
+/* Шрифты */
+$font-inter: 'Inter', sans-serif;
+$font-golos: 'Golos Text', sans-serif;
+
+/* Размеры шрифта */
+$font-size-12: 12px;
+$font-size-14: 14px;
+$font-size-16: 16px;
+$font-size-18: 18px;
+$font-size-20: 20px;
+$font-size-24: 24px;
+$font-size-30: 30px;
+
+/* Прочее */
+$shadow-menu: 0px 8px 8px 0px rgba(161,169,184,0.3);

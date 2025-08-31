@@ -1,0 +1,63 @@
+@use "../../../styles/variables.scss" as *;
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-1-5 $spacing-2-5;
+    background: $color-bg-surface-1;
+    border-radius: $radius-lg;
+    box-shadow: 0 2px 8px rgba(161, 169, 184, 0.08);
+    font-family: $font-inter;
+    min-height: 64px;
+    gap: $spacing-2-5;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+}
+
+.title {
+    font-size: $font-size-18;
+    font-weight: 600;
+    color: $color-black;
+    margin-left: $spacing-1;
+    letter-spacing: 0.02em;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menuItem {
+    font-size: $font-size-16;
+    color: $color-black;
+    text-decoration: none;
+    font-family: $font-inter;
+    font-weight: 400;
+    padding: $spacing-0-5 $spacing-1;
+    border-radius: $radius-md;
+    transition: background 0.2s, color 0.2s;
+
+    &:hover {
+        background: $color-blue;
+        color: $color-white;
+    }
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+}
+
+.pagesLabel {
+    display: inline;
+}
