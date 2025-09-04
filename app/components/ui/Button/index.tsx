@@ -7,8 +7,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     buttonLabel?: string;
     iconLeft?: boolean;
     iconRight?: boolean;
-    leftIconType?: React.ReactNode;
-    rightIconType?: React.ReactNode;
+    leftIcon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
     variant?: 'primary' | 'secondary' | 'success'
     fullWidth?: boolean;
 
@@ -27,10 +27,8 @@ const rightArrow = "http://localhost:3845/assets/485dbc7448ba91c3dcb9c2e771bb797
 export const Button: React.FC<ButtonProps> = ({
     children,
     buttonLabel,
-    iconLeft = false,
-    iconRight = false,
-    leftIconType,
-    rightIconType,
+    leftIcon,
+    rightIcon,
     variant = 'primary',
     fullWidth = false,
     disabled,
@@ -57,29 +55,11 @@ export const Button: React.FC<ButtonProps> = ({
             {...props}
         >
             <span className={styles.content}>
-                {iconLeft &&
-                    (leftIconType || (
-                        <img
-                            src={leftArrow}
-                            alt=""
-                            className={styles.icon}
-                            aria-hidden="true"
-                            draggable={false}
-                        />
-                    ))}
+                {leftIcon}
                 <span className={styles.label}>
-                  {children ?? buttonLabel ?? "Button"}
+                    {children ?? buttonLabel ?? "Button"}
                 </span>
-                {iconRight &&
-                    (rightIconType || (
-                        <img
-                            src={rightArrow}
-                            alt=""
-                            className={styles.icon}
-                            aria-hidden="true"
-                            draggable={false}
-                        />
-                    ))}
+                {rightIcon}
             </span>
         </Tag>
     );

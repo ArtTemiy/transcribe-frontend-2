@@ -1,0 +1,70 @@
+@use '../../../styles/variables.scss' as *;
+
+.spinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    transform-origin: center;
+}
+
+// Направления вращения
+.clockwise .icon {
+    animation: spinClockwise 1s linear infinite;
+}
+
+.counterclockwise .icon {
+    animation: spinCounterclockwise 1s linear infinite;
+    // transform: scaleX(-1);
+}
+
+@keyframes spinClockwise {
+    from {
+        transform: rotate(0deg) scalex(-1);
+    }
+    to {
+        transform: rotate(359deg) scalex(-1);
+    }
+}
+
+@keyframes spinCounterclockwise {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+// Цвета
+.white .icon {
+    filter: brightness(0) invert(1);
+}
+
+.default .icon {
+    // Стандартный цвет из SVG
+}
+
+// Размеры
+.small {
+    .icon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.medium {
+    .icon {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+.large {
+    .icon {
+        width: 40px;
+        height: 40px;
+    }
+}

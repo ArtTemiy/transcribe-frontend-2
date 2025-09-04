@@ -13,6 +13,8 @@ import NavBar from "./components/ui/NavBar";
 import { Container } from "react-bootstrap";
 import Footer from "./components/ui/Footer";
 import AppWrapper from "./components/utils/AppWrapper";
+import MockServerControls from "./components/dev/MockServerControls";
+import { FilesProvider } from "./context/FilesContext";
 
 export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -41,11 +43,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </head>
             <body>
 
-                <AppWrapper>
-                    <NavBar />
-                    {children}
-                    <Footer />
-                </AppWrapper>
+                <FilesProvider>
+                    <AppWrapper>
+                        <NavBar />
+                        {children}
+                        <Footer />
+                        <MockServerControls />
+                    </AppWrapper>
+                </FilesProvider>
                 <ScrollRestoration />
                 <Scripts />
             </body>

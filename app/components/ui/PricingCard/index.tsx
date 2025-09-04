@@ -5,7 +5,7 @@ import { Card } from "~/components/ui/Card";
 import styles from "./index.module.scss";
 import classNames from "classnames";
 import type { PricingPlan } from "~/types/PricingPlan";
-import CheckIcon from '@/../src/icons/PricingFeatureCheck.svg';
+import CheckIcon from '@/../src/icons/features/PricingFeatureCheck.svg';
 import RoundLabel from "../RoundLabel";
 
 export interface PricingCardProps {

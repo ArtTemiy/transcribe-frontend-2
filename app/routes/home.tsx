@@ -1,4 +1,4 @@
-import { Dropzone } from "../components/ui/Dropzone";
+import { Dropzone } from "../components/ui/files/Dropzone";
 import { FeatureCard } from "../components/ui/FeatureCard";
 import { PricingCard } from "../components/ui/PricingCard";
 import { FeedbackCard } from "../components/ui/FeedbackCard";
@@ -9,11 +9,10 @@ import { Text } from "~/components/ui/Text";
 import { pricingPlans } from "~/consts/pricingPlans";
 
 // icons
-import DownloadIcon from '@/../src/icons/download.svg';
-import AIIcon from '@/../src/icons/ai.svg';
-import SearchIcon from '@/../src/icons/search.svg';
-import SecureIcon from '@/../src/icons/secure.svg';
-import GlobalIcon from '@/../src/icons/global.svg';
+import AIIcon from '@/../src/icons/features/ai.svg';
+import SearchIcon from '@/../src/icons/features/search.svg';
+import SecureIcon from '@/../src/icons/features/secure.svg';
+import GlobalIcon from '@/../src/icons/features/global.svg';
 
 // Моки для преимуществ
 const features = [
@@ -79,21 +78,15 @@ const HomePage = () => {
                         </Text>
                     </Col>
                 </Row>
-                <Dropzone onDrop={files => { }} className={styles.dropzone}>
-                    <DownloadIcon />
-                    <div className={styles.dropzoneTitle}>
-                        Click or drag your files here to convert
-                    </div>
-                    <div className={styles.dropzoneDesc}>You can upload up to 20 files at once</div>
-                </Dropzone>
+                <Dropzone className={styles.dropzone} />
             </Container>
 
             <Container>
                 <h2 className={styles.whyTrustUsTitle}>Why trust us</h2>
                 <Row className="gx-3 gy-3">
-                    {features.map((f, i) => (
-                        <Col className="col-12 col-md-3">
-                            <FeatureCard key={i} title={f.title} description={f.description} icon={f.icon} />
+                    {features.map((feature) => (
+                        <Col key={feature.title} className="col-12 col-md-3">
+                            <FeatureCard title={feature.title} description={feature.description} icon={feature.icon} />
                         </Col>
                     ))}
                 </Row>
@@ -115,14 +108,13 @@ const HomePage = () => {
                     <h2 className={styles.feedbackTitle}>Feedback from our users</h2>
                     <FeedbackSlider>
                         <Row className="gx-3 gy-3">
-                            {feedbacks.map((f, i) => (
-                                <Col className="col-12 col-md-4">
+                            {feedbacks.map((feedback) => (
+                                <Col key={feedback.name} className="col-12 col-md-4">
                                     <FeedbackCard
-                                        key={i}
-                                        name={f.name}
-                                        role={f.role}
-                                        avatar={f.avatar}
-                                        text={f.text}
+                                        name={feedback.name}
+                                        role={feedback.role}
+                                        avatar={feedback.avatar}
+                                        text={feedback.text}
                                     />
                                 </Col>
                             ))}
