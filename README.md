@@ -1,61 +1,187 @@
-# Welcome to React Router!
+# 🏦 AI Bank Statement Converter
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Умный конвертер банковских выписок на базе искусственного интеллекта. Поддерживает глобальные банковские форматы, включая отсканированные документы.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## ✨ Особенности
 
-## Features
+- 🤖 **ИИ-обработка** - Быстрое извлечение данных без потери качества
+- 🔍 **Точность** - Контекстно-зависимый парсинг с дополнительной валидацией
+- 🔒 **Безопасность** - Защищенная загрузка, шифрование, автоматическое удаление данных через 24 часа
+- 🌍 **Глобальная поддержка** - 150+ стран, неограниченные форматы, даже сканы
+- ⚡ **Быстрота** - Молниеносная обработка файлов
+- 📱 **Адаптивность** - Работает на всех устройствах
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## 🛠 Технологический стек
 
-## Getting Started
+- **Frontend**: React 19 + TypeScript
+- **Роутинг**: React Router v7
+- **Стилизация**: SCSS + Bootstrap + Tailwind CSS
+- **Состояние**: TanStack Query (React Query)
+- **Сборка**: Vite
+- **Тестирование**: MSW (Mock Service Worker)
+- **PDF**: React-PDF для просмотра документов
 
-### Installation
+## 🚀 Быстрый старт
 
-Install the dependencies:
+### Установка
 
 ```bash
+# Клонируйте репозиторий
+git clone <repository-url>
+cd transcribe-frontend-2
+
+# Установите зависимости
 npm install
+
+# Инициализируйте мок сервер (для разработки)
+npx msw init public/ --save
 ```
 
-### Development
-
-Start the development server with HMR:
+### Разработка
 
 ```bash
+# Запустите сервер разработки
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Приложение будет доступно по адресу `http://localhost:5173`
 
-## Building for Production
+### Настройка окружения
 
-Create a production build:
+Создайте файл `.env` в корне проекта:
+
+```env
+# Включить мок сервер для разработки
+VITE_ENABLE_MOCKS=true
+
+# URL реального API (когда моки отключены)
+VITE_API_BASE_URL=https://your-api-url.com
+```
+
+## 📁 Структура проекта
+
+```
+transcribe-frontend-2/
+├── app/
+│   ├── components/          # UI компоненты
+│   │   ├── ui/             # Переиспользуемые UI элементы
+│   │   │   ├── files/      # Компоненты для работы с файлами
+│   │   │   ├── Button/     # Кнопки
+│   │   │   ├── Card/       # Карточки
+│   │   │   └── ...
+│   │   └── utils/          # Утилитарные компоненты
+│   ├── routes/             # Страницы приложения
+│   │   ├── home.tsx        # Главная страница
+│   │   └── pricing.tsx     # Страница тарифов
+│   ├── mocks/              # Мок сервер (MSW)
+│   ├── queries/            # TanStack Query запросы
+│   ├── mutations/          # TanStack Query мутации
+│   ├── context/            # React контексты
+│   ├── types/              # TypeScript типы
+│   └── utils/              # Утилиты
+├── public/                 # Статические файлы
+├── docs/                   # Документация
+└── src/icons/              # SVG иконки
+```
+
+## 🔧 Основные команды
 
 ```bash
+# Разработка
+npm run dev
+
+# Сборка для продакшена
 npm run build
+
+# Запуск продакшен сервера
+npm start
+
+# Проверка типов
+npm run typecheck
 ```
 
-## Deployment
+## 🧪 Мок сервер
 
-### Docker Deployment
+Проект использует MSW для локальной разработки. Мок сервер симулирует следующие API:
 
-To build and run using Docker:
+- `GET /api/user/info` - Информация о пользователе
+- `POST /api/upload` - Загрузка файла для обработки
+- `GET /api/download/:requestId` - Скачивание обработанного файла
+
+### Управление моками
 
 ```bash
-docker build -t my-app .
+# Включить моки
+VITE_ENABLE_MOCKS=true
 
-# Run the container
-docker run -p 3000:3000 my-app
+# Отключить моки
+VITE_ENABLE_MOCKS=false
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+Подробнее в [документации мок сервера](docs/MOCK_SERVER.md).
+
+## 🐳 Docker
+
+```bash
+# Сборка образа
+docker build -t transcribe-frontend .
+
+# Запуск контейнера
+docker run -p 3000:3000 transcribe-frontend
+```
+
+## 📋 API Endpoints
+
+### Информация о пользователе
+```typescript
+GET /api/user/info
+
+Response: {
+  pagesCount: number;
+  planKey: string;
+  apiKey: string;
+}
+```
+
+### Загрузка файла
+```typescript
+POST /api/upload
+Content-Type: multipart/form-data
+
+Response: {
+  requestId: string;
+}
+```
+
+### Скачивание результата
+```typescript
+GET /api/download/:requestId
+
+Response: File download (text/plain)
+Content-Disposition: attachment; filename="transcription_*.txt"
+```
+
+## 🎨 Компоненты
+
+### Основные UI компоненты
+
+- **Dropzone** - Зона загрузки файлов с drag & drop
+- **FileView** - Просмотр загруженных файлов
+- **FilesLoader** - Индикатор загрузки файлов
+- **PricingCard** - Карточки тарифных планов
+- **FeatureCard** - Карточки преимуществ
+- **FeedbackCard** - Карточки отзывов
+
+### Утилитарные компоненты
+
+- **Button** - Настраиваемые кнопки
+- **Text** - Типографика
+- **LoadingSpinner** - Индикатор загрузки
+- **Logo** - Логотип приложения
+
+## 🌐 Деплой
+
+### Поддерживаемые платформы
 
 - AWS ECS
 - Google Cloud Run
@@ -63,25 +189,47 @@ The containerized application can be deployed to any platform that supports Dock
 - Digital Ocean App Platform
 - Fly.io
 - Railway
+- Vercel
+- Netlify
 
-### DIY Deployment
+### Подготовка к деплою
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+```bash
+# Сборка проекта
+npm run build
 
-Make sure to deploy the output of `npm run build`
-
+# Структура сборки
+build/
+├── client/    # Статические файлы
+└── server/    # Серверный код
 ```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
 
-## Styling
+## 📚 Документация
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+- [Настройка мок сервера](MOCK_SERVER_SETUP.md) - Быстрый старт
+- [Полная документация мок сервера](docs/MOCK_SERVER.md)
+- [React Router документация](https://reactrouter.com/)
+- [TanStack Query документация](https://tanstack.com/query)
+
+## 🤝 Разработка
+
+### Добавление новых компонентов
+
+1. Создайте папку в `app/components/ui/`
+2. Добавьте `index.tsx` и `index.module.scss`
+3. Экспортируйте компонент
+4. Добавьте типы в `app/types/`
+
+### Добавление новых API endpoints
+
+1. Добавьте handler в `app/mocks/handlers.ts`
+2. Создайте query/mutation в соответствующей папке
+3. Добавьте типы для запроса/ответа
+
+## 📄 Лицензия
+
+Этот проект создан для демонстрации возможностей современного React стека.
 
 ---
 
-Built with ❤️ using React Router.
+Создано с ❤️ используя React Router v7 + TypeScript + TanStack Query
