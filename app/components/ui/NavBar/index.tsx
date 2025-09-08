@@ -1,9 +1,12 @@
+import React, { useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Logo from "@/../src/icons/logo.svg";
 import Button from "~/components/ui/Button";
 import Link from "../Link";
 import { useUserInfoQuery } from "~/queries/userInfo";
 import RoundLabel from "../RoundLabel";
+import Modal from "../Modal";
+import RegisterForm, { type RegisterFormData } from "../RegisterForm";
 
 import styles from './index.module.scss'
 
@@ -15,7 +18,40 @@ const menuItems = [
 
 const NavBar: React.FC = () => {
     const userInfoQuery = useUserInfoQuery();
-    return <Navbar expand="lg" bg="white" className="shadow-sm py-2" style={{ fontFamily: "Inter, sans-serif" }}>
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
+    const handleGetStartedClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        setIsRegisterModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsRegisterModalOpen(false);
+    };
+
+    const handleRegisterSubmit = (data: RegisterFormData) => {
+        console.log("Registration data:", data);
+        // Здесь можно добавить логику отправки данных на сервер
+        alert(`Регистрация успешна!\nИмя пользователя: ${data.username}\nEmail: ${data.email}`);
+        setIsRegisterModalOpen(false);
+    };
+
+    const handleGoogleSignUp = () => {
+        console.log("Google sign up clicked");
+        // Здесь можно добавить логику регистрации через Google
+        alert("Регистрация через Google");
+        setIsRegisterModalOpen(false);
+    };
+
+    const handleSignInClick = () => {
+        console.log("Sign in clicked");
+        // Здесь можно добавить логику перехода на страницу входа
+        setIsRegisterModalOpen(false);
+        // Например: navigate('/login');
+    };
+
+    return <>
+        <Navbar expand="lg" bg="white" className="shadow-sm py-2" style={{ fontFamily: "Inter, sans-serif" }}>
         <Container>
             <Navbar.Brand href="/" className="d-flex align-items-center gap-2">
                 <Logo />
@@ -38,12 +74,26 @@ const NavBar: React.FC = () => {
                         <Button href='/login' variant='secondary' buttonLabel="Login" />
                     </Nav.Item>
                     <Nav.Item>
-                        <Button href="/register" variant='primary' buttonLabel="Get Started" />
+                        <Button
+                            variant='primary'
+                            buttonLabel="Get Started"
+                            onClick={handleGetStartedClick}
+                        />
                     </Nav.Item>
                 </Nav>
             </Navbar.Collapse>
         </Container>
-    </Navbar>
+        </Navbar>
+
+        <Modal isOpen={isRegisterModalOpen} onClose={handleCloseModal}>
+            <RegisterForm
+                onClose={handleCloseModal}
+                onSubmit={handleRegisterSubmit}
+                onGoogleSignUp={handleGoogleSignUp}
+                onSignInClick={handleSignInClick}
+            />
+        </Modal>
+    </>;
 };
 
 export default NavBar;

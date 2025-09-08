@@ -14,4 +14,10 @@ export default defineConfig({
         }),
         tsconfigPaths()
     ],
+    define: {
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    },
+    optimizeDeps: {
+        exclude: ['msw']
+    }
 });

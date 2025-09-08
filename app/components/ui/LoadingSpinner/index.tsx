@@ -1,6 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./style.module.scss";
+import LoadingIcon from '@/../src/icons/loading.svg'
 
 interface LoadingSpinnerProps {
     size?: 'small' | 'medium' | 'large';
@@ -25,9 +26,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 
     return (
         <div className={spinnerClass}>
-            <img
-                src="/src/icons/loading.svg"
-                alt="Loading..."
+            <LoadingIcon
                 className={styles.icon}
             />
         </div>
