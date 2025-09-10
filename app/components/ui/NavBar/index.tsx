@@ -5,12 +5,14 @@ import Button from "~/components/ui/Button";
 import Link from "../Link";
 import { useUserInfoQuery } from "~/queries/userInfo";
 import RoundLabel from "../RoundLabel";
-import Modal from "../Modal";
-import RegisterForm from "../RegisterForm";
+import Modal from "../Modal/Modal";
+import RegisterForm from "../forms/RegisterForm";
 
 import styles from './index.module.scss'
 import { Text } from "../Text";
-import type { RegisterResponseData } from "~/mutations/auth/register";
+import type { AuthResponse } from "~/types/auth/authResponse";
+import { useModal } from "../Modal/useModal";
+import LoginForm from "../forms/LoginForm";
 
 const menuItems = [
     { label: "Pricing", href: "/pricing" },
@@ -20,81 +22,94 @@ const menuItems = [
 
 const NavBar: React.FC = () => {
     const userInfoQuery = useUserInfoQuery();
-    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
-    const handleGetStartedClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        setIsRegisterModalOpen(true);
+    const registerModal = useModal();
+    const loginModal = useModal();
+
+    const openSignIn = () => {
+        registerModal.closeModal();
+        loginModal.openModal();
     };
 
-    const handleCloseModal = () => {
-        setIsRegisterModalOpen(false);
+    const openRegister = () => {
+        loginModal.closeModal();
+        registerModal.openModal();
     };
 
-    const handleRegisterSubmit = (data: RegisterResponseData) => {
+    const handleSuccessAuthSubmit = (data: AuthResponse) => {
         console.log("Registration data:", data);
         // Здесь можно добавить логику отправки данных на сервер
-        alert(`Регистрация успешна!\nToken: '${data.token}'`);
-        setIsRegisterModalOpen(false);
+        alert(`Регистрация успешна!\nToken: '${data.accessToken}'`);
+        registerModal.closeModal();
     };
 
     const handleGoogleSignUp = () => {
-        console.log("Google sign up clicked");
-        // Здесь можно добавить логику регистрации через Google
-        alert("Регистрация через Google");
-        setIsRegisterModalOpen(false);
+        alert("Register with Google");
+        registerModal.closeModal();
     };
 
-    const handleSignInClick = () => {
-        console.log("Sign in clicked");
-        // Здесь можно добавить логику перехода на страницу входа
-        setIsRegisterModalOpen(false);
-        // Например: navigate('/login');
+    const handleGoogleLogin = () => {
+        alert("Login with Google");
+        registerModal.closeModal();
     };
 
     return <>
         <Navbar expand="lg" bg="white" className="shadow-sm py-2" style={{ fontFamily: "Inter, sans-serif" }}>
-        <Container>
-            <Navbar.Brand href="/" className="d-flex align-items-center gap-2">
-                <Logo />
-                <Text variant='header'>AI Bank Statement Converter</Text>
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="main-navbar" />
-            <Navbar.Collapse id="main-navbar">
-                <Nav className="mx-auto gap-3">
-                    {userInfoQuery.data?.pagesCount !== undefined && <Nav.Item>
-                        <Link variant='body-s' href="/pages">Pages <RoundLabel variant='caption' className={styles.pagesLabel}>{userInfoQuery.data.pagesCount}</RoundLabel></Link>
-                    </Nav.Item>}
-                    {menuItems.map((item) => (
-                        <Nav.Item key={item.href}>
-                            <Link variant='body-s' href={item.href}>{item.label}</Link>
-                        </Nav.Item>
-                    ))}
-                </Nav>
-                <Nav className="gap-2">
-                    <Nav.Item>
-                        <Button href='/login' variant='secondary' buttonLabel="Login" />
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Button
-                            variant='primary'
-                            buttonLabel="Get Started"
-                            onClick={handleGetStartedClick}
-                        />
-                    </Nav.Item>
-                </Nav>
-            </Navbar.Collapse>
-        </Container>
+            <Container>
+                <Navbar.Brand href="/" className="d-flex align-items-center gap-2">
+                    <Logo />
+                    <Text variant='header'>AI Bank Statement Converter</Text>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="main-navbar" />
+                <Navbar.Collapse id="main-navbar">
+                    <Nav className="mx-auto gap-3">
+                        {userInfoQuery.data?.pagesCount !== undefined && <Nav.Item>
+                            <Link variant='body-s' href="/pages">Pages <RoundLabel variant='caption' className={styles.pagesLabel}>{userInfoQuery.data.pagesCount}</RoundLabel></Link>
+                        </Nav.Item>}
+                        {menuItems.map((item) => (
+                            <Nav.Item key={item.href}>
+                                <Link variant='body-s' href={item.href}>{item.label}</Link>
+                            </Nav.Item>
+                        ))}
+                    </Nav>
+                    <Nav className="gap-2">
+                        {!userInfoQuery.data && <>
+                            <Nav.Item>
+                                <Button
+                                    variant='secondary'
+                                    onClick={openSignIn}
+                                >Login</Button>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Button
+                                    variant='primary'
+                                    onClick={openRegister}
+                                >Get started</Button>
+                            </Nav.Item>
+                        </>}
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
         </Navbar>
 
-        <Modal isOpen={isRegisterModalOpen} onClose={handleCloseModal}>
-            <RegisterForm
-                onClose={handleCloseModal}
-                onSubmit={handleRegisterSubmit}
-                onGoogleSignUp={handleGoogleSignUp}
-                onSignInClick={handleSignInClick}
-            />
-        </Modal>
+        {!userInfoQuery.data && <>
+            <registerModal.Component>
+                <RegisterForm
+                    onClose={registerModal.closeModal}
+                    onSubmit={handleSuccessAuthSubmit}
+                    onGoogleSignUp={handleGoogleSignUp}
+                    onSignInClick={openSignIn}
+                />
+            </registerModal.Component>
+            <loginModal.Component>
+                <LoginForm
+                    onClose={loginModal.closeModal}
+                    onSubmit={handleSuccessAuthSubmit}
+                    onGoogleLogin={handleGoogleLogin}
+                    onRegisterClick={openRegister}
+                />
+            </loginModal.Component>
+        </>}
     </>;
 };
 

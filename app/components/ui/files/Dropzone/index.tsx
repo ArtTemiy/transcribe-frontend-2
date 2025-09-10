@@ -2,11 +2,9 @@ import React, { useCallback, useRef } from "react";
 import styles from './index.module.scss';
 import classNames from "classnames";
 import type { PropsWithClassName } from "~/types/helpers/PropsWithClassName";
-import { Text } from "../../Text";
 import { EmptyContent } from "./EmptyContent";
-import FilesLoader from '~/components/ui/files/FilesLoader'
-import Button from "../../Button";
-import { useFilesContext } from "~/context/FilesContext";
+import FilesLoader from '~/components/ui/files/FilesLoader';
+import { FilesProvider, useFilesContext } from "~/context/FilesContext";
 import FileView from "../FileView";
 
 type DropzoneProps = PropsWithClassName & {};
@@ -83,4 +81,8 @@ export const Dropzone: React.FC<DropzoneProps> = ({ className }: DropzoneProps) 
     </div>;
 };
 
-export default Dropzone;
+const DropzoneWrapper = (props: DropzoneProps) => <FilesProvider>
+    <Dropzone {...props} />
+</FilesProvider>;
+
+export default DropzoneWrapper;

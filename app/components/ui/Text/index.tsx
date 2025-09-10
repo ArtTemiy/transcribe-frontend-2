@@ -2,8 +2,9 @@ import React from 'react';
 import styles from './styles.module.scss'
 import classNames from 'classnames';
 
-export type Style = 'header' | 'title' | 'caption' | 'body-s' | 'body-m' | 'body-l' | 'small' | 'numbers';
-export type Color = 'standard' | 'light' | 'alarm';
+export type Style = 'display' | 'header' | 'title' | 'caption' | 'body-s' | 'body-m' | 'body-l' | 'small' | 'numbers';
+export type Color = 'standard' | 'light' | 'alarm' | 'accent';
+
 export type Typography = {
     variant?: Style;
     typColor?: Color;
@@ -12,6 +13,7 @@ export type Typography = {
 type Props = React.HTMLAttributes<HTMLSpanElement> & Typography;
 
 const STYLE_CLASSES_MAPPING: Record<Style, string> = {
+    display: styles.display,
     header: styles.header,
     title: styles.title,
     caption: styles.caption,
@@ -25,7 +27,8 @@ const STYLE_CLASSES_MAPPING: Record<Style, string> = {
 const COLOR_CLASSES_MAPPING: Record<Color, string> = {
     standard: styles.color_standard,
     light: styles.color_light,
-    alarm: styles.color_alarm
+    alarm: styles.color_alarm,
+    accent: styles.color_accent,
 }
 
 export const getStyleClassName = (variant?: Style): string => STYLE_CLASSES_MAPPING[variant || 'body-m'];

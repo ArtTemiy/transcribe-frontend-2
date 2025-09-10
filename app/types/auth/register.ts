@@ -1,5 +1,5 @@
-export type RegisterData = {
-    username: string;
+import type { LoginData } from "./login";
+
+export type RegisterData = LoginData & {
     email: string;
-    password: string;
 };

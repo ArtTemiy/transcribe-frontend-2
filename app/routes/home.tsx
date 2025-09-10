@@ -1,4 +1,4 @@
-import { Dropzone } from "../components/ui/files/Dropzone";
+import Dropzone from "../components/ui/files/Dropzone";
 import { FeatureCard } from "../components/ui/FeatureCard";
 import { PricingCard } from "../components/ui/PricingCard";
 import { FeedbackCard } from "../components/ui/FeedbackCard";

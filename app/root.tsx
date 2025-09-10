@@ -10,10 +10,10 @@ import {
 import type { Route } from "./+types/root";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "./components/ui/NavBar";
-import { Container } from "react-bootstrap";
 import Footer from "./components/ui/Footer";
 import AppWrapper from "./components/utils/AppWrapper";
-import { FilesProvider } from "./context/FilesContext";
+
+import styles from './root.module.scss';
 
 export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -30,6 +30,7 @@ export const links: Route.LinksFunction = () => [
 
 
 export function Layout({ children }: { children: React.ReactNode }) {
+
     return (
         <html lang="en">
             <head>
@@ -40,14 +41,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Links />
             </head>
             <body>
-
-                <FilesProvider>
-                    <AppWrapper>
+                <AppWrapper>
+                    <div className={styles.body}>
                         <NavBar />
-                        {children}
+                        <div className={styles.content}>
+                            {children}
+                        </div>
                         <Footer />
-                    </AppWrapper>
-                </FilesProvider>
+                    </div>
+                </AppWrapper>
                 <ScrollRestoration />
                 <Scripts />
             </body>

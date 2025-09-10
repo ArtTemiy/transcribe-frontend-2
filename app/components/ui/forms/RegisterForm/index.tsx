@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./index.module.scss";
-import Button from "../Button";
-import { Text } from "../Text";
-import Link from "../Link";
+import Button from "@/components/ui/Button";
+import { Text } from "@/components/ui/Text";
+import Link from "@/components/ui/Link";
 
 import Logo from "@/../src/icons/logo.svg";
 import CrossIcon from "@/../src/icons/cross.svg";
 import GoogleIcon from "@/../src/icons/google.svg";
-import ButtonBase from "../ButtonBase";
-import TextInput from "../input/TextInput/TextInput";
+import ButtonBase from "@/components/ui/ButtonBase";
+import TextInput from "@/components/ui/input/TextInput/TextInput";
 import type { RegisterData } from "~/types/auth/register";
-import { useAuthRegisterMutation} from "~/mutations/auth/register";
+import { useAuthRegisterMutation } from "~/mutations/auth/register";
 import type { AuthResponse } from "~/types/auth/authResponse";
 
 type RegisterFormProps = {
@@ -82,8 +82,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
                     <form className={styles.form} onSubmit={handleSubmit(onFormSubmit)}>
                         <div className={styles.inputs}>
-                            
-                        <TextInput
+
+                            <TextInput
                                 label="Username"
                                 error={errors.username?.message}
                                 placeholder="Username"
@@ -96,7 +96,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                                     },
                                     pattern: {
                                         value: /^[a-zA-Z0-9_]+$/,
-                                        message: "Username can only contain letters, numbers, and underscores",
+                                        message: "Username can only contain letters, numbers and underscores",
                                     },
                                 })}
                             />
@@ -150,9 +150,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                             type="submit"
                             variant="primary"
                             fullWidth
-                            buttonLabel={isSubmitting ? "Регистрация..." : "Get started"}
                             disabled={isSubmitting}
-                        />
+                        >
+                            Get started
+                        </Button>
                     </form>
                 </div>
 
@@ -175,7 +176,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 <div className={styles.signInPrompt}>
                     <Text variant="small" className={styles.signInText}>Already have an account? </Text>
                     <Link
-                        href="/signIn"
                         className={styles.signInLink}
                         onClick={onSignInClick}
                         variant='small'

@@ -26,7 +26,6 @@ const rightArrow = "http://localhost:3845/assets/485dbc7448ba91c3dcb9c2e771bb797
 
 export const Button: React.FC<ButtonProps> = ({
     children,
-    buttonLabel,
     leftIcon,
     rightIcon,
     variant = 'primary',
@@ -45,7 +44,7 @@ export const Button: React.FC<ButtonProps> = ({
         }
     );
 
-    const Tag = useMemo(() => href ? (p: any) => <a {...p} /> : (p: any) => <button {...p} />, []);
+    const Tag = useMemo(() => href ? (p: any) => <a href={href} {...p} /> : (p: any) => <button {...p} />, []);
 
     return (
         <Tag
@@ -55,7 +54,7 @@ export const Button: React.FC<ButtonProps> = ({
             {...props}
         >
             {leftIcon}
-            {children ?? buttonLabel ?? "Button"}
+            {children}
             {rightIcon}
         </Tag>
     );

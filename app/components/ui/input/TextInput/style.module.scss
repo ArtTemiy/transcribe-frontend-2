@@ -14,7 +14,7 @@
     width: 100%;
     border: 1px solid $color-grey-light;
     border-radius: $radius-md;
-    padding: $spacing-1;
+    padding: 10px 12px;
 }
 
 .input {
@@ -22,10 +22,11 @@
     border: none;
     background: $color-white;
     font-family: $font-inter;
-    font-size: $font-size-12;
+    font-size: $font-size-18;
     color: $color-black;
     outline: none;
     transition: border 0.2s;
+    text-overflow: ellipsis;
 
     &::placeholder {
         color: $color-grey-light;
@@ -34,7 +35,7 @@
 
     &:disabled {
         background: $color-grey-bg;
-        color: $color-grey-light;
+        // color: $color-grey-light;
         cursor: not-allowed;
     }
 }
