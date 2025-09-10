@@ -1,0 +1,44 @@
+@use "../../../../styles/variables.scss" as *;
+
+.fieldWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid $color-grey-light;
+    border-radius: $radius-md;
+    padding: $spacing-1;
+}
+
+.input {
+    width: 100%;
+    border: none;
+    background: $color-white;
+    font-family: $font-inter;
+    font-size: $font-size-12;
+    color: $color-black;
+    outline: none;
+    transition: border 0.2s;
+
+    &::placeholder {
+        color: $color-grey-light;
+        opacity: 1;
+    }
+
+    &:disabled {
+        background: $color-grey-bg;
+        color: $color-grey-light;
+        cursor: not-allowed;
+    }
+}
+
+.error {
+    border-color: $color-error;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss'
 import classNames from 'classnames';
 
-export type Style = 'title' | 'caption' | 'body-s' | 'body-m' | 'body-l' | 'small' | 'numbers';
+export type Style = 'header' | 'title' | 'caption' | 'body-s' | 'body-m' | 'body-l' | 'small' | 'numbers';
 export type Color = 'standard' | 'light' | 'alarm';
 export type Typography = {
     variant?: Style;
@@ -12,6 +12,7 @@ export type Typography = {
 type Props = React.HTMLAttributes<HTMLSpanElement> & Typography;
 
 const STYLE_CLASSES_MAPPING: Record<Style, string> = {
+    header: styles.header,
     title: styles.title,
     caption: styles.caption,
     'body-s': styles.bodyS,

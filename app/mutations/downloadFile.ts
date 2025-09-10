@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import { apiClient } from "~/utils/api";
 
 export const downloadFileMutation = (id: string) => {
     return useMutation({
         mutationKey: ['downloadFile', id],
         mutationFn: async () => {
-            return await axios.get(`/api/download/${id}`);
+            return await apiClient.get(`/files/download/${id}`);
         }
     });
 }

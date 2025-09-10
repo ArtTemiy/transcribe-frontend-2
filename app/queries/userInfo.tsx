@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios";
 import type { UserInfo } from "@/types/UserInfo";
+import { apiClient } from "~/utils/api";
 
 export const useUserInfoQuery = () => {
     return useQuery<UserInfo>({
         queryKey: ["userInfo"],
         queryFn: async () => {
-            const response = await axios.get("/api/user/info");
+            const response = await apiClient.get('/user/info');
             return response.data as UserInfo;
         },
     });

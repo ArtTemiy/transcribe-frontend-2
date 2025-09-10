@@ -5,6 +5,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     font-size: 18px;
     border: none;
     border-radius: 10px;
@@ -68,12 +69,12 @@ a.btn {
     width: 100%;
 }
 
-.content {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
+// .content {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     gap: 10px;
+// }
 
 .icon {
     width: 20px;
@@ -81,10 +82,10 @@ a.btn {
     display: inline-block;
 }
 
-.label {
-    font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 1;
-    white-space: nowrap;
-}
+// .label {
+//     font-family: 'Inter', sans-serif;
+//     font-size: 18px;
+//     font-weight: 300;
+//     line-height: 1;
+//     white-space: nowrap;
+// }

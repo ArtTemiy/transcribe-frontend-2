@@ -54,13 +54,9 @@ export const Button: React.FC<ButtonProps> = ({
             type={type}
             {...props}
         >
-            <span className={styles.content}>
-                {leftIcon}
-                <span className={styles.label}>
-                    {children ?? buttonLabel ?? "Button"}
-                </span>
-                {rightIcon}
-            </span>
+            {leftIcon}
+            {children ?? buttonLabel ?? "Button"}
+            {rightIcon}
         </Tag>
     );
 };

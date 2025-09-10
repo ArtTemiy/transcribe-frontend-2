@@ -6,9 +6,11 @@ import Link from "../Link";
 import { useUserInfoQuery } from "~/queries/userInfo";
 import RoundLabel from "../RoundLabel";
 import Modal from "../Modal";
-import RegisterForm, { type RegisterFormData } from "../RegisterForm";
+import RegisterForm from "../RegisterForm";
 
 import styles from './index.module.scss'
+import { Text } from "../Text";
+import type { RegisterResponseData } from "~/mutations/auth/register";
 
 const menuItems = [
     { label: "Pricing", href: "/pricing" },
@@ -29,10 +31,10 @@ const NavBar: React.FC = () => {
         setIsRegisterModalOpen(false);
     };
 
-    const handleRegisterSubmit = (data: RegisterFormData) => {
+    const handleRegisterSubmit = (data: RegisterResponseData) => {
         console.log("Registration data:", data);
         // Здесь можно добавить логику отправки данных на сервер
-        alert(`Регистрация успешна!\nИмя пользователя: ${data.username}\nEmail: ${data.email}`);
+        alert(`Регистрация успешна!\nToken: '${data.token}'`);
         setIsRegisterModalOpen(false);
     };
 
@@ -55,7 +57,7 @@ const NavBar: React.FC = () => {
         <Container>
             <Navbar.Brand href="/" className="d-flex align-items-center gap-2">
                 <Logo />
-                <span style={{ fontWeight: 600, fontSize: 18, color: "#313131" }}>AI Bank Statement Converter</span>
+                <Text variant='header'>AI Bank Statement Converter</Text>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="main-navbar" />
             <Navbar.Collapse id="main-navbar">

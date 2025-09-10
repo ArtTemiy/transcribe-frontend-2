@@ -12,7 +12,7 @@ import UploadedIcon from '@/../src/icons/files/uploaded.svg';
 import CrossIcon from '@/../src/icons/cross.svg'
 import DownloadIcon from '@/../src/icons/download.svg';
 
-import ButtonBase from "../../ButtonBase/ButtonBase";
+import ButtonBase from "../../ButtonBase";
 import ExcelBold from '@/../src/icons/files/excel_bold.svg';
 import { useUploadFilesMutation } from "~/mutations/uploadFile";
 import LoadingSpinner from "../../LoadingSpinner";

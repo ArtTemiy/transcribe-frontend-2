@@ -8,7 +8,7 @@ import { v4 as uuidV4 } from 'uuid'
 import DownloadIcon from '@/../src/icons/download.svg';
 import ExcelBold from '@/../src/icons/files/excel_bold.svg';
 
-import ButtonBase from "../../ButtonBase/ButtonBase";
+import ButtonBase from "../../ButtonBase";
 import { useUploadFilesMutation } from "~/mutations/uploadFile";
 import LoadingSpinner from "../../LoadingSpinner";
 import { useFilesContext, type UserFile } from "~/context/FilesContext";
