@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import classNames from "classnames";
 import styles from "./index.module.scss";
+import { Link } from "react-router";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children?: React.ReactNode;
@@ -44,7 +45,7 @@ export const Button: React.FC<ButtonProps> = ({
         }
     );
 
-    const Tag = useMemo(() => href ? (p: any) => <a href={href} {...p} /> : (p: any) => <button {...p} />, []);
+    const Tag = useMemo(() => href ? (p: any) => <Link to={href} {...p} /> : (p: any) => <button {...p} />, []);
 
     return (
         <Tag

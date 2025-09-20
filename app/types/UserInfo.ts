@@ -1,5 +1,5 @@
 export type UserInfo = {
-    pagesCount: number;
+    pages: number;
     planKey: string;
     apiKey: string;
 };

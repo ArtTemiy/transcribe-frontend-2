@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiClient } from "~/utils/api";
+import { apiClient } from "~/utils/apiClient";
 
 export const downloadFileMutation = (id: string) => {
     return useMutation({

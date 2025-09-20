@@ -21,9 +21,7 @@ type RegisterFormProps = {
     onSignInClick?: () => void;
 }
 
-type RegisterFormData = RegisterData & {
-    confirmPassword: string;
-}
+type RegisterFormData = RegisterData
 
 const RegisterForm: React.FC<RegisterFormProps> = ({
     onClose,
@@ -41,13 +39,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         defaultValues: {
             username: "",
             email: "",
-            password: "",
-            confirmPassword: "",
+            password1: "",
+            password2: "",
         },
     });
     const registerMutation = useAuthRegisterMutation();
 
-    const password = watch("password");
+    const password1 = watch("password1");
 
     const onFormSubmit = (data: RegisterFormData) => {
         registerMutation.mutate(data);
@@ -117,31 +115,31 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
                             <TextInput
                                 label='Password'
-                                error={errors.password?.message}
+                                error={errors.password1?.message}
                                 placeholder='Password'
                                 type='password'
-                                {...register("password", {
+                                {...register("password1", {
                                     required: 'Password is required',
-                                    minLength: {
-                                        value: 6,
-                                        message: 'Password must be at least 6 characters long',
-                                    },
-                                    pattern: {
-                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-                                        message: 'Password must contain at least one lowercase letter, one uppercase letter and one number',
-                                    },
+                                    // minLength: {
+                                    //     value: 6,
+                                    //     message: 'Password must be at least 6 characters long',
+                                    // },
+                                    // pattern: {
+                                    //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+                                    //     message: 'Password must contain at least one lowercase letter, one uppercase letter and one number',
+                                    // },
                                 })}
                             />
 
                             <TextInput
                                 label='Repeat password'
-                                error={errors.confirmPassword?.message}
+                                error={errors.password2?.message}
                                 placeholder='Repeat password'
                                 type='password'
-                                {...register("confirmPassword", {
+                                {...register("password2", {
                                     required: 'Password check is required',
                                     validate: (value) =>
-                                        value === password || 'Passwords do not match',
+                                        value === password1 || 'Passwords do not match',
                                 })}
                             />
                         </div>

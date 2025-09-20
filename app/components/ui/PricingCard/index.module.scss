@@ -1,4 +1,4 @@
-@use "../../../styles/variables.scss" as *;
+@use '../../../styles/variables.scss' as *;
 
 .pricingCard {
     display: flex;
@@ -25,7 +25,6 @@
 .title {
     display: flex;
     flex-direction: row;
-    gap: 30px;
     justify-content: space-between;
 }
 

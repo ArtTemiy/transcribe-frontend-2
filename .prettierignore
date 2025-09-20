@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+build/
+dist/
+.react-router/
+
+# Public assets
+public/
+
+# Configuration files
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+
+# Coverage
+coverage/
+
+# Environment files
+.env*
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

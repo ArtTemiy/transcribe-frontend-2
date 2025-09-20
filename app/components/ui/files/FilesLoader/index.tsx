@@ -9,7 +9,7 @@ import DownloadIcon from '@/../src/icons/download.svg';
 import ExcelBold from '@/../src/icons/files/excel_bold.svg';
 
 import ButtonBase from "../../ButtonBase";
-import { useUploadFilesMutation } from "~/mutations/uploadFile";
+import { useConvertFilesMutation } from "~/mutations/files/convertFile";
 import LoadingSpinner from "../../LoadingSpinner";
 import { useFilesContext, type UserFile } from "~/context/FilesContext";
 import type { FileState } from "~/context/FilesContext/types";
@@ -20,11 +20,11 @@ export type FilesLoaderState = "preparing" | "prepared" | "uploading" | "uploade
 type FilesLoaderProps = {}
 
 const FilesLoader: React.FC<FilesLoaderProps> = ({ }: FilesLoaderProps) => {
-    const [requestId, setRequestId] = useState<string | undefined>(undefined);
+    // const [requestId, setRequestId] = useState<string | undefined>(undefined);
     const { files } = useFilesContext();
 
     const [state, setState] = useState<FilesLoaderState>('preparing');
-    const uploadMutation = useUploadFilesMutation('all');
+    const uploadMutation = useConvertFilesMutation('all');
 
     const sendFiles = useCallback(() => {
         setState('uploading');
@@ -32,8 +32,8 @@ const FilesLoader: React.FC<FilesLoaderProps> = ({ }: FilesLoaderProps) => {
     }, [files, setState, uploadMutation]);
 
     const downloadFile = useCallback(() => {
-        open(`/api/download/${requestId}`, '_blank');
-    }, [requestId]);
+        open(`/api/v1/download/${uploadMutation.data}`, '_blank');
+    }, [uploadMutation]);
 
     useEffect(() => {
         if (files.filter(file => ['error', 'loading'].includes(file.state)).length > 0) {
@@ -41,18 +41,16 @@ const FilesLoader: React.FC<FilesLoaderProps> = ({ }: FilesLoaderProps) => {
             return;
         }
 
-        setState('prepared');
+        setState(state => state === 'uploaded' ? state : 'prepared');
     }, [setState, files]);
 
     useEffect(() => {
         if (uploadMutation.isSuccess) {
-            const requestId = uploadMutation.data.requestId;
-            setRequestId(requestId);
             setState(state => state === 'uploading' ? 'uploaded' : state);
         } else if (uploadMutation.isError) {
             // TODO:
         }
-    }, [uploadMutation, setRequestId]);
+    }, [uploadMutation]);
 
     return (
         <div>

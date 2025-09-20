@@ -19,7 +19,7 @@ const PricingPage = () => {
                             <Col key={plan.key} className="col-12 col-md-3">
                                 <PricingCard
                                     pricingInfo={plan}
-                                    isCurrent={plan.key === userInfoQuery.data?.planKey}
+                                    isCurrent={plan.key === userInfoQuery.data?.data?.planKey}
                                 />
                             </Col>
                         ))}

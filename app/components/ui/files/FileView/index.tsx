@@ -3,7 +3,12 @@ import styles from "./style.module.scss";
 import Button from "../../Button";
 import classNames from "classnames";
 import { Text } from "../../Text";
-import { v4 as uuidV4 } from 'uuid'
+import ButtonBase from "../../ButtonBase";
+import ExcelBold from '@/../src/icons/files/excel_bold.svg';
+import { useConvertFilesMutation } from "~/mutations/files/convertFile";
+import LoadingSpinner from "../../LoadingSpinner";
+import { useFilesContext, type UserFile } from "~/context/FilesContext";
+
 // Icons
 import ErrorIcon from '@/../src/icons/files/error.svg';
 import LoadedIcon from '@/../src/icons/files/loaded.svg';
@@ -11,13 +16,6 @@ import LockedIcon from '@/../src/icons/files/locked.svg';
 import UploadedIcon from '@/../src/icons/files/uploaded.svg';
 import CrossIcon from '@/../src/icons/cross.svg'
 import DownloadIcon from '@/../src/icons/download.svg';
-
-import ButtonBase from "../../ButtonBase";
-import ExcelBold from '@/../src/icons/files/excel_bold.svg';
-import { useUploadFilesMutation } from "~/mutations/uploadFile";
-import LoadingSpinner from "../../LoadingSpinner";
-import { useFilesContext, type UserFile } from "~/context/FilesContext";
-// import { Document } from "react-pdf";
 
 type FileLoaderProps = {
     file: UserFile;
@@ -31,10 +29,10 @@ function formatSize(size: number) {
 
 const FileView: React.FC<FileLoaderProps> = ({ file }) => {
     const [pagesCount, setPagesCount] = useState<number | undefined>(undefined);
-    const [requestId, setRequestId] = useState<string | undefined>(undefined);
+    // const [downloadUri, downloadUri] = useState<string | undefined>(undefined);
     const { updateFile, removeFile } = useFilesContext();
 
-    const uploadMutation = useUploadFilesMutation(file.id);
+    const uploadMutation = useConvertFilesMutation(file.id);
 
     const getStateIcon = useCallback(() => {
         if (file.passwordState !== undefined && file.passwordState.correct === undefined) {
@@ -63,8 +61,8 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
     }, []);
 
     const downloadFile = useCallback(() => {
-        open(`/api/download/${requestId}`, '_blank');
-    }, [requestId]);
+        open(`/api/v1/download/${uploadMutation.data}`, '_blank');
+    }, [uploadMutation]);
 
     // Симуляция загрузки файла
     useEffect(() => {
@@ -72,14 +70,12 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
         setTimeout(() => updateFile({
             ...file,
             state: 'loaded',
-        }), 2000);
+        }), 200);
     }, [file.id, updateFile]);
 
     useEffect(() => {
         if (file.state === 'uploading') {
             if (uploadMutation.isSuccess) {
-                const requestId = uploadMutation.data.requestId;
-                setRequestId(requestId);
                 updateFile({
                     ...file,
                     state: 'uploaded'
@@ -92,7 +88,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                 })
             }
         }
-    }, [file, uploadMutation, setRequestId, updateFile]);
+    }, [file, uploadMutation, updateFile]);
 
     return (
         <div className={classNames(styles.fileLoader)}>
@@ -126,8 +122,6 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                     <CrossIcon />
                 </ButtonBase>
             </div>
-
-            {/* <Document file={file} onLoadSuccess={(data) => setPagesCount(data.numPages)} /> */}
         </div>
     );
 };

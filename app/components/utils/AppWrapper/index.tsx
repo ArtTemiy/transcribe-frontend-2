@@ -5,9 +5,14 @@ import { useUserInfoQuery } from "~/queries/userInfo";
 
 const RequiresWrapper = ({ children }: PropsWithChildren) => {
     const queries = [useUserInfoQuery()];
-    return queries.filter((el) => el.isLoading).length > 0 ?
-        <LoadingPlaceholder /> :
-        children;
+
+    const isLoading = queries.filter((el) => el.isLoading).length > 0;
+    
+    if (isLoading) {
+        return <LoadingPlaceholder />;
+    }
+    
+    return children;
 }
 
 const ComponentsWrapper = ({ children }: PropsWithChildren) => {

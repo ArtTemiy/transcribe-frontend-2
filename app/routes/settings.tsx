@@ -11,8 +11,8 @@ import { useModal } from "~/components/ui/Modal/useModal";
 const Page = () => {
     const userInfoQ = useUserInfoQuery();
     const copyKey = useCallback(() => {
-        navigator.clipboard.writeText(userInfoQ.data?.apiKey ?? '');
-    }, [userInfoQ.data?.apiKey]);
+        navigator.clipboard.writeText(userInfoQ.data?.data?.apiKey ?? '');
+    }, [userInfoQ.data?.data?.apiKey]);
 
     const reviewModal = useModal();
 
@@ -24,11 +24,11 @@ const Page = () => {
         <div className={styles.apiKeySection}>
             <Text variant='header'> API Key</Text>
             <div className={styles.apiKeyCopySection}>
-                <TextInput disabled value={userInfoQ.data?.apiKey} />
+                <TextInput disabled value={userInfoQ.data?.data?.apiKey} />
                 <Button
                     variant='secondary'
                     onClick={copyKey}
-                    disabled={userInfoQ.data?.apiKey === undefined}
+                    disabled={userInfoQ.data?.data?.apiKey === undefined}
                 >Copy</Button>
             </div>
             <Link href='/ducs/api' className={styles.apiKeyLink} typColor='accent'>

@@ -8,7 +8,7 @@ export type FileState = "loading" | "loaded" | "uploading" | "uploaded" | "error
 export type UserFile = {
     file: File;
     id: string;
-    state: "loading" | "loaded" | "uploading" | "uploaded" | "error";
+    state: FileState;
     passwordState?: FilePasswordState;
     error?: string;
 };
