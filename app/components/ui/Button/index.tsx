@@ -1,29 +1,37 @@
-import React, { useMemo } from "react";
-import classNames from "classnames";
-import styles from "./index.module.scss";
-import { Link } from "react-router";
+import classNames from 'classnames';
+import React, { type ComponentProps } from 'react';
+import { Link } from 'react-router';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+import styles from './index.module.scss';
+
+interface BaseButtonProps {
     children?: React.ReactNode;
     buttonLabel?: string;
     iconLeft?: boolean;
     iconRight?: boolean;
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
-    variant?: 'primary' | 'secondary' | 'success'
+    variant?: 'primary' | 'secondary' | 'success';
     fullWidth?: boolean;
-
-    href?: string;
+    disabled?: boolean;
 }
+
+interface ButtonAsButton extends BaseButtonProps, React.ButtonHTMLAttributes<HTMLButtonElement> {
+    href?: never;
+}
+
+interface ButtonAsLink extends BaseButtonProps, Omit<ComponentProps<typeof Link>, 'to'> {
+    href: string;
+    disabled?: boolean;
+}
+
+type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const VARIANT_CLASSES = {
     primary: styles.primary,
     secondary: styles.secondary,
-    success: styles.success
-}
-
-const leftArrow = "http://localhost:3845/assets/66c10af71339b2d6650b470b0669d0cff9293db7.svg";
-const rightArrow = "http://localhost:3845/assets/485dbc7448ba91c3dcb9c2e771bb79741bcdedf7.svg";
+    success: styles.success,
+};
 
 export const Button: React.FC<ButtonProps> = ({
     children,
@@ -32,32 +40,33 @@ export const Button: React.FC<ButtonProps> = ({
     variant = 'primary',
     fullWidth = false,
     disabled,
-    type = "button",
     href,
     ...props
 }) => {
     const styleClass = disabled ? styles.disabled : VARIANT_CLASSES[variant];
 
-    const buttonClass = classNames(
-        styleClass,
-        {
-            [styles.fullWidth]: fullWidth
-        }
-    );
+    const buttonClass = classNames(styleClass, {
+        [styles.fullWidth]: fullWidth,
+    });
 
-    const Tag = useMemo(() => href ? (p: any) => <Link to={href} {...p} /> : (p: any) => <button {...p} />, []);
+    if (href) {
+        const linkProps = props as ButtonAsLink;
+        return (
+            <Link to={href} className={buttonClass} {...linkProps}>
+                {leftIcon}
+                {children}
+                {rightIcon}
+            </Link>
+        );
+    }
 
+    const { type: buttonType = 'button', ...buttonProps } = props as ButtonAsButton;
     return (
-        <Tag
-            className={buttonClass}
-            disabled={disabled}
-            type={type}
-            {...props}
-        >
+        <button className={buttonClass} disabled={disabled} type={buttonType} {...buttonProps}>
             {leftIcon}
             {children}
             {rightIcon}
-        </Tag>
+        </button>
     );
 };
 

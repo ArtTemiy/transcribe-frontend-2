@@ -1,6 +1,7 @@
-import { createContext, useContext, useCallback, useState, type ReactNode } from "react";
-import type { UserFile, FilesContextType } from "./types";
+import { createContext, useContext, useCallback, useState, type ReactNode } from 'react';
 import { v4 } from 'uuid';
+
+import type { UserFile, FilesContextType } from './types';
 
 // Создаем контекст
 const FilesContext = createContext<FilesContextType | undefined>(undefined);
@@ -9,26 +10,35 @@ const FilesContext = createContext<FilesContextType | undefined>(undefined);
 export const FilesProvider = ({ children }: { children: ReactNode }) => {
     const [files, setFiles] = useState<UserFile[]>([]);
 
-    const addFile = useCallback((newFiles: File[]) => {
-        const newUserFiles = newFiles.map((file: File): UserFile => ({
-            file: file,
-            id: v4(),
-            state: "loading",
-        }));
-        setFiles(prevFiles => [...prevFiles, ...newUserFiles]);
-    }, [setFiles]);
+    const addFile = useCallback(
+        (newFiles: File[]) => {
+            const newUserFiles = newFiles.map(
+                (file: File): UserFile => ({
+                    file: file,
+                    id: v4(),
+                    state: 'loading',
+                }),
+            );
+            setFiles(prevFiles => [...prevFiles, ...newUserFiles]);
+        },
+        [setFiles],
+    );
 
-    const removeFile = useCallback((file: UserFile) => {
-        setFiles(prevFiles => prevFiles.filter((f) => f.id !== file.id));
-    }, [setFiles]);
+    const removeFile = useCallback(
+        (file: UserFile) => {
+            setFiles(prevFiles => prevFiles.filter(f => f.id !== file.id));
+        },
+        [setFiles],
+    );
 
-    const updateFile = useCallback((updatedFile: UserFile) => {
-        setFiles(prevFiles => 
-            prevFiles.map(file => 
-                file.id === updatedFile.id ? updatedFile : file
-            )
-        );
-    }, [setFiles]);
+    const updateFile = useCallback(
+        (updatedFile: UserFile) => {
+            setFiles(prevFiles =>
+                prevFiles.map(file => (file.id === updatedFile.id ? updatedFile : file)),
+            );
+        },
+        [setFiles],
+    );
 
     const value: FilesContextType = {
         files,
@@ -37,11 +47,7 @@ export const FilesProvider = ({ children }: { children: ReactNode }) => {
         updateFile,
     };
 
-    return (
-        <FilesContext.Provider value={value}>
-            {children}
-        </FilesContext.Provider>
-    );
+    return <FilesContext.Provider value={value}>{children}</FilesContext.Provider>;
 };
 
 // Хук для использования контекста
@@ -54,4 +60,4 @@ export const useFilesContext = (): FilesContextType => {
 };
 
 // Экспортируем типы для удобства
-export type { UserFile, FilesContextType, FilePasswordState } from "./types";
+export type { UserFile, FilesContextType, FilePasswordState } from './types';

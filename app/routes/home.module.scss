@@ -1,146 +1,146 @@
-@use "../styles/variables.scss" as *;
+@use '../styles/variables.scss' as *;
 
 .dropzone {
-  margin: 50px 0 0 0;
+    margin: 50px 0 0 0;
 }
 
 .home {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 60px;
-  background: $color-bg-surface-1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 60px;
+    background: $color-bg-surface-1;
 }
 
 .heroSection {
-  margin-top: 40px;
+    margin-top: 40px;
 }
 
 .heroTitle {
-  font-size: 60px;
-  font-weight: 500;
-  color: $color-black;
-  margin-bottom: 20px;
+    font-size: 60px;
+    font-weight: 500;
+    color: $color-black;
+    margin-bottom: 20px;
 }
 
 .heroSubtitle {
-  font-size: 30px;
-  color: $color-grey;
-  margin-bottom: 40px;
-  max-width: 580px;
+    font-size: 30px;
+    color: $color-grey;
+    margin-bottom: 40px;
+    max-width: 580px;
 }
 
 .dropzoneTitle {
-  font-size: 30px;
-  color: $color-black;
-  margin: 20px 0 8px 0;
+    font-size: 30px;
+    color: $color-black;
+    margin: 20px 0 8px 0;
 }
 
 .dropzoneDesc {
-  font-size: 16px;
-  color: $color-grey;
+    font-size: 16px;
+    color: $color-grey;
 }
 
 /* Why trust us section */
 .whyTrustUsSection {
-  padding: 60px 80px;
-  background: $color-bg-surface-1;
-  text-align: left;
+    padding: 60px 80px;
+    background: $color-bg-surface-1;
+    text-align: left;
 }
 
 .whyTrustUsTitle {
-  font-size: 50px;
-  font-weight: 500;
-  color: $color-black;
-  margin-bottom: 40px;
-  line-height: 1.1;
+    font-size: 50px;
+    font-weight: 500;
+    color: $color-black;
+    margin-bottom: 40px;
+    line-height: 1.1;
 }
 
 .featuresList {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
 }
 
 /* Pricing section */
 .pricingSection {
-  padding: 60px 80px;
-  background: $color-bg-surface-1;
-  text-align: left;
+    padding: 60px 80px;
+    background: $color-bg-surface-1;
+    text-align: left;
 }
 
 .pricingTitle {
-  font-size: 50px;
-  font-weight: 500;
-  color: $color-black;
-  margin-bottom: 40px;
-  line-height: 1.1;
+    font-size: 50px;
+    font-weight: 500;
+    color: $color-black;
+    margin-bottom: 40px;
+    line-height: 1.1;
 }
 
 .pricingList {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
 }
 
 /* Feedback section */
 .feedbackSection {
-  padding: 80px 0;
-  background: $color-grey-bg;
-  // text-align: left;
+    padding: 80px 0;
+    background: $color-grey-bg;
+    // text-align: left;
 }
 
 .feedbackTitle {
-  font-size: 50px;
-  font-weight: 500;
-  color: $color-black;
-  margin-bottom: 40px;
-  line-height: 1.1;
+    font-size: 50px;
+    font-weight: 500;
+    color: $color-black;
+    margin-bottom: 40px;
+    line-height: 1.1;
 }
 
 .feedbackList {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
 }
 
 /* Footer */
 .footerSection {
-  padding: 40px 80px;
-  background: $color-bg-surface-1;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  align-items: stretch;
+    padding: 40px 80px;
+    background: $color-bg-surface-1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
 }
 
 .footerTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
-  color: $color-black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: $color-black;
 }
 
 .footerLinks {
-  display: flex;
-  gap: 24px;
+    display: flex;
+    gap: 24px;
 }
 
 .footerBottom {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 600;
-  font-size: 18px;
-  color: $color-black;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    font-size: 18px;
+    color: $color-black;
 }

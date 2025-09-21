@@ -1,34 +1,34 @@
 .links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #313131;
-  line-height: 1;
-  cursor: pointer;
-  position: relative;
-  padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #313131;
+    line-height: 1;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
 }
 
 .text {
-  color: #313131;
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1;
+    color: #313131;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
 }
 
 .underline {
-  display: block;
-  width: 100%;
-  height: 1px;
-  background: #313131;
-  margin-top: 2px;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #313131;
+    margin-top: 2px;
 }
 
 .hover {
-  /* underline уже добавляется через .underline */
+    /* underline уже добавляется через .underline */
 }

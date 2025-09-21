@@ -1,4 +1,5 @@
 import LoadingSpinner from '../LoadingSpinner';
+
 import styles from './loadingplaceholder.module.scss';
 
 const LoadingPlaceholder = () => {

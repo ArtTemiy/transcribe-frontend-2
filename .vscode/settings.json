@@ -39,7 +39,7 @@
   },
   "prettier.requireConfig": true,
   "prettier.useEditorConfig": false,
-  "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.suggest.autoImports": true,
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.importModuleSpecifier": "project-relative"
 }

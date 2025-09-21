@@ -1,4 +1,4 @@
-@use "../../../../styles/variables.scss" as *;
+@use '../../../../styles/variables.scss' as *;
 
 .fileLoader {
     display: flex;
@@ -29,7 +29,6 @@
     display: flex;
     gap: 20px;
 }
-
 
 .info {
     flex: 1;

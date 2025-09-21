@@ -1,13 +1,13 @@
-@use "../../../styles/variables.scss" as *;
+@use '../../../styles/variables.scss' as *;
 
 .card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
-  height: 100%;
-  box-sizing: border-box;
-  border-radius: $radius-8;
-  padding: 20px;
-  background-color: $color-grey-bg;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: $radius-8;
+    padding: 20px;
+    background-color: $color-grey-bg;
 }

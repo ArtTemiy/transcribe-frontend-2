@@ -1,25 +1,22 @@
-import React, { useState, useEffect, useCallback, useMemo, useContext } from "react";
-import styles from "./index.module.scss";
-import Button from "../../Button";
-import classNames from "classnames";
-import { Text } from "../../Text";
-import { v4 as uuidV4 } from 'uuid'
-// Icons
+import React, { useState, useEffect, useCallback } from 'react';
+
 import DownloadIcon from '@/../src/icons/download.svg';
 import ExcelBold from '@/../src/icons/files/excel_bold.svg';
+import Button from '@/components/ui/Button';
+import { useFilesContext } from '~/context/FilesContext';
+import { useConvertFilesMutation } from '~/mutations/files/convertFile';
 
-import ButtonBase from "../../ButtonBase";
-import { useConvertFilesMutation } from "~/mutations/files/convertFile";
-import LoadingSpinner from "../../LoadingSpinner";
-import { useFilesContext, type UserFile } from "~/context/FilesContext";
-import type { FileState } from "~/context/FilesContext/types";
+// Icons
+
+import LoadingSpinner from '../../LoadingSpinner';
+
 // import { Document } from "react-pdf";
 
-export type FilesLoaderState = "preparing" | "prepared" | "uploading" | "uploaded";
+export type FilesLoaderState = 'preparing' | 'prepared' | 'uploading' | 'uploaded';
 
-type FilesLoaderProps = {}
+type FilesLoaderProps = object;
 
-const FilesLoader: React.FC<FilesLoaderProps> = ({ }: FilesLoaderProps) => {
+const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
     // const [requestId, setRequestId] = useState<string | undefined>(undefined);
     const { files } = useFilesContext();
 
@@ -41,12 +38,12 @@ const FilesLoader: React.FC<FilesLoaderProps> = ({ }: FilesLoaderProps) => {
             return;
         }
 
-        setState(state => state === 'uploaded' ? state : 'prepared');
+        setState(state => (state === 'uploaded' ? state : 'prepared'));
     }, [setState, files]);
 
     useEffect(() => {
         if (uploadMutation.isSuccess) {
-            setState(state => state === 'uploading' ? 'uploaded' : state);
+            setState(state => (state === 'uploading' ? 'uploaded' : state));
         } else if (uploadMutation.isError) {
             // TODO:
         }
@@ -54,15 +51,23 @@ const FilesLoader: React.FC<FilesLoaderProps> = ({ }: FilesLoaderProps) => {
 
     return (
         <div>
-            {(state === 'preparing' || state === 'prepared') && <Button rightIcon={<ExcelBold />} onClick={sendFiles} disabled={state === 'preparing'}>
-                Convert to Excel
-            </Button>}
-            {(state === 'uploading') && <Button rightIcon={<LoadingSpinner color='white' />}>
-                Converting...
-            </Button>}
-            {(state === 'uploaded') && <Button rightIcon={<DownloadIcon />} onClick={downloadFile}>
-                Download CSV
-            </Button>}
+            {(state === 'preparing' || state === 'prepared') && (
+                <Button
+                    rightIcon={<ExcelBold />}
+                    onClick={sendFiles}
+                    disabled={state === 'preparing'}
+                >
+                    Convert to Excel
+                </Button>
+            )}
+            {state === 'uploading' && (
+                <Button rightIcon={<LoadingSpinner color='white' />}>Converting...</Button>
+            )}
+            {state === 'uploaded' && (
+                <Button rightIcon={<DownloadIcon />} onClick={downloadFile}>
+                    Download CSV
+                </Button>
+            )}
         </div>
     );
 };

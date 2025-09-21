@@ -1,13 +1,13 @@
-@import "../../styles/variables.scss";
+@import '../../styles/variables.scss';
 
 .label {
-  font-family: $font-inter;
-  font-size: $font-size-12;
-  color: $color-black;
-  line-height: 18px;
-  font-weight: 400;
+    font-family: $font-inter;
+    font-size: $font-size-12;
+    color: $color-black;
+    line-height: 18px;
+    font-weight: 400;
 }
 
 .error {
-  color: $color-error;
+    color: $color-error;
 }

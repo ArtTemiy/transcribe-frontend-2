@@ -119,10 +119,10 @@ VITE_ENABLE_MOCKS=true
 # Отключить моки
 VITE_ENABLE_MOCKS=false
 ```
+
 Подробнее в [документации мок сервера](docs/MOCK_SERVER.md).
 
 **SSR-совместимость**: Все компоненты, работающие с моками, проверяют доступность браузерных API перед использованием.
-
 
 ## 🐳 Docker
 
@@ -137,17 +137,19 @@ docker run -p 3000:3000 transcribe-frontend
 ## 📋 API Endpoints
 
 ### Информация о пользователе
+
 ```typescript
-GET /api/user/info
+GET / api / user / info;
 
 Response: {
-  pagesCount: number;
-  planKey: string;
-  apiKey: string;
+    pagesCount: number;
+    planKey: string;
+    apiKey: string;
 }
 ```
 
 ### Загрузка файла
+
 ```typescript
 POST /api/upload
 Content-Type: multipart/form-data
@@ -158,6 +160,7 @@ Response: {
 ```
 
 ### Скачивание результата
+
 ```typescript
 GET /api/download/:requestId
 

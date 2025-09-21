@@ -1,20 +1,21 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useEffect } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
+
 import Logo from '@/../src/icons/logo.svg';
 import Button from '~/components/ui/Button';
-import Link from '../Link';
+import { useAuthLogoutMutation } from '~/mutations/auth/logout';
 import { useUserInfoQuery } from '~/queries/userInfo';
-import RoundLabel from '../RoundLabel';
-import Modal from '../Modal/Modal';
+import type { AuthResponse } from '~/types/auth/authResponse';
+
+import LoginForm from '../forms/LoginForm';
 import RegisterForm from '../forms/RegisterForm';
+import Link from '../Link';
+import { useModal } from '../Modal/useModal';
+import RoundLabel from '../RoundLabel';
+import { Text } from '../Text';
 
 import styles from './index.module.scss';
-import { Text } from '../Text';
-import type { AuthResponse } from '~/types/auth/authResponse';
-import { useModal } from '../Modal/useModal';
-import LoginForm from '../forms/LoginForm';
-import { useAuthLogoutMutation } from '~/mutations/auth/logout';
-import { useQueryClient } from '@tanstack/react-query';
 
 const menuItems = [
     { label: 'Pricing', href: '/pricing' },
@@ -47,7 +48,7 @@ const NavBar: React.FC = () => {
             registerModal.closeModal();
             loginModal.closeModal();
         },
-        [queryClient, registerModal],
+        [queryClient, registerModal, loginModal],
     );
 
     const handleGoogleSignUp = useCallback(() => {
@@ -84,43 +85,47 @@ const NavBar: React.FC = () => {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls='main-navbar' />
                     <Navbar.Collapse id='main-navbar'>
-                        <Nav className='mx-auto gap-3'>
+                        <Nav className='mx-auto gap-4 mb-5 mb-lg-0 mt-4 mt-lg-0'>
                             {userInfoQuery.data?.data?.pages !== undefined && (
-                                <Nav.Item>
+                                <Nav.Item className={styles.navlink}>
                                     <Link variant='body-s' href='/pages'>
                                         Pages{' '}
-                                        <RoundLabel variant='caption' className={styles.pagesLabel}>
+                                        <RoundLabel variant='caption'>
                                             {userInfoQuery.data.data.pages}
                                         </RoundLabel>
                                     </Link>
                                 </Nav.Item>
                             )}
                             {menuItems.map(item => (
-                                <Nav.Item key={item.href}>
+                                <Nav.Item key={item.href} className={styles.navlink}>
                                     <Link variant='body-s' href={item.href}>
                                         {item.label}
                                     </Link>
                                 </Nav.Item>
                             ))}
                         </Nav>
-                        <Nav className='gap-2'>
+                        <Nav className='gap-3 mb-3 mb-lg-0'>
                             {userInfoQuery.data?.data ? (
                                 <>
-                                    <Nav.Item>
-                                        <Button variant='secondary' onClick={handleLogout}>
+                                    <Nav.Item className='w-100'>
+                                        <Button
+                                            variant='secondary'
+                                            onClick={handleLogout}
+                                            fullWidth
+                                        >
                                             Logout
                                         </Button>
                                     </Nav.Item>
                                 </>
                             ) : (
                                 <>
-                                    <Nav.Item>
-                                        <Button variant='secondary' onClick={openSignIn}>
+                                    <Nav.Item className='w-100'>
+                                        <Button variant='secondary' onClick={openSignIn} fullWidth>
                                             Login
                                         </Button>
                                     </Nav.Item>
-                                    <Nav.Item>
-                                        <Button variant='primary' onClick={openRegister}>
+                                    <Nav.Item className='w-100'>
+                                        <Button variant='primary' onClick={openRegister} fullWidth>
                                             Get started
                                         </Button>
                                     </Nav.Item>

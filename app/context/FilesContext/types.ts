@@ -3,7 +3,7 @@ export type FilePasswordState = {
     correct?: boolean;
 };
 
-export type FileState = "loading" | "loaded" | "uploading" | "uploaded" | "error";
+export type FileState = 'loading' | 'loaded' | 'uploading' | 'uploaded' | 'error';
 
 export type UserFile = {
     file: File;

@@ -1,69 +1,69 @@
-@use "../../../styles/variables.scss" as *;
+@use '../../../styles/variables.scss' as *;
 
 .fieldWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
 }
 
 .label {
-  font-family: $font-inter;
-  font-size: $font-size-12;
-  color: $color-black;
-  margin-bottom: 2px;
+    font-family: $font-inter;
+    font-size: $font-size-12;
+    color: $color-black;
+    margin-bottom: 2px;
 }
 
 .inputContainer {
-  position: relative;
-  display: flex;
-  align-items: center;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .input {
-  width: 100%;
-  padding: $spacing-1-5 $spacing-2-5 $spacing-1-5 $spacing-1-5;
-  border: 1px solid $color-grey-light;
-  border-radius: $radius-md;
-  background: $color-white;
-  font-family: $font-inter;
-  font-size: $font-size-14;
-  color: $color-black;
-  outline: none;
-  transition: border 0.2s;
-  &::placeholder {
-    color: $color-grey-light;
-    opacity: 1;
-  }
-  &:focus {
-    border-color: $color-blue;
-  }
-  &:disabled {
-    background: $color-grey-bg;
-    color: $color-grey-light;
-    cursor: not-allowed;
-  }
+    width: 100%;
+    padding: $spacing-1-5 $spacing-2-5 $spacing-1-5 $spacing-1-5;
+    border: 1px solid $color-grey-light;
+    border-radius: $radius-md;
+    background: $color-white;
+    font-family: $font-inter;
+    font-size: $font-size-14;
+    color: $color-black;
+    outline: none;
+    transition: border 0.2s;
+    &::placeholder {
+        color: $color-grey-light;
+        opacity: 1;
+    }
+    &:focus {
+        border-color: $color-blue;
+    }
+    &:disabled {
+        background: $color-grey-bg;
+        color: $color-grey-light;
+        cursor: not-allowed;
+    }
 }
 
 .iconRight {
-  position: absolute;
-  right: $spacing-1-5;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  color: $color-grey-light;
+    position: absolute;
+    right: $spacing-1-5;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: $color-grey-light;
 }
 
 .error {
-  color: $color-error;
-  font-size: $font-size-12;
-  margin-top: 2px;
+    color: $color-error;
+    font-size: $font-size-12;
+    margin-top: 2px;
 }
 
 .counter {
-  color: $color-grey-light;
-  font-size: $font-size-12;
-  margin-top: 2px;
-  margin-left: auto;
+    color: $color-grey-light;
+    font-size: $font-size-12;
+    margin-top: 2px;
+    margin-left: auto;
 }

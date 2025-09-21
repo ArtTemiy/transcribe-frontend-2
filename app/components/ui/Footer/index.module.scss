@@ -1,10 +1,10 @@
-@use "../../../styles/variables.scss" as *;
+@use '../../../styles/variables.scss' as *;
 
 .footer {
     background: $color-grey;
     width: 100%;
     padding: $spacing-2-5 $spacing-2;
-    
+
     // Десктопные стили
     @media (min-width: 768px) {
         padding: 40px $spacing-80;
@@ -21,7 +21,7 @@
 .logoIcon {
     width: 35px !important;
     height: 35px !important;
-    
+
     // Десктопная версия
     @media (min-width: 768px) {
         width: 50px !important;
@@ -36,7 +36,7 @@
     font-size: $font-size-12 !important;
     line-height: 15px !important;
     font-family: $font-inter;
-    
+
     // Десктопная версия
     @media (min-width: 768px) {
         font-size: $font-size-16 !important;
@@ -49,7 +49,7 @@
     font-size: $font-size-12 !important;
     line-height: 15px !important;
     font-family: $font-inter;
-    
+
     // Десктопная версия
     @media (min-width: 768px) {
         font-size: $font-size-16 !important;
@@ -71,7 +71,7 @@
     line-height: 15px !important;
     font-family: $font-inter;
     cursor: pointer;
-    
+
     // Десктопная версия
     @media (min-width: 768px) {
         font-size: $font-size-16 !important;

@@ -1,4 +1,4 @@
-@use "../../../../styles/variables.scss" as *;
+@use '../../../../styles/variables.scss' as *;
 
 .fieldWrapper {
     display: flex;
@@ -6,7 +6,6 @@
     gap: 4px;
     width: 100%;
 }
-
 
 .inputContainer {
     display: flex;

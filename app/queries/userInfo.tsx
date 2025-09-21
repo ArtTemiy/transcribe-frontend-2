@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+
 import type { UserInfo } from '@/types/UserInfo';
 import { apiClient } from '~/utils/apiClient';
 
@@ -14,8 +15,8 @@ export const useUserInfoQuery = () => {
                 return {
                     data: {
                         pages: 10,
-                        planKey: 'personal',
-                        apiKey: 'asdadsasd',
+                        plan: 'personal',
+                        api_token: 'asdadsasd',
                     },
                 };
                 const response = await apiClient.get('/auth/user');
