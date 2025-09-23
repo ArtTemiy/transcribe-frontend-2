@@ -122,16 +122,6 @@ export const Alert: React.FC<AlertProps> = ({
         }
     }, [show]);
 
-    useEffect(() => {
-        if (autoHide && isVisible) {
-            const timer = setTimeout(() => {
-                handleClose();
-            }, autoHide);
-
-            return () => clearTimeout(timer);
-        }
-    }, [autoHide, isVisible]);
-
     const handleClose = () => {
         setIsAnimating(false);
         setTimeout(() => {

@@ -14,6 +14,8 @@ import type { AuthResponse } from '~/types/auth/authResponse';
 import type { LoginData } from '~/types/auth/login';
 
 import styles from './index.module.scss';
+import { useAlert } from '../../Alert';
+import { isAxiosError } from 'axios';
 
 type LoginFormProps = {
     onClose?: () => void;
@@ -30,10 +32,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
     onGoogleLogin,
     onRegisterClick,
 }) => {
+    const alert = useAlert();
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<LoginFormData>({
         mode: 'onChange',
         defaultValues: {
@@ -41,20 +44,30 @@ const LoginForm: React.FC<LoginFormProps> = ({
             password: '',
         },
     });
-    const LoginMutation = useAuthLoginMutation();
+    const loginMutation = useAuthLoginMutation();
 
     const onFormSubmit = (data: LoginFormData) => {
-        LoginMutation.mutate(data);
+        loginMutation.mutate(data);
     };
 
+    // Обработка успешного логина
     useEffect(() => {
-        if (LoginMutation.isSuccess) {
-            onSubmit(LoginMutation.data);
+        if (loginMutation.isSuccess && loginMutation.data) {
+            onSubmit(loginMutation.data);
         }
-        if (LoginMutation.isError) {
-            console.error(LoginMutation.error);
+    }, [loginMutation.isSuccess, loginMutation.data, onSubmit]);
+
+    // Обработка ошибки логина
+    useEffect(() => {
+        if (loginMutation.isError && loginMutation.error) {
+            console.error(loginMutation.error);
+            let errorMessage = 'Unknown Error';
+            if (isAxiosError(loginMutation.error)) {
+                errorMessage = loginMutation.error.response?.data?.message || 'Unknown Error';
+            }
+            alert.showError(errorMessage, { autoHide: 2 });
         }
-    }, [LoginMutation, onSubmit]);
+    }, [loginMutation.isError, loginMutation.error, alert.showError]);
 
     return (
         <div className={styles.container}>
@@ -99,7 +112,12 @@ const LoginForm: React.FC<LoginFormProps> = ({
                             />
                         </div>
 
-                        <Button type='submit' variant='primary' fullWidth disabled={isSubmitting}>
+                        <Button
+                            type='submit'
+                            variant='primary'
+                            fullWidth
+                            disabled={loginMutation.isPending}
+                        >
                             Login
                         </Button>
                     </form>
@@ -113,12 +131,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     <div className={styles.separatorLine} />
                 </div>
 
-                <Button
-                    variant='secondary'
-                    onClick={onGoogleLogin}
-                    disabled={isSubmitting}
-                    className={styles.googleButton}
-                >
+                <Button variant='secondary' onClick={onGoogleLogin} className={styles.googleButton}>
                     <GoogleIcon />
                     <Text variant='body-s' className={styles.googleButtonText}>
                         Log in with Google

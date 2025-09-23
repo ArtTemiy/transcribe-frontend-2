@@ -14,6 +14,8 @@ import type { AuthResponse } from '~/types/auth/authResponse';
 import type { RegisterData } from '~/types/auth/register';
 
 import styles from './index.module.scss';
+import { useAlert } from '../../Alert';
+import { isAxiosError } from 'axios';
 
 type RegisterFormProps = {
     onClose?: () => void;
@@ -30,11 +32,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     onGoogleSignUp,
     onSignInClick,
 }) => {
+    const alert = useAlert();
     const {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<RegisterFormData>({
         mode: 'onChange',
         defaultValues: {
@@ -52,14 +55,24 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         registerMutation.mutate(data);
     };
 
+    // Обработка успешного логина
     useEffect(() => {
-        if (registerMutation.isSuccess) {
+        if (registerMutation.isSuccess && registerMutation.data) {
             onSubmit(registerMutation.data);
         }
-        if (registerMutation.isError) {
+    }, [registerMutation.isSuccess, registerMutation.data, onSubmit]);
+
+    // Обработка ошибки логина
+    useEffect(() => {
+        if (registerMutation.isError && registerMutation.error) {
             console.error(registerMutation.error);
+            let errorMessage = 'Unknown Error';
+            if (isAxiosError(registerMutation.error)) {
+                errorMessage = registerMutation.error.response?.data?.message || 'Unknown Error';
+            }
+            alert.showError(errorMessage, { autoHide: 5 });
         }
-    }, [registerMutation, onSubmit]);
+    }, [registerMutation.isError, registerMutation.error, alert.showError]);
 
     return (
         <div className={styles.container}>
@@ -148,7 +161,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                             />
                         </div>
 
-                        <Button type='submit' variant='primary' fullWidth disabled={isSubmitting}>
+                        <Button
+                            type='submit'
+                            variant='primary'
+                            fullWidth
+                            disabled={registerMutation.isPending}
+                        >
                             Get started
                         </Button>
                     </form>
@@ -165,7 +183,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 <Button
                     variant='secondary'
                     onClick={onGoogleSignUp}
-                    disabled={isSubmitting}
                     className={styles.googleButton}
                 >
                     <GoogleIcon />

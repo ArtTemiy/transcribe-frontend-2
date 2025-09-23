@@ -8,11 +8,12 @@
     width: 100%;
 
     padding: $spacing-2-5;
-    // border-radius: $radius-10;
+    border: 0;
+    border-radius: $radius-8;
 }
 
 .error {
     @extend .alert;
-    background-color: $color-error;
+    background-color: $color-error-active;
     color: $color-white;
 }
