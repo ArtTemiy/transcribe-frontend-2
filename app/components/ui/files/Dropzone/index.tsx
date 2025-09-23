@@ -13,7 +13,7 @@ import { useAlert } from '../../Alert';
 
 type DropzoneProps = PropsWithClassName & {};
 
-const MAXIMUM_FILES = 3;
+const MAXIMUM_FILES = 20;
 
 export const Dropzone: React.FC<DropzoneProps> = ({ className }: DropzoneProps) => {
     const { files, addFile } = useFilesContext();

@@ -9,7 +9,7 @@ export interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ children, className }) => {
-    return <div className={classNames(styles.card, className)}>{children}</div>;
+    return <div className={classNames(className, styles.card)}>{children}</div>;
 };
 
 export default Card;
