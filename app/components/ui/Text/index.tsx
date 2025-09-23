@@ -13,7 +13,7 @@ export type Style =
     | 'body-l'
     | 'small'
     | 'numbers';
-export type Color = 'standard' | 'light' | 'alarm' | 'accent';
+export type Color = 'standard' | 'light' | 'white' | 'alarm' | 'accent';
 
 export type Typography = {
     variant?: Style;
@@ -37,6 +37,7 @@ const STYLE_CLASSES_MAPPING: Record<Style, string> = {
 const COLOR_CLASSES_MAPPING: Record<Color, string> = {
     standard: styles.color_standard,
     light: styles.color_light,
+    white: styles.color_whight,
     alarm: styles.color_alarm,
     accent: styles.color_accent,
 };

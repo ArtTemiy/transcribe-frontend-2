@@ -18,6 +18,7 @@ import LoadingSpinner from '../../LoadingSpinner';
 import { Text } from '../../Text';
 
 import styles from './style.module.scss';
+import { useAlert } from '../../Alert';
 
 type FileLoaderProps = {
     file: UserFile;
@@ -34,6 +35,8 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
     const { updateFile, removeFile } = useFilesContext();
 
     const uploadMutation = useConvertFilesMutation(file.id);
+
+    const alert = useAlert();
 
     const getStateIcon = useCallback(() => {
         if (file.passwordState !== undefined && file.passwordState.correct === undefined) {
@@ -71,14 +74,21 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
         if (file.state === 'loading') {
             setTimeout(
                 () =>
+                    // {
+                    //     alert.showError('Ur file is fuuuu', {
+                    //         autoHide: 5000,
+                    //     });
+                    //     removeFile(file);
+                    // },
+
                     updateFile({
                         ...file,
                         state: 'loaded',
                     }),
-                200,
+                1000,
             );
         }
-    }, [file, updateFile]);
+    }, [file, updateFile, removeFile, alert]);
 
     useEffect(() => {
         if (file.state === 'uploading') {

@@ -9,12 +9,16 @@ import FileView from '../FileView';
 
 import { EmptyContent } from './EmptyContent';
 import styles from './index.module.scss';
+import { useAlert } from '../../Alert';
 
 type DropzoneProps = PropsWithClassName & {};
+
+const MAXIMUM_FILES = 3;
 
 export const Dropzone: React.FC<DropzoneProps> = ({ className }: DropzoneProps) => {
     const { files, addFile } = useFilesContext();
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const alert = useAlert();
 
     // Функция для фильтрации только PDF файлов
     const filterPdfFiles = useCallback((fileList: FileList): File[] => {
@@ -24,11 +28,15 @@ export const Dropzone: React.FC<DropzoneProps> = ({ className }: DropzoneProps) 
     const onDrop = useCallback(
         (newFiles: FileList) => {
             const pdfFiles = filterPdfFiles(newFiles);
+            if (pdfFiles.length + files.length > MAXIMUM_FILES) {
+                alert.showError(`Maximum of ${MAXIMUM_FILES} files allowed`, { position: 'top' });
+                return;
+            }
             if (pdfFiles.length > 0) {
                 addFile(pdfFiles);
             }
         },
-        [filterPdfFiles, addFile],
+        [files, filterPdfFiles, addFile],
     );
 
     const handleDrop = useCallback(

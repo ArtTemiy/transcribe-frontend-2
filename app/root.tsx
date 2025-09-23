@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/ui/Footer';
 import NavBar from './components/ui/NavBar';
 import AppWrapper from './components/utils/AppWrapper';
+import { AlertProvider } from './context/AlertContext';
 import styles from './root.module.scss';
 
 export const links: Route.LinksFunction = () => [
@@ -41,13 +42,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Links />
             </head>
             <body>
-                <AppWrapper>
-                    <div className={styles.body}>
-                        <NavBar />
-                        <div className={styles.content}>{children}</div>
-                        <Footer />
-                    </div>
-                </AppWrapper>
+                <AlertProvider>
+                    <AppWrapper>
+                        <div className={styles.body}>
+                            <NavBar />
+                            <div className={styles.content}>{children}</div>
+                            <Footer />
+                        </div>
+                    </AppWrapper>
+                </AlertProvider>
                 <ScrollRestoration />
                 <Scripts />
             </body>

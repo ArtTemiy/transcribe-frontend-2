@@ -6,4 +6,6 @@ export default [
     route('settings', 'routes/settings.tsx'),
 
     route('test', 'routes/test.tsx'),
+    route('alert-test', 'routes/alert-test.tsx'),
+    route('global-alert-test', 'routes/global-alert-test.tsx'),
 ] satisfies RouteConfig;

@@ -10,7 +10,7 @@ const PricingSection = () => {
     return (
         <Row className='gx-0 gx-md-3 gy-3'>
             {pricingPlans.map(plan => (
-                <Col key={plan.key} className='col-12 col-md-3'>
+                <Col key={plan.key} className='col-12 col-md-6 col-lg-3'>
                     <PricingCard
                         pricingInfo={plan}
                         isCurrent={plan.key === userInfoQuery.data?.data?.plan}

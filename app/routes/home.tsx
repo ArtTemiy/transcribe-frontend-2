@@ -89,7 +89,7 @@ const HomePage = () => {
                 <h2 className={styles.whyTrustUsTitle}>Why trust us</h2>
                 <Row className='gx-3 gy-3'>
                     {features.map(feature => (
-                        <Col key={feature.title} className='col-12 col-md-3'>
+                        <Col key={feature.title} className='col-12 col-md-6 col-lg-3'>
                             <FeatureCard
                                 title={feature.title}
                                 description={feature.description}
@@ -102,13 +102,6 @@ const HomePage = () => {
 
             <Container>
                 <h2 className={styles.pricingTitle}>Pricing</h2>
-                {/* <Row className='gx-3 gy-3'>
-                    {pricingPlans.map(plan => (
-                        <Col key={plan.key} className='col-12 col-md-3'>
-                            <PricingCard pricingInfo={plan} />
-                        </Col>
-                    ))}
-                </Row> */}
                 <PricingSection />
             </Container>
 

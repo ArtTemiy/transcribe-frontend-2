@@ -1,0 +1,37 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 1050;
+}
+
+.alertWrapper {
+    pointer-events: auto;
+    margin-bottom: 10px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Стили для стекинга алертов
+.alertWrapper + .alertWrapper {
+    margin-top: 10px;
+}
+
+// Мобильная версия
+@media (max-width: 768px) {
+    .alertWrapper {
+        margin-bottom: 8px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .alertWrapper + .alertWrapper {
+        margin-top: 8px;
+    }
+}
