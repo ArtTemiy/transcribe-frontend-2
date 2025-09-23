@@ -12,13 +12,6 @@ export const useUserInfoQuery = () => {
         queryKey: ['userInfo'],
         queryFn: async (): Promise<Response> => {
             try {
-                return {
-                    data: {
-                        pages: 10,
-                        plan: 'personal',
-                        api_token: 'asdadsasd',
-                    },
-                };
                 const response = await apiClient.get('/auth/user');
                 return { data: response.data as UserInfo };
             } catch (error) {
