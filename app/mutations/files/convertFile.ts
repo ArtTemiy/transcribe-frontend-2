@@ -27,7 +27,6 @@ export const useConvertFilesMutation = (key: string) => {
 
                 const response = await apiClient.post('/upload', formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
-                    timeout: 2000,
                 });
 
                 const { id: serverFileId } = response.data as UploadingFileResponse;
