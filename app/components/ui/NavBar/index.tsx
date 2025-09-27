@@ -51,16 +51,6 @@ const NavBar: React.FC = () => {
         [queryClient, registerModal, loginModal],
     );
 
-    const handleGoogleSignUp = useCallback(() => {
-        alert('Register with Google');
-        registerModal.closeModal();
-    }, [registerModal]);
-
-    const handleGoogleLogin = useCallback(() => {
-        alert('Login with Google');
-        registerModal.closeModal();
-    }, [registerModal]);
-
     const handleLogout = useCallback(() => {
         logoutMutation.mutate();
     }, [logoutMutation]);
@@ -142,7 +132,6 @@ const NavBar: React.FC = () => {
                         <RegisterForm
                             onClose={registerModal.closeModal}
                             onSubmit={handleSuccessAuthSubmit}
-                            onGoogleSignUp={handleGoogleSignUp}
                             onSignInClick={openSignIn}
                         />
                     </registerModal.Component>
@@ -150,7 +139,6 @@ const NavBar: React.FC = () => {
                         <LoginForm
                             onClose={loginModal.closeModal}
                             onSubmit={handleSuccessAuthSubmit}
-                            onGoogleLogin={handleGoogleLogin}
                             onRegisterClick={openRegister}
                         />
                     </loginModal.Component>

@@ -12,8 +12,14 @@
     border-radius: $radius-8;
 }
 
-.error {
+.alert_error {
     @extend .alert;
     background-color: $color-error-active;
+    color: $color-white;
+}
+
+.alert_success {
+    @extend .alert;
+    background-color: $color-error-success;
     color: $color-white;
 }

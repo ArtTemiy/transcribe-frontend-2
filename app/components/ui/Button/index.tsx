@@ -41,18 +41,19 @@ export const Button: React.FC<ButtonProps> = ({
     fullWidth = false,
     disabled,
     href,
+    className,
     ...props
 }) => {
     const styleClass = disabled ? styles.disabled : VARIANT_CLASSES[variant];
 
-    const buttonClass = classNames(styleClass, {
+    const buttonClass = classNames(className, styleClass, {
         [styles.fullWidth]: fullWidth,
     });
 
     if (href) {
         const linkProps = props as ButtonAsLink;
         return (
-            <Link to={href} className={buttonClass} {...linkProps}>
+            <Link to={href} className={classNames(styles.btn, buttonClass)} {...linkProps}>
                 {leftIcon}
                 {children}
                 {rightIcon}

@@ -9,12 +9,15 @@ import { Text } from '~/components/ui/Text';
 import { useUserInfoQuery } from '~/queries/userInfo';
 
 import styles from './settings.module.scss';
+import { useAlert } from '../context/AlertContext';
 
 const Page = () => {
     const userInfoQ = useUserInfoQuery();
+    const alert = useAlert();
     const copyKey = useCallback(() => {
         navigator.clipboard.writeText(userInfoQ.data?.data?.api_token ?? '');
-    }, [userInfoQ.data?.data?.api_token]);
+        alert.showSuccess('Coppied', { autoHide: 0.5 });
+    }, [userInfoQ.data?.data?.api_token, alert]);
 
     const reviewModal = useModal();
 

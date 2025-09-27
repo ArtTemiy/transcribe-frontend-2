@@ -10,18 +10,22 @@ import TextInput from '@/components/ui/input/TextInput/TextInput';
 import Link from '@/components/ui/Link';
 import { Text } from '@/components/ui/Text';
 import { useAuthLoginMutation } from '~/mutations/auth/login';
+import { useGoogleAuth } from '~/hooks/useGoogleAuth';
 import type { AuthResponse } from '~/types/auth/authResponse';
 import type { LoginData } from '~/types/auth/login';
 
 import styles from './index.module.scss';
 import { useAlert } from '../../Alert';
 import { isAxiosError } from 'axios';
+import { useNavigate } from 'react-router';
+import { AUTH } from '../../../../consts/auth';
 
 type LoginFormProps = {
     onClose?: () => void;
     onSubmit: (data: AuthResponse) => void;
-    onGoogleLogin?: () => void;
+    // onGoogleLogin?: () => void;
     onRegisterClick?: () => void;
+    googleClientId?: string;
 };
 
 type LoginFormData = LoginData;
@@ -29,8 +33,9 @@ type LoginFormData = LoginData;
 const LoginForm: React.FC<LoginFormProps> = ({
     onClose,
     onSubmit,
-    onGoogleLogin,
+    // onGoogleLogin,
     onRegisterClick,
+    googleClientId,
 }) => {
     const alert = useAlert();
     const {
@@ -46,8 +51,25 @@ const LoginForm: React.FC<LoginFormProps> = ({
     });
     const loginMutation = useAuthLoginMutation();
 
+    // const { signInWithGoogle, isLoading: isGoogleLoading } = useGoogleAuth({
+    //     onSuccess: onSubmit,
+    //     clientId: googleClientId,
+    // });
+
     const onFormSubmit = (data: LoginFormData) => {
         loginMutation.mutate(data);
+    };
+
+    const navigate = useNavigate();
+
+    const handleGoogleLogin = () => {
+        // if (onGoogleLogin) {
+        //     onGoogleLogin();
+        // } else {
+        //     signInWithGoogle();
+        // }
+        // navigate(AUTH.redirectUrl);
+        // window.location.
     };
 
     // Обработка успешного логина
@@ -112,12 +134,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                             />
                         </div>
 
-                        <Button
-                            type='submit'
-                            variant='primary'
-                            fullWidth
-                            disabled={loginMutation.isPending}
-                        >
+                        <Button type='submit' variant='primary' fullWidth>
                             Login
                         </Button>
                     </form>
@@ -131,7 +148,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     <div className={styles.separatorLine} />
                 </div>
 
-                <Button variant='secondary' onClick={onGoogleLogin} className={styles.googleButton}>
+                <Button variant='secondary' href={AUTH.redirectUrl} className={styles.googleButton}>
                     <GoogleIcon />
                     <Text variant='body-s' className={styles.googleButtonText}>
                         Log in with Google

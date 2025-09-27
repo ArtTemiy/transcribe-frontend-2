@@ -136,17 +136,17 @@ export const Alert: React.FC<AlertProps> = ({
 
     const alertClasses = classNames(
         styles.alert,
-        styles[variant],
-        styles[position],
+        // styles[position],
         {
             [styles.animating]: isAnimating,
             [styles.dismissible]: dismissible,
         },
-        // Bootstrap классы для дополнительной стилизации
-        'alert',
-        `alert-${variant === 'error' ? 'danger' : variant}`,
         {
             'alert-dismissible': dismissible,
+        },
+        {
+            [styles.alert_error]: variant === 'error',
+            [styles.alert_success]: variant === 'success',
         },
         className,
     );

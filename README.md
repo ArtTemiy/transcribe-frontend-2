@@ -58,7 +58,28 @@ VITE_ENABLE_MOCKS=true
 
 # URL реального API (когда моки отключены)
 VITE_API_BASE_URL=https://your-api-url.com
+
+# Google OAuth Client ID для авторизации через Google
+VITE_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
 ```
+
+#### Настройка Google OAuth
+
+1. Перейдите в [Google Cloud Console](https://console.cloud.google.com/)
+2. Создайте новый проект или выберите существующий
+3. Включите Google Identity API:
+   - Перейдите в "APIs & Services" > "Library"
+   - Найдите "Google Identity" и включите API
+4. Создайте OAuth 2.0 Client ID:
+   - Перейдите в "APIs & Services" > "Credentials"
+   - Нажмите "Create Credentials" > "OAuth client ID"
+   - Выберите "Web application"
+   - Добавьте разрешенные домены:
+     - `http://localhost:5173` (для разработки)
+     - Ваш продакшн домен
+5. Скопируйте Client ID и добавьте в `.env` файл как `VITE_GOOGLE_CLIENT_ID`
+
+**Важно**: Google OAuth работает только с HTTPS в продакшене и с localhost в разработке.
 
 ## 📁 Структура проекта
 
@@ -136,10 +157,64 @@ docker run -p 3000:3000 transcribe-frontend
 
 ## 📋 API Endpoints
 
+### Авторизация
+
+#### Обычный логин
+```typescript
+POST /api/v1/auth/login
+Content-Type: application/json
+
+Body: {
+  username: string;
+  password: string;
+  use_cookies: boolean;
+}
+
+Response: {
+  access_token: string;
+  user: UserInfo;
+}
+```
+
+#### Регистрация
+```typescript
+POST /api/v1/auth/register
+Content-Type: application/json
+
+Body: {
+  username: string;
+  email: string;
+  password1: string;
+  password2: string;
+  use_cookies: boolean;
+}
+
+Response: {
+  access_token: string;
+  user: UserInfo;
+}
+```
+
+#### Google OAuth
+```typescript
+POST /api/auth/google
+Content-Type: application/json
+
+Body: {
+  id_token: string;
+  use_cookies: boolean;
+}
+
+Response: {
+  access_token: string;
+  user: UserInfo;
+}
+```
+
 ### Информация о пользователе
 
 ```typescript
-GET / api / user / info;
+GET /api/user/info
 
 Response: {
     pagesCount: number;

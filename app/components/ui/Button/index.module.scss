@@ -20,11 +20,11 @@
     min-width: 120px;
     user-select: none;
     white-space: nowrap;
-}
-
-a.btn {
     text-decoration: none;
 }
+
+// a.btn {
+// }
 
 .primary {
     @extend .btn;

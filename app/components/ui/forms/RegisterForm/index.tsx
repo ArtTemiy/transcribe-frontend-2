@@ -16,22 +16,17 @@ import type { RegisterData } from '~/types/auth/register';
 import styles from './index.module.scss';
 import { useAlert } from '../../Alert';
 import { isAxiosError } from 'axios';
+import { AUTH } from '../../../../consts/auth';
 
 type RegisterFormProps = {
     onClose?: () => void;
     onSubmit: (data: AuthResponse) => void;
-    onGoogleSignUp?: () => void;
     onSignInClick?: () => void;
 };
 
 type RegisterFormData = RegisterData;
 
-const RegisterForm: React.FC<RegisterFormProps> = ({
-    onClose,
-    onSubmit,
-    onGoogleSignUp,
-    onSignInClick,
-}) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ onClose, onSubmit, onSignInClick }) => {
     const alert = useAlert();
     const {
         register,
@@ -161,12 +156,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                             />
                         </div>
 
-                        <Button
-                            type='submit'
-                            variant='primary'
-                            fullWidth
-                            disabled={registerMutation.isPending}
-                        >
+                        <Button type='submit' variant='primary' fullWidth>
                             Get started
                         </Button>
                     </form>
@@ -180,11 +170,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                     <div className={styles.separatorLine} />
                 </div>
 
-                <Button
-                    variant='secondary'
-                    onClick={onGoogleSignUp}
-                    className={styles.googleButton}
-                >
+                <Button variant='secondary' href={AUTH.redirectUrl} className={styles.googleButton}>
                     <GoogleIcon />
                     <Text variant='body-s' className={styles.googleButtonText}>
                         Sign up with Google
