@@ -72,6 +72,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({ className }: DropzoneProps) 
                 className={classNames(
                     files.length ? styles.dropzone : styles.dropzoneEmpty,
                     className,
+                    'p-3 p-md-5',
                 )}
                 onDragOver={e => e.preventDefault()}
                 onDrop={handleDrop}

@@ -1,0 +1,24 @@
+@use '../../../styles/variables.scss' as *;
+
+.googleButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 42px;
+    padding: 10px $spacing-2-5;
+    border: 1px solid $color-black;
+    border-radius: $radius-10;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+}
+
+.googleButtonText {
+    flex-grow: 1;
+    text-align: center;
+}

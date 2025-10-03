@@ -10,7 +10,6 @@ import TextInput from '@/components/ui/input/TextInput/TextInput';
 import Link from '@/components/ui/Link';
 import { Text } from '@/components/ui/Text';
 import { useAuthLoginMutation } from '~/mutations/auth/login';
-import { useGoogleAuth } from '~/hooks/useGoogleAuth';
 import type { AuthResponse } from '~/types/auth/authResponse';
 import type { LoginData } from '~/types/auth/login';
 
@@ -19,24 +18,17 @@ import { useAlert } from '../../Alert';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router';
 import { AUTH } from '../../../../consts/auth';
+import GoogleButton from '../../GoogleButton/GoogleButton';
 
 type LoginFormProps = {
     onClose?: () => void;
     onSubmit: (data: AuthResponse) => void;
-    // onGoogleLogin?: () => void;
     onRegisterClick?: () => void;
-    googleClientId?: string;
 };
 
 type LoginFormData = LoginData;
 
-const LoginForm: React.FC<LoginFormProps> = ({
-    onClose,
-    onSubmit,
-    // onGoogleLogin,
-    onRegisterClick,
-    googleClientId,
-}) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSubmit, onRegisterClick }) => {
     const alert = useAlert();
     const {
         register,
@@ -51,25 +43,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
     });
     const loginMutation = useAuthLoginMutation();
 
-    // const { signInWithGoogle, isLoading: isGoogleLoading } = useGoogleAuth({
-    //     onSuccess: onSubmit,
-    //     clientId: googleClientId,
-    // });
-
     const onFormSubmit = (data: LoginFormData) => {
         loginMutation.mutate(data);
-    };
-
-    const navigate = useNavigate();
-
-    const handleGoogleLogin = () => {
-        // if (onGoogleLogin) {
-        //     onGoogleLogin();
-        // } else {
-        //     signInWithGoogle();
-        // }
-        // navigate(AUTH.redirectUrl);
-        // window.location.
     };
 
     // Обработка успешного логина
@@ -147,13 +122,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     </Text>
                     <div className={styles.separatorLine} />
                 </div>
-
-                <Button variant='secondary' href={AUTH.redirectUrl} className={styles.googleButton}>
-                    <GoogleIcon />
-                    <Text variant='body-s' className={styles.googleButtonText}>
-                        Log in with Google
-                    </Text>
-                </Button>
+                <GoogleButton href={AUTH.redirectUrl}>Log in with Google</GoogleButton>
 
                 <div className={styles.signInPrompt}>
                     <Text variant='small' className={styles.signInText}>

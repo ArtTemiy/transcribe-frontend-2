@@ -17,6 +17,7 @@ import styles from './index.module.scss';
 import { useAlert } from '../../Alert';
 import { isAxiosError } from 'axios';
 import { AUTH } from '../../../../consts/auth';
+import GoogleButton from '../../GoogleButton/GoogleButton';
 
 type RegisterFormProps = {
     onClose?: () => void;
@@ -170,12 +171,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose, onSubmit, onSignIn
                     <div className={styles.separatorLine} />
                 </div>
 
-                <Button variant='secondary' href={AUTH.redirectUrl} className={styles.googleButton}>
-                    <GoogleIcon />
-                    <Text variant='body-s' className={styles.googleButtonText}>
-                        Sign up with Google
-                    </Text>
-                </Button>
+                <GoogleButton href={AUTH.redirectUrl}>Sign up with Google</GoogleButton>
 
                 <div className={styles.signInPrompt}>
                     <Text variant='small' className={styles.signInText}>

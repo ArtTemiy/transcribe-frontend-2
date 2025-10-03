@@ -25,7 +25,7 @@ interface ButtonAsLink extends BaseButtonProps, Omit<ComponentProps<typeof Link>
     disabled?: boolean;
 }
 
-type ButtonProps = ButtonAsButton | ButtonAsLink;
+export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const VARIANT_CLASSES = {
     primary: styles.primary,

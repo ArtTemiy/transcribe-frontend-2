@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 
 // Icons
 import CrossIcon from '@/../src/icons/cross.svg';
@@ -38,20 +38,20 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
 
     const alert = useAlert();
 
-    const getStateIcon = useCallback(() => {
+    const StateIcon = useMemo(() => {
         if (file.passwordState !== undefined && file.passwordState.correct === undefined) {
-            return <LockedIcon />;
+            return LockedIcon;
         }
         switch (file.state) {
             case 'loading':
-                return <LoadingSpinner />;
+                return LoadingSpinner;
             case 'loaded':
             case 'uploading':
-                return <LoadedIcon />;
+                return LoadedIcon;
             case 'uploaded':
-                return <UploadedIcon />;
+                return UploadedIcon;
             case 'error':
-                return <ErrorIcon />;
+                return ErrorIcon;
         }
     }, [file]);
 
@@ -74,13 +74,6 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
         if (file.state === 'loading') {
             setTimeout(
                 () =>
-                    // {
-                    //     alert.showError('Ur file is fuuuu', {
-                    //         autoHide: 5000,
-                    //     });
-                    //     removeFile(file);
-                    // },
-
                     updateFile({
                         ...file,
                         state: 'loaded',
@@ -108,42 +101,56 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
     }, [file, uploadMutation, updateFile]);
 
     return (
-        <div className={classNames(styles.fileLoader)}>
-            <div className={styles.state}>
-                {getStateIcon()}
-                <div className={styles.fileInfo}>
-                    <Text variant='body-s'>{file.file.name}</Text>
-                    <Text variant='caption' typColor='light'>
-                        {formatSize(file.file.size)}
-                        {/* {pagesCount && <>, {pagesCount} pages</>} */}
-                    </Text>
-                    {file.error && (
-                        <Text variant='small' typColor='alarm'>
-                            {file.error}
+        <div className={classNames('p-2 p-md-4 align-items-md-center', styles.fileLoader)}>
+            <div
+                className={classNames(
+                    styles.contentContainer,
+                    'd-flex flex-column flex-md-row align-items-md-center',
+                )}
+            >
+                <div className={styles.content__state}>
+                    <StateIcon style={{ width: '40px', flexShrink: 0 }} />
+                    <div className={styles.content__state__fileInfo}>
+                        <Text variant='body-s' className={styles.content__state__fileInfo__name}>
+                            {file.file.name}
                         </Text>
+                        <Text variant='small' typColor='light'>
+                            {formatSize(file.file.size)};
+                            {/* {pagesCount && <>, {pagesCount} pages</>} */}
+                        </Text>
+                        {file.error && (
+                            <Text variant='small' typColor='alarm'>
+                                {file.error}
+                            </Text>
+                        )}
+                    </div>
+                </div>
+                <div className={styles.actions}>
+                    {(file.state === 'loading' ||
+                        file.state === 'loaded' ||
+                        file.state === 'error') && (
+                        <Button
+                            rightIcon={<ExcelBold />}
+                            onClick={sendFile}
+                            disabled={file.state === 'loading'}
+                        >
+                            Convert to Excel
+                        </Button>
                     )}
+                    {file.state === 'uploading' && (
+                        <Button rightIcon={<LoadingSpinner color='white' />}>Converting...</Button>
+                    )}
+                    {file.state === 'uploaded' && (
+                        <Button rightIcon={<DownloadIcon />} onClick={downloadFile}>
+                            Download CSV
+                        </Button>
+                    )}
+                    {/* <ButtonBase onClick={() => removeFile(file)}>
+                        <CrossIcon />
+                    </ButtonBase> */}
                 </div>
             </div>
-            <div className={styles.actions}>
-                {(file.state === 'loading' ||
-                    file.state === 'loaded' ||
-                    file.state === 'error') && (
-                    <Button
-                        rightIcon={<ExcelBold />}
-                        onClick={sendFile}
-                        disabled={file.state === 'loading'}
-                    >
-                        Convert to Excel
-                    </Button>
-                )}
-                {file.state === 'uploading' && (
-                    <Button rightIcon={<LoadingSpinner color='white' />}>Converting...</Button>
-                )}
-                {file.state === 'uploaded' && (
-                    <Button rightIcon={<DownloadIcon />} onClick={downloadFile}>
-                        Download CSV
-                    </Button>
-                )}
+            <div className={classNames(styles.closeContainer)}>
                 <ButtonBase onClick={() => removeFile(file)}>
                     <CrossIcon />
                 </ButtonBase>
