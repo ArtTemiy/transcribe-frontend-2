@@ -56,6 +56,11 @@
 .actions {
     display: flex;
     justify-content: center;
+    gap: 10px;
+}
+
+.passwordInput {
+    font-size: $font-size-14;
 }
 
 .stateIcon {

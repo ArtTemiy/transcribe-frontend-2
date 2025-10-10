@@ -1,7 +1,8 @@
 import classNames from 'classnames';
-import React, { useEffect, useCallback, useMemo, useState } from 'react';
-
+import { useEffect, useCallback, useMemo, useState } from 'react';
 // Icons
+import { useForm } from 'react-hook-form';
+
 import CrossIcon from '@/../src/icons/cross.svg';
 import DownloadIcon from '@/../src/icons/download.svg';
 import ErrorIcon from '@/../src/icons/files/error.svg';
@@ -16,9 +17,10 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Text } from '@/components/ui/Text';
 import { useFilesContext, type UserFile } from '@/context/FilesContext';
 import { useConvertFilesMutation } from '@/mutations/files/convertFile';
-import { usePageCounter } from '@/utils/pageCounter';
+import { procesFile } from '~/utils/fileProcessor';
 
 import { formatSize } from '../../../../utils/formatSize';
+import TextInput from '../../input/TextInput/TextInput';
 
 import styles from './style.module.scss';
 
@@ -27,7 +29,6 @@ type FileLoaderProps = {
 };
 
 const FileView: React.FC<FileLoaderProps> = ({ file }) => {
-    const { countPages } = usePageCounter();
     const [pagesCount, setPagesCount] = useState<number | undefined>(undefined);
     const { updateFile, removeFile } = useFilesContext();
 
@@ -65,28 +66,103 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
         open(`/api/v1/download/${uploadMutation.data}`, '_blank');
     }, [uploadMutation]);
 
-    // Подсчет страниц и симуляция загрузки файла
+    const { register, getValues } = useForm<{ password: string }>({
+        defaultValues: { password: '' },
+    });
+    const checkPassword = useCallback(async () => {
+        try {
+            const checkResult = await procesFile(file.file, getValues('password'));
+            if (checkResult.passwordValid) {
+                updateFile({
+                    ...file,
+                    state: 'loaded',
+                    passwordState: {
+                        password: getValues('password'),
+                        correct: true,
+                    },
+                });
+            } else {
+                updateFile({
+                    ...file,
+                    state: 'error',
+                    error: 'Incorrect password',
+                });
+            }
+        } catch (error) {
+            updateFile({
+                ...file,
+                state: 'error',
+                error: String(error),
+            });
+        }
+    }, [file, getValues, updateFile]);
+
+    // Подсчет страниц и обработка паролей
     useEffect(() => {
         (async () => {
             if (file.state === 'loading') {
                 try {
-                    setPagesCount(await countPages(file.file));
-                    updateFile({
-                        ...file,
-                        state: 'loaded',
-                    });
+                    const password = file.passwordState?.password;
+                    const fileInfo = await procesFile(file.file, password);
+
+                    setPagesCount(fileInfo.pages);
+
+                    if (fileInfo.hasPassword) {
+                        if (fileInfo.passwordValid === false) {
+                            // Неверный пароль
+                            updateFile({
+                                ...file,
+                                state: 'error',
+                                error: 'Неверный пароль',
+                                passwordState: file.passwordState
+                                    ? {
+                                          ...file.passwordState,
+                                          correct: false,
+                                      }
+                                    : undefined,
+                            });
+                        } else if (fileInfo.passwordValid === undefined && !password) {
+                            // Файл защищен паролем, но пароль не предоставлен
+                            updateFile({
+                                ...file,
+                                state: 'loaded',
+                                passwordState: {
+                                    password: '',
+                                    correct: undefined,
+                                },
+                            });
+                        } else {
+                            // Пароль правильный
+                            updateFile({
+                                ...file,
+                                state: 'loaded',
+                                passwordState: file.passwordState
+                                    ? {
+                                          ...file.passwordState,
+                                          correct: true,
+                                      }
+                                    : undefined,
+                            });
+                        }
+                    } else {
+                        // Файл не защищен паролем
+                        updateFile({
+                            ...file,
+                            state: 'loaded',
+                        });
+                    }
                 } catch (error) {
-                    console.error('Failed to count pages', error);
+                    console.error('Failed to process file', error);
 
                     updateFile({
                         ...file,
                         state: 'error',
-                        error: 'Failed to count pages',
+                        error: 'Не удалось обработать файл',
                     });
                 }
             }
         })();
-    }, [file, updateFile, removeFile, alert, countPages]);
+    }, [file, updateFile, removeFile, alert]);
 
     useEffect(() => {
         if (file.state === 'uploading') {
@@ -125,7 +201,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                             {formatSize(file.file.size)}
                             {pagesCount && pagesCount > 0 && <>, {pagesCount} Pages</>}
                         </Text>
-                        {file.error && (
+                        {file.state === 'error' && file.error && (
                             <Text variant='small' typColor='alarm'>
                                 {file.error}
                             </Text>
@@ -133,17 +209,31 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                     </div>
                 </div>
                 <div className={styles.actions}>
+                    {file.passwordState && !file.passwordState.correct && (
+                        <>
+                            <TextInput
+                                type='password'
+                                placeholder='Password'
+                                {...register('password')}
+                                className={styles.passwordInput}
+                            />
+                            <Button variant='primary' onClick={checkPassword}>
+                                Submit
+                            </Button>
+                        </>
+                    )}
                     {(file.state === 'loading' ||
                         file.state === 'loaded' ||
-                        file.state === 'error') && (
-                        <Button
-                            rightIcon={<ExcelBold />}
-                            onClick={sendFile}
-                            disabled={file.state === 'loading'}
-                        >
-                            Convert to Excel
-                        </Button>
-                    )}
+                        file.state === 'error') &&
+                        (file.passwordState === undefined || file.passwordState.correct) && (
+                            <Button
+                                rightIcon={<ExcelBold />}
+                                onClick={sendFile}
+                                disabled={file.state === 'loading'}
+                            >
+                                Convert to Excel
+                            </Button>
+                        )}
                     {file.state === 'uploading' && (
                         <Button rightIcon={<LoadingSpinner color='white' />}>Converting...</Button>
                     )}

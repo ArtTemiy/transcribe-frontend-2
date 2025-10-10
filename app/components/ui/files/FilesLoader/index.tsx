@@ -1,3 +1,4 @@
+import { isAxiosError } from 'axios';
 import React, { useState, useEffect, useCallback } from 'react';
 
 import DownloadIcon from '@/../src/icons/download.svg';
@@ -8,6 +9,7 @@ import { useConvertFilesMutation } from '@/mutations/files/convertFile';
 
 // Icons
 
+import { useAlert } from '../../Alert';
 import LoadingSpinner from '../../LoadingSpinner';
 
 // import { Document } from "react-pdf";
@@ -19,6 +21,7 @@ type FilesLoaderProps = object;
 const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
     // const [requestId, setRequestId] = useState<string | undefined>(undefined);
     const { files } = useFilesContext();
+    const alert = useAlert();
 
     const [state, setState] = useState<FilesLoaderState>('preparing');
     const uploadMutation = useConvertFilesMutation('all');
@@ -32,8 +35,17 @@ const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
         open(`/api/v1/download/${uploadMutation.data}`, '_blank');
     }, [uploadMutation]);
 
+    // Обновление стейта на обновлении файлов
     useEffect(() => {
         if (files.filter(file => ['error', 'loading'].includes(file.state)).length > 0) {
+            setState('preparing');
+            return;
+        }
+        if (
+            files.filter(
+                file => file.passwordState !== undefined && file.passwordState.correct !== true,
+            ).length > 0
+        ) {
             setState('preparing');
             return;
         }
@@ -41,13 +53,23 @@ const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
         setState(state => (state === 'uploaded' ? state : 'prepared'));
     }, [setState, files]);
 
+    // Обновление стейта на обновлении мутации
     useEffect(() => {
+        if (state !== 'uploading') {
+            return;
+        }
         if (uploadMutation.isSuccess) {
             setState(state => (state === 'uploading' ? 'uploaded' : state));
         } else if (uploadMutation.isError) {
-            // TODO:
+            const error = uploadMutation.error;
+            alert.showError(
+                isAxiosError(error)
+                    ? error.response?.data?.message || 'Unkown Error'
+                    : 'Unkown Error',
+            );
+            setState('prepared');
         }
-    }, [uploadMutation]);
+    }, [alert, state, uploadMutation]);
 
     return (
         <div>

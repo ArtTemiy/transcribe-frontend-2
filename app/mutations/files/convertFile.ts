@@ -24,6 +24,9 @@ export const useConvertFilesMutation = (key: string) => {
             const fileUploadTasks = files.map(async file => {
                 const formData = new FormData();
                 formData.append('file', file.file);
+                if (file.passwordState?.password) {
+                    formData.append('password', file.passwordState?.password);
+                }
 
                 const response = await apiClient.post('/upload', formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
