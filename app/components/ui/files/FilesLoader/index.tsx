@@ -10,6 +10,7 @@ import { useConvertFilesMutation } from '@/mutations/files/convertFile';
 // Icons
 
 import { useAlert } from '../../Alert';
+import Flex from '../../Flex';
 import LoadingSpinner from '../../LoadingSpinner';
 
 // import { Document } from "react-pdf";
@@ -72,7 +73,7 @@ const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
     }, [alert, state, uploadMutation]);
 
     return (
-        <div>
+        <Flex direction='column' className=''>
             {(state === 'preparing' || state === 'prepared') && (
                 <Button
                     rightIcon={<ExcelBold />}
@@ -90,7 +91,7 @@ const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
                     Download CSV
                 </Button>
             )}
-        </div>
+        </Flex>
     );
 };
 

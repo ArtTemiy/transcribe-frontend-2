@@ -1,3 +1,4 @@
+import { isAxiosError } from 'axios';
 import classNames from 'classnames';
 import { useEffect, useCallback, useMemo, useState } from 'react';
 // Icons
@@ -172,10 +173,15 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                     state: 'uploaded',
                 });
             } else if (uploadMutation.isError) {
+                let msg = 'Error while loading';
+                const error = uploadMutation.error;
+                if (isAxiosError(error)) {
+                    msg = (error.response?.data as { message?: string }).message || msg;
+                }
                 updateFile({
                     ...file,
                     state: 'error',
-                    error: uploadMutation.error.message,
+                    error: msg,
                 });
             }
         }
@@ -208,7 +214,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                         )}
                     </div>
                 </div>
-                <div className={styles.actions}>
+                <div className={classNames(styles.actions, 'flex-column flex-md-row')}>
                     {file.passwordState && !file.passwordState.correct && (
                         <>
                             <TextInput
