@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import type { PropsWithChildren } from 'react';
 
-import type { PropsWithClassName } from '~/types/helpers/PropsWithClassName';
+import type { PropsWithClassName } from '@/types/helpers/PropsWithClassName';
 
 import { getStyleClassName, type Style } from '../Text';
 

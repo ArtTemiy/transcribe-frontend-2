@@ -3,8 +3,8 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import LogoWgiteIcon from '@/../src/icons/logo_white.svg';
-import { Link } from '~/components/ui/Link';
-import { Text } from '~/components/ui/Text';
+import { Link } from '@/components/ui/Link';
+import { Text } from '@/components/ui/Text';
 
 import styles from './index.module.scss';
 

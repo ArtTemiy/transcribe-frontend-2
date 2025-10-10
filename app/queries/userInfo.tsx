@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 import type { UserInfo } from '@/types/UserInfo';
-import { apiClient } from '~/utils/apiClient';
+import { apiClient } from '@/utils/apiClient';
 
 type Response = {
     data?: UserInfo;

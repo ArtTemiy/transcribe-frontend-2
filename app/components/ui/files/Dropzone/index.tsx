@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React, { useCallback, useRef } from 'react';
 
-import FilesLoader from '~/components/ui/files/FilesLoader';
-import { FilesProvider, useFilesContext } from '~/context/FilesContext';
-import type { PropsWithClassName } from '~/types/helpers/PropsWithClassName';
+import FilesLoader from '@/components/ui/files/FilesLoader';
+import { FilesProvider, useFilesContext } from '@/context/FilesContext';
+import type { PropsWithClassName } from '@/types/helpers/PropsWithClassName';
 
 import FileView from '../FileView';
 

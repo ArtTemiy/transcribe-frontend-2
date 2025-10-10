@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 
 import CheckIcon from '@/../src/icons/features/PricingFeatureCheck.svg';
-import { Button } from '~/components/ui/Button';
-import { Card } from '~/components/ui/Card';
-import { Text } from '~/components/ui/Text';
-import type { PricingPlan } from '~/types/PricingPlan';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Text } from '@/components/ui/Text';
+import type { PricingPlan } from '@/types/PricingPlan';
 
 import RoundLabel from '../RoundLabel';
 

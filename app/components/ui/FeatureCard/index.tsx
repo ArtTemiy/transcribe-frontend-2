@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Card } from '~/components/ui/Card';
-import { Text } from '~/components/ui/Text';
+import { Card } from '@/components/ui/Card';
+import { Text } from '@/components/ui/Text';
 
 import styles from './index.module.scss';
 

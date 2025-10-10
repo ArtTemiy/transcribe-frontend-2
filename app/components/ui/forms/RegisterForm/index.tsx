@@ -9,9 +9,9 @@ import ButtonBase from '@/components/ui/ButtonBase';
 import TextInput from '@/components/ui/input/TextInput/TextInput';
 import Link from '@/components/ui/Link';
 import { Text } from '@/components/ui/Text';
-import { useAuthRegisterMutation } from '~/mutations/auth/register';
-import type { AuthResponse } from '~/types/auth/authResponse';
-import type { RegisterData } from '~/types/auth/register';
+import { useAuthRegisterMutation } from '@/mutations/auth/register';
+import type { AuthResponse } from '@/types/auth/authResponse';
+import type { RegisterData } from '@/types/auth/register';
 
 import styles from './index.module.scss';
 import { useAlert } from '../../Alert';

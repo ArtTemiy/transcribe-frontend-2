@@ -6,7 +6,7 @@ import GlobalIcon from '@/../src/icons/features/global.svg';
 import SearchIcon from '@/../src/icons/features/search.svg';
 import SecureIcon from '@/../src/icons/features/secure.svg';
 import PricingSection from '@/components/ui/PricingSection';
-import { Text } from '~/components/ui/Text';
+import { Text } from '@/components/ui/Text';
 
 import { FeatureCard } from '../components/ui/FeatureCard';
 import { FeedbackCard } from '../components/ui/FeedbackCard';

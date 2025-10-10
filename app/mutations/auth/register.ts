@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
-import type { AuthResponse } from '~/types/auth/authResponse';
-import type { RegisterData } from '~/types/auth/register';
+import type { AuthResponse } from '@/types/auth/authResponse';
+import type { RegisterData } from '@/types/auth/register';
 
 export const useAuthRegisterMutation = () => {
     return useMutation({

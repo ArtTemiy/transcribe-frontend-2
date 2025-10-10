@@ -3,10 +3,10 @@ import React, { useCallback, useEffect } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
 import Logo from '@/../src/icons/logo.svg';
-import Button from '~/components/ui/Button';
-import { useAuthLogoutMutation } from '~/mutations/auth/logout';
-import { useUserInfoQuery } from '~/queries/userInfo';
-import type { AuthResponse } from '~/types/auth/authResponse';
+import Button from '@/components/ui/Button';
+import { useAuthLogoutMutation } from '@/mutations/auth/logout';
+import { useUserInfoQuery } from '@/queries/userInfo';
+import type { AuthResponse } from '@/types/auth/authResponse';
 
 import LoginForm from '../forms/LoginForm';
 import RegisterForm from '../forms/RegisterForm';

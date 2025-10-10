@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import type { AuthResponse } from '~/types/auth/authResponse';
+import type { AuthResponse } from '@/types/auth/authResponse';
 
 // Создаем экземпляр axios с базовой конфигурацией
 export const apiClient = axios.create({

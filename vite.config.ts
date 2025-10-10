@@ -19,5 +19,9 @@ export default defineConfig({
     },
     optimizeDeps: {
         exclude: ['msw'],
+        include: ['pdfjs-dist'],
+    },
+    ssr: {
+        external: ['pdfjs-dist'],
     },
 });

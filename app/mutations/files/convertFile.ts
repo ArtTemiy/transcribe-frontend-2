@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 
-import type { UserFile } from '~/context/FilesContext';
-import { apiClient } from '~/utils/apiClient';
+import type { UserFile } from '@/context/FilesContext';
+import { apiClient } from '@/utils/apiClient';
 
 export type UploadingFileResponse = {
     id: string;

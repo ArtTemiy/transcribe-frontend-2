@@ -3,8 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import DownloadIcon from '@/../src/icons/download.svg';
 import ExcelBold from '@/../src/icons/files/excel_bold.svg';
 import Button from '@/components/ui/Button';
-import { useFilesContext } from '~/context/FilesContext';
-import { useConvertFilesMutation } from '~/mutations/files/convertFile';
+import { useFilesContext } from '@/context/FilesContext';
+import { useConvertFilesMutation } from '@/mutations/files/convertFile';
 
 // Icons
 

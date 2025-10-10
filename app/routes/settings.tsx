@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 import { Container } from 'react-bootstrap';
 
-import Button from '~/components/ui/Button';
-import TextInput from '~/components/ui/input/TextInput/TextInput';
-import Link from '~/components/ui/Link';
-import { useModal } from '~/components/ui/Modal/useModal';
-import { Text } from '~/components/ui/Text';
-import { useUserInfoQuery } from '~/queries/userInfo';
+import Button from '@/components/ui/Button';
+import TextInput from '@/components/ui/input/TextInput/TextInput';
+import Link from '@/components/ui/Link';
+import { useModal } from '@/components/ui/Modal/useModal';
+import { Text } from '@/components/ui/Text';
+import { useUserInfoQuery } from '@/queries/userInfo';
 
 import styles from './settings.module.scss';
 import { useAlert } from '../context/AlertContext';

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
-import type { AuthResponse } from '~/types/auth/authResponse';
+import type { AuthResponse } from '@/types/auth/authResponse';
 
 export type GoogleAuthData = {
     token: string;
