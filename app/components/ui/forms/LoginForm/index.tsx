@@ -1,8 +1,8 @@
+import { isAxiosError } from 'axios';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import CrossIcon from '@/../src/icons/cross.svg';
-import GoogleIcon from '@/../src/icons/google.svg';
 import Logo from '@/../src/icons/logo.svg';
 import Button from '@/components/ui/Button';
 import ButtonBase from '@/components/ui/ButtonBase';
@@ -13,12 +13,11 @@ import { useAuthLoginMutation } from '@/mutations/auth/login';
 import type { AuthResponse } from '@/types/auth/authResponse';
 import type { LoginData } from '@/types/auth/login';
 
-import styles from './index.module.scss';
-import { useAlert } from '../../Alert';
-import { isAxiosError } from 'axios';
-import { useNavigate } from 'react-router';
 import { AUTH } from '../../../../consts/auth';
+import { useAlert } from '../../Alert';
 import GoogleButton from '../../GoogleButton/GoogleButton';
+
+import styles from './index.module.scss';
 
 type LoginFormProps = {
     onClose?: () => void;
@@ -64,7 +63,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSubmit, onRegisterClic
             }
             alert.showError(errorMessage, { autoHide: 2 });
         }
-    }, [loginMutation.isError, loginMutation.error, alert.showError]);
+    }, [loginMutation.isError, loginMutation.error, alert.showError, alert]);
 
     return (
         <div className={styles.container}>

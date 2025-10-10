@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo, useRef } from 'react';
+
 import { AlertContainer } from '../../components/ui/Alert/AlertContainer';
 
 // Определяем типы напрямую, чтобы избежать проблем с импортом
@@ -17,8 +18,8 @@ interface AlertItem extends Required<Omit<AlertConfig, 'icon'>> {
     show: boolean;
 }
 
-interface AlertContextType {
-    alerts: AlertItem[];
+// Разделяем контексты: один для методов (стабильный), другой для состояния
+interface AlertMethodsContextType {
     showAlert: (config: AlertConfig) => string;
     hideAlert: (id: string) => void;
     hideAllAlerts: () => void;
@@ -28,7 +29,12 @@ interface AlertContextType {
     showInfo: (message: string, options?: Omit<AlertConfig, 'message' | 'variant'>) => string;
 }
 
-const AlertContext = createContext<AlertContextType | undefined>(undefined);
+interface AlertStateContextType {
+    alerts: AlertItem[];
+}
+
+const AlertMethodsContext = createContext<AlertMethodsContextType | undefined>(undefined);
+const AlertStateContext = createContext<AlertStateContextType | undefined>(undefined);
 
 interface AlertProviderProps {
     children: React.ReactNode;
@@ -37,21 +43,22 @@ interface AlertProviderProps {
 
 export const AlertProvider: React.FC<AlertProviderProps> = ({ children, maxAlerts = 5 }) => {
     const [alerts, setAlerts] = useState<AlertItem[]>([]);
+    
+    // Используем useRef для стабильных методов
+    const setAlertsRef = useRef(setAlerts);
+    setAlertsRef.current = setAlerts;
 
     const generateId = useCallback(() => {
         return `alert-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     }, []);
 
-    const hideAlert = useCallback(
-        (id: string) => {
-            setAlerts(prev => prev.filter(alert => alert.id !== id));
-        },
-        [setAlerts],
-    );
+    const hideAlert = useCallback((id: string) => {
+        setAlertsRef.current(prev => prev.filter(alert => alert.id !== id));
+    }, []);
 
     const hideAllAlerts = useCallback(() => {
-        setAlerts([]);
-    }, [setAlerts]);
+        setAlertsRef.current([]);
+    }, []);
 
     const showAlert = useCallback(
         (config: AlertConfig) => {
@@ -61,21 +68,19 @@ export const AlertProvider: React.FC<AlertProviderProps> = ({ children, maxAlert
                 variant: config.variant || 'error',
                 message: config.message,
                 dismissible: config.dismissible !== false,
-                autoHide: config.autoHide,
+                autoHide: config.autoHide || 0,
                 position: config.position || 'top',
                 icon: config.icon,
                 show: true,
             };
 
-            setAlerts(prev => {
+            setAlertsRef.current(prev => {
                 const updated = [...prev, newAlert];
                 // Ограничиваем количество алертов
                 return updated.slice(-maxAlerts);
             });
 
             // Если задано автоскрытие, удаляем алерт через указанное время
-            console.log('create', id, newAlert);
-
             if (newAlert.autoHide) {
                 setTimeout(() => {
                     hideAlert(id);
@@ -84,10 +89,10 @@ export const AlertProvider: React.FC<AlertProviderProps> = ({ children, maxAlert
 
             return id;
         },
-        [generateId, maxAlerts, hideAlert, setAlerts],
+        [generateId, maxAlerts, hideAlert],
     );
 
-    // Удобные методы для разных типов алертов
+    // Удобные методы для разных типов алертов - стабильные
     const showError = useCallback(
         (message: string, options?: Omit<AlertConfig, 'message' | 'variant'>) => {
             return showAlert({ ...options, message, variant: 'error' });
@@ -116,9 +121,9 @@ export const AlertProvider: React.FC<AlertProviderProps> = ({ children, maxAlert
         [showAlert],
     );
 
-    const contextValue: AlertContextType = useMemo(
+    // Стабильные методы - не зависят от состояния alerts
+    const methodsValue = useMemo(
         () => ({
-            alerts,
             showAlert,
             hideAlert,
             hideAllAlerts,
@@ -127,31 +132,41 @@ export const AlertProvider: React.FC<AlertProviderProps> = ({ children, maxAlert
             showSuccess,
             showInfo,
         }),
-        [
+        [showAlert, hideAlert, hideAllAlerts, showError, showWarning, showSuccess, showInfo],
+    );
+
+    // Состояние - изменяется только при изменении alerts
+    const stateValue = useMemo(
+        () => ({
             alerts,
-            showAlert,
-            hideAlert,
-            hideAllAlerts,
-            showError,
-            showWarning,
-            showSuccess,
-            showInfo,
-        ],
+        }),
+        [alerts],
     );
 
     return (
-        <AlertContext.Provider value={contextValue}>
-            {children}
-            <AlertContainer alerts={alerts} onClose={hideAlert} maxAlerts={maxAlerts} />
-        </AlertContext.Provider>
+        <AlertMethodsContext.Provider value={methodsValue}>
+            <AlertStateContext.Provider value={stateValue}>
+                {children}
+                <AlertContainer alerts={[]} onClose={hideAlert} maxAlerts={maxAlerts} />
+            </AlertStateContext.Provider>
+        </AlertMethodsContext.Provider>
     );
 };
 
-// Хук для использования контекста алертов
+// Хук для использования методов алертов (не вызывает перерендер при изменении состояния)
 export const useAlert = () => {
-    const context = useContext(AlertContext);
+    const context = useContext(AlertMethodsContext);
     if (context === undefined) {
         throw new Error('useAlert must be used within an AlertProvider');
+    }
+    return context;
+};
+
+// Хук для использования состояния алертов (только для компонентов, которые отображают алерты)
+export const useAlertState = () => {
+    const context = useContext(AlertStateContext);
+    if (context === undefined) {
+        throw new Error('useAlertState must be used within an AlertProvider');
     }
     return context;
 };

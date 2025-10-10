@@ -18,17 +18,13 @@ import { useFilesContext, type UserFile } from '@/context/FilesContext';
 import { useConvertFilesMutation } from '@/mutations/files/convertFile';
 import { usePageCounter } from '@/utils/pageCounter';
 
+import { formatSize } from '../../../../utils/formatSize';
+
 import styles from './style.module.scss';
 
 type FileLoaderProps = {
     file: UserFile;
 };
-
-function formatSize(size: number) {
-    if (size > 1024 * 1024) return (size / 1024 / 1024).toFixed(1) + ' MB';
-    if (size > 1024) return (size / 1024).toFixed(1) + ' KB';
-    return size + ' B';
-}
 
 const FileView: React.FC<FileLoaderProps> = ({ file }) => {
     const { countPages } = usePageCounter();

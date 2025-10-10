@@ -6,21 +6,26 @@ import { Card } from '@/components/ui/Card';
 import { Text } from '@/components/ui/Text';
 import type { PricingPlan } from '@/types/PricingPlan';
 
+import { useChoosePlanMutation } from '../../../mutations/payments/choosePlan';
 import RoundLabel from '../RoundLabel';
 
 import styles from './PricingCard.module.scss';
-import { useChoosePlanMutation } from '../../../mutations/payments/choosePlan';
 
 export interface PricingCardProps {
     pricingInfo: PricingPlan;
     isCurrent?: boolean;
+    handleChooseOverride?: () => void;
 }
 
-export const PricingCard: React.FC<PricingCardProps> = ({ pricingInfo, isCurrent = false }) => {
+export const PricingCard: React.FC<PricingCardProps> = ({
+    pricingInfo,
+    isCurrent = false,
+    handleChooseOverride,
+}) => {
     const paymentMutation = useChoosePlanMutation(pricingInfo);
     const handlePlanChoose = useCallback(() => {
         paymentMutation.mutate();
-    }, []);
+    }, [paymentMutation]);
     return (
         <Card className={isCurrent ? styles.pricingCardCurrent : styles.pricingCard}>
             <div className={styles.content}>
@@ -54,8 +59,8 @@ export const PricingCard: React.FC<PricingCardProps> = ({ pricingInfo, isCurrent
                 <Button
                     fullWidth
                     variant={pricingInfo.recommended ? 'primary' : 'secondary'}
-                    onClick={handlePlanChoose}
-                    disabled={isCurrent}
+                    onClick={handleChooseOverride || handlePlanChoose}
+                    disabled={isCurrent || paymentMutation.isPending}
                 >
                     {pricingInfo.buttonText}
                 </Button>

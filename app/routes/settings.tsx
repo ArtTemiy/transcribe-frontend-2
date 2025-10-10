@@ -8,8 +8,10 @@ import { useModal } from '@/components/ui/Modal/useModal';
 import { Text } from '@/components/ui/Text';
 import { useUserInfoQuery } from '@/queries/userInfo';
 
-import styles from './settings.module.scss';
+import FeedbackForm from '../components/ui/FeedbackForm';
 import { useAlert } from '../context/AlertContext';
+
+import styles from './settings.module.scss';
 
 const Page = () => {
     const userInfoQ = useUserInfoQuery();
@@ -47,7 +49,15 @@ const Page = () => {
                 Send review
             </Button>
             <reviewModal.Component>
-                <div>TODO</div>
+                <FeedbackForm
+                    onClose={reviewModal.closeModal}
+                    header='Share Your Feedback'
+                    messageSettings={{
+                        title: 'Your Feedback',
+                        placeholder: 'Share your experience working with us...',
+                    }}
+                    withFiles
+                />
             </reviewModal.Component>
         </Container>
     );

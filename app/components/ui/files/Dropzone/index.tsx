@@ -5,11 +5,11 @@ import FilesLoader from '@/components/ui/files/FilesLoader';
 import { FilesProvider, useFilesContext } from '@/context/FilesContext';
 import type { PropsWithClassName } from '@/types/helpers/PropsWithClassName';
 
+import { useAlert } from '../../Alert';
 import FileView from '../FileView';
 
 import { EmptyContent } from './EmptyContent';
 import styles from './index.module.scss';
-import { useAlert } from '../../Alert';
 
 type DropzoneProps = PropsWithClassName & {};
 
@@ -36,7 +36,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({ className }: DropzoneProps) 
                 addFile(pdfFiles);
             }
         },
-        [files, filterPdfFiles, addFile],
+        [filterPdfFiles, files.length, alert, addFile],
     );
 
     const handleDrop = useCallback(

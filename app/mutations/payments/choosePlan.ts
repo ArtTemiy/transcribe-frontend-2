@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { apiClient } from '../../utils/apiClient';
+import { isAxiosError } from 'axios';
+
 import { useAlert } from '../../context/AlertContext';
 import type { PricingPlan } from '../../types/PricingPlan';
-import { isAxiosError } from 'axios';
+import { apiClient } from '../../utils/apiClient';
 
 type CheckoutSessionResponse = {
     checkout_url: string;
@@ -12,7 +12,6 @@ type CheckoutSessionResponse = {
 
 export const useChoosePlanMutation = (plan: PricingPlan) => {
     const alert = useAlert();
-    const navigate = useNavigate();
     const mutation = useMutation({
         mutationKey: ['choosePlan', plan.key],
         mutationFn: async () => {
@@ -27,7 +26,7 @@ export const useChoosePlanMutation = (plan: PricingPlan) => {
             if (isAxiosError(error)) {
                 errorMessage = error.response?.data?.message || 'Unknown Error';
             }
-            alert.showError(errorMessage, { autoHide: 2 });
+            alert.showError(errorMessage, { autoHide: 10 });
         },
     });
     return mutation;

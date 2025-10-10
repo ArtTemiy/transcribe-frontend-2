@@ -1,0 +1,199 @@
+@use '../../../styles/variables.scss' as *;
+
+// Base flex styles
+.flex {
+    display: flex;
+}
+
+.inlineFlex {
+    display: inline-flex;
+}
+
+// Flex Direction
+.directionRow {
+    flex-direction: row;
+}
+
+.directionRowReverse {
+    flex-direction: row-reverse;
+}
+
+.directionColumn {
+    flex-direction: column;
+}
+
+.directionColumnReverse {
+    flex-direction: column-reverse;
+}
+
+// Justify Content (main axis)
+.justifyStart {
+    justify-content: flex-start;
+}
+
+.justifyEnd {
+    justify-content: flex-end;
+}
+
+.justifyCenter {
+    justify-content: center;
+}
+
+.justifyBetween {
+    justify-content: space-between;
+}
+
+.justifyAround {
+    justify-content: space-around;
+}
+
+.justifyEvenly {
+    justify-content: space-evenly;
+}
+
+// Align Items (cross axis)
+.alignStart {
+    align-items: flex-start;
+}
+
+.alignEnd {
+    align-items: flex-end;
+}
+
+.alignCenter {
+    align-items: center;
+}
+
+.alignBaseline {
+    align-items: baseline;
+}
+
+.alignStretch {
+    align-items: stretch;
+}
+
+// Align Content (for multi-line flex containers)
+.alignContentStart {
+    align-content: flex-start;
+}
+
+.alignContentEnd {
+    align-content: flex-end;
+}
+
+.alignContentCenter {
+    align-content: center;
+}
+
+.alignContentBetween {
+    align-content: space-between;
+}
+
+.alignContentAround {
+    align-content: space-around;
+}
+
+.alignContentEvenly {
+    align-content: space-evenly;
+}
+
+.alignContentStretch {
+    align-content: stretch;
+}
+
+// Flex Wrap
+.wrapNowrap {
+    flex-wrap: nowrap;
+}
+
+.wrapWrap {
+    flex-wrap: wrap;
+}
+
+.wrapWrapReverse {
+    flex-wrap: wrap-reverse;
+}
+
+// Gap (both row and column)
+.gapNone {
+    gap: 0;
+}
+
+.gapXs {
+    gap: $spacing-0-5; // 4px
+}
+
+.gapSm {
+    gap: $spacing-1; // 8px
+}
+
+.gapMd {
+    gap: $spacing-2; // 16px
+}
+
+.gapLg {
+    gap: $spacing-3; // 24px
+}
+
+.gapXl {
+    gap: $spacing-30; // 30px
+}
+
+// Gap X (column gap)
+.gapXNone {
+    column-gap: 0;
+}
+
+.gapXXs {
+    column-gap: $spacing-0-5; // 4px
+}
+
+.gapXSm {
+    column-gap: $spacing-1; // 8px
+}
+
+.gapXMd {
+    column-gap: $spacing-2; // 16px
+}
+
+.gapXLg {
+    column-gap: $spacing-3; // 24px
+}
+
+.gapXXl {
+    column-gap: $spacing-30; // 30px
+}
+
+// Gap Y (row gap)
+.gapYNone {
+    row-gap: 0;
+}
+
+.gapYXs {
+    row-gap: $spacing-0-5; // 4px
+}
+
+.gapYSm {
+    row-gap: $spacing-1; // 8px
+}
+
+.gapYMd {
+    row-gap: $spacing-2; // 16px
+}
+
+.gapYLg {
+    row-gap: $spacing-3; // 24px
+}
+
+.gapYXl {
+    row-gap: $spacing-30; // 30px
+}
+
+// Size utilities
+.fullWidth {
+    width: 100%;
+}
+
+.fullHeight {
+    height: 100%;
+}

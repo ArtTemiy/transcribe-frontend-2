@@ -1,0 +1,106 @@
+@use '../../../../styles/variables.scss' as *;
+
+.fieldWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.textareaContainer {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    border: 1px solid $color-grey-light;
+    border-radius: $radius-md;
+    padding: 10px 12px;
+    transition: border-color 0.2s;
+
+    &:focus-within {
+        border-color: $color-blue;
+    }
+
+    &:hover:not(.error) {
+        border-color: $color-blue-hover;
+    }
+}
+
+.textarea {
+    width: 100%;
+    border: none;
+    background: $color-white;
+    font-family: $font-inter;
+    font-size: $font-size-12;
+    line-height: 1.5;
+    color: $color-black;
+    outline: none;
+    resize: vertical;
+    min-height: 4.5em; // 3 строки по 1.5em
+
+    &::placeholder {
+        color: $color-grey-light;
+        opacity: 1;
+    }
+
+    &:disabled {
+        background: $color-grey-bg;
+        color: $color-grey-light;
+        cursor: not-allowed;
+        resize: none;
+    }
+
+    // Убираем стандартные стили скроллбара в WebKit браузерах
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $color-grey-light;
+        border-radius: 3px;
+
+        &:hover {
+            background: $color-grey;
+        }
+    }
+}
+
+.error {
+    border-color: $color-error;
+
+    &:focus-within {
+        border-color: $color-error;
+    }
+
+    &:hover {
+        border-color: $color-error-hover;
+    }
+}
+
+// Дополнительные утилитарные классы для resize
+.resizeNone {
+    .textarea {
+        resize: none;
+    }
+}
+
+.resizeVertical {
+    .textarea {
+        resize: vertical;
+    }
+}
+
+.resizeHorizontal {
+    .textarea {
+        resize: horizontal;
+    }
+}
+
+.resizeBoth {
+    .textarea {
+        resize: both;
+    }
+}
