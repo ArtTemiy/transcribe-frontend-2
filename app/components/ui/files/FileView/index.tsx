@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo, useState } from 'react';
 
 // Icons
 import CrossIcon from '@/../src/icons/cross.svg';
@@ -9,16 +9,16 @@ import ExcelBold from '@/../src/icons/files/excel_bold.svg';
 import LoadedIcon from '@/../src/icons/files/loaded.svg';
 import LockedIcon from '@/../src/icons/files/locked.svg';
 import UploadedIcon from '@/../src/icons/files/uploaded.svg';
-import { useFilesContext, type UserFile } from '~/context/FilesContext';
-import { useConvertFilesMutation } from '~/mutations/files/convertFile';
-
-import Button from '../../Button';
-import ButtonBase from '../../ButtonBase';
-import LoadingSpinner from '../../LoadingSpinner';
-import { Text } from '../../Text';
+import { useAlert } from '@/components/ui/Alert';
+import Button from '@/components/ui/Button';
+import ButtonBase from '@/components/ui/ButtonBase';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { Text } from '@/components/ui/Text';
+import { useFilesContext, type UserFile } from '@/context/FilesContext';
+import { useConvertFilesMutation } from '@/mutations/files/convertFile';
+import { usePageCounter } from '@/utils/pageCounter';
 
 import styles from './style.module.scss';
-import { useAlert } from '../../Alert';
 
 type FileLoaderProps = {
     file: UserFile;
@@ -31,7 +31,8 @@ function formatSize(size: number) {
 }
 
 const FileView: React.FC<FileLoaderProps> = ({ file }) => {
-    // const [pagesCount, setPagesCount] = useState<number | undefined>(undefined);
+    const { countPages } = usePageCounter();
+    const [pagesCount, setPagesCount] = useState<number | undefined>(undefined);
     const { updateFile, removeFile } = useFilesContext();
 
     const uploadMutation = useConvertFilesMutation(file.id);
@@ -44,7 +45,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
         }
         switch (file.state) {
             case 'loading':
-                return LoadingSpinner;
+                return () => <LoadingSpinner size='large' className={styles.stateIcon} />;
             case 'loaded':
             case 'uploading':
                 return LoadedIcon;
@@ -68,20 +69,28 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
         open(`/api/v1/download/${uploadMutation.data}`, '_blank');
     }, [uploadMutation]);
 
-    // Симуляция загрузки файла
+    // Подсчет страниц и симуляция загрузки файла
     useEffect(() => {
-        // TODO: Any logic here? Maybe count pages?
-        if (file.state === 'loading') {
-            setTimeout(
-                () =>
+        (async () => {
+            if (file.state === 'loading') {
+                try {
+                    setPagesCount(await countPages(file.file));
                     updateFile({
                         ...file,
                         state: 'loaded',
-                    }),
-                1000,
-            );
-        }
-    }, [file, updateFile, removeFile, alert]);
+                    });
+                } catch (error) {
+                    console.error('Failed to count pages', error);
+
+                    updateFile({
+                        ...file,
+                        state: 'error',
+                        error: 'Failed to count pages',
+                    });
+                }
+            }
+        })();
+    }, [file, updateFile, removeFile, alert, countPages]);
 
     useEffect(() => {
         if (file.state === 'uploading') {
@@ -109,14 +118,16 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                 )}
             >
                 <div className={styles.content__state}>
-                    <StateIcon style={{ width: '40px', flexShrink: 0 }} />
+                    <div className={styles.stateIcon}>
+                        <StateIcon />
+                    </div>
                     <div className={styles.content__state__fileInfo}>
                         <Text variant='body-s' className={styles.content__state__fileInfo__name}>
                             {file.file.name}
                         </Text>
                         <Text variant='small' typColor='light'>
-                            {formatSize(file.file.size)};
-                            {/* {pagesCount && <>, {pagesCount} pages</>} */}
+                            {formatSize(file.file.size)}
+                            {pagesCount && pagesCount > 0 && <>, {pagesCount} Pages</>}
                         </Text>
                         {file.error && (
                             <Text variant='small' typColor='alarm'>
@@ -145,9 +156,6 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                             Download CSV
                         </Button>
                     )}
-                    {/* <ButtonBase onClick={() => removeFile(file)}>
-                        <CrossIcon />
-                    </ButtonBase> */}
                 </div>
             </div>
             <div className={classNames(styles.closeContainer)}>
