@@ -15,12 +15,14 @@ export interface PricingCardProps {
     pricingInfo: PricingPlan;
     isCurrent?: boolean;
     handleChooseOverride?: () => void;
+    disabled: boolean;
 }
 
 export const PricingCard: React.FC<PricingCardProps> = ({
     pricingInfo,
     isCurrent = false,
     handleChooseOverride,
+    disabled = false,
 }) => {
     const paymentMutation = useChoosePlanMutation(pricingInfo);
     const handlePlanChoose = useCallback(() => {
@@ -60,7 +62,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                     fullWidth
                     variant={pricingInfo.recommended ? 'primary' : 'secondary'}
                     onClick={handleChooseOverride || handlePlanChoose}
-                    disabled={isCurrent || paymentMutation.isPending}
+                    disabled={disabled || isCurrent || paymentMutation.isPending}
                 >
                     {pricingInfo.buttonText}
                 </Button>

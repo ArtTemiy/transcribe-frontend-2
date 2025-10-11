@@ -77,12 +77,12 @@ const NavBar: React.FC = () => {
                         <Nav className='mx-auto gap-4 mb-5 mb-lg-0 mt-4 mt-lg-0'>
                             {userInfoQuery.data?.data !== undefined && (
                                 <Nav.Item className={styles.navlink}>
-                                    <Link variant='body-s' href='/pages'>
+                                    <Text variant='body-s'>
                                         Pages{' '}
                                         <RoundLabel variant='caption'>
                                             {userInfoQuery.data.data.pages}
                                         </RoundLabel>
-                                    </Link>
+                                    </Text>
                                 </Nav.Item>
                             )}
                             {menuItems.map(item => (

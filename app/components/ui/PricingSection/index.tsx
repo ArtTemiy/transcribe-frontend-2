@@ -24,6 +24,13 @@ const PricingSection = () => {
         [contactUsModal],
     );
 
+    const isDisabled = useCallback(
+        (pricingInfo: PricingPlan) => {
+            return pricingInfo.key !== 'enterprise' && userInfoQuery.data?.data === undefined;
+        },
+        [userInfoQuery.data?.data],
+    );
+
     return (
         <>
             <Row className='gx-0 gx-md-3 gy-3'>
@@ -33,6 +40,7 @@ const PricingSection = () => {
                             pricingInfo={plan}
                             isCurrent={plan.key === userInfoQuery.data?.data?.plan}
                             handleChooseOverride={getHandleChoose(plan)}
+                            disabled={isDisabled(plan)}
                         />
                     </Col>
                 ))}
