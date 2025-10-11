@@ -8,7 +8,7 @@ export const fileFormats = [
         displayName: 'JSON',
     },
     {
-        key: 'excel',
+        key: 'xlsx',
         displayName: 'Excel',
     },
 ];
