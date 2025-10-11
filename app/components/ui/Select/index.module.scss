@@ -1,0 +1,134 @@
+@use '../../../styles/variables.scss' as *;
+
+.select {
+    position: relative;
+}
+
+.trigger {
+    border-color: $color-grey-light;
+    color: $color-black;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: $color-grey-bg;
+        color: $color-black;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $color-blue-hover;
+        box-shadow: 0 0 0 3px rgba(4, 102, 200, 0.1);
+    }
+}
+
+.text {
+    font-family: $font-inter;
+    font-size: $font-size-18;
+    color: $color-black;
+    flex: 1;
+    text-align: left;
+}
+
+.placeholder {
+    color: $color-grey-light;
+}
+
+.arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: $color-black;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.arrowUp {
+    transform: rotate(180deg);
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-menu;
+    z-index: 1000;
+    max-height: 240px;
+    overflow-y: auto;
+    border: 1px solid $color-border-light;
+    padding: 5px;
+}
+
+.option {
+    padding: 10px 16px;
+    font-family: $font-inter;
+    font-size: $font-size-18;
+    color: $color-black;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: $radius-sm;
+
+    &:hover {
+        background-color: $color-hover-bg;
+    }
+
+    margin-top: 5px;
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.selected {
+    background-color: $color-hover-bg;
+}
+
+.disabled {
+    .trigger {
+        background-color: $color-bg-disabled-light;
+        border-color: $color-border-light;
+        cursor: not-allowed;
+        color: $color-content-disabled;
+
+        &:hover {
+            border-color: $color-border-light;
+        }
+    }
+
+    .text {
+        color: $color-content-disabled;
+    }
+
+    .arrow {
+        color: $color-content-disabled;
+    }
+}
+
+.open {
+    .trigger {
+        border-color: $color-blue-hover;
+        box-shadow: 0 0 0 3px rgba(4, 102, 200, 0.1);
+    }
+}
+
+// Стили для скроллбара в dropdown
+.dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dropdown::-webkit-scrollbar-thumb {
+    background: $color-border-default;
+    border-radius: 3px;
+}
+
+.dropdown::-webkit-scrollbar-thumb:hover {
+    background: $color-grey-light;
+}

@@ -9,10 +9,12 @@ import { useConvertFilesMutation } from '@/mutations/files/convertFile';
 
 // Icons
 
+import { fileFormats } from '../../../../types/files/formats';
 import type { Response } from '../../../../types/response';
 import { useAlert } from '../../Alert';
 import Flex from '../../Flex';
 import LoadingSpinner from '../../LoadingSpinner';
+import Select from '../../Select';
 
 // import { Document } from "react-pdf";
 
@@ -26,12 +28,13 @@ const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
     const alert = useAlert();
 
     const [state, setState] = useState<FilesLoaderState>('preparing');
+    const [fileType, setFileType] = useState<string>(fileFormats[0].key);
     const uploadMutation = useConvertFilesMutation('all');
 
     const sendFiles = useCallback(() => {
         setState('uploading');
-        uploadMutation.mutate(files);
-    }, [files, setState, uploadMutation]);
+        uploadMutation.mutate({ files, fileType });
+    }, [fileType, files, uploadMutation]);
 
     const downloadFile = useCallback(() => {
         open(`/api/v1/download/${uploadMutation.data}`, '_blank');
@@ -74,22 +77,33 @@ const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
     }, [alert, state, uploadMutation]);
 
     return (
-        <Flex direction='column' className=''>
+        <Flex gap='sm' justify='center' className='flex-column flex-md-row w-100'>
             {(state === 'preparing' || state === 'prepared') && (
-                <Button
-                    rightIcon={<ExcelBold />}
-                    onClick={sendFiles}
-                    disabled={state === 'preparing'}
-                >
-                    Convert to Excel
-                </Button>
+                <>
+                    <Select
+                        options={fileFormats.map(format => ({
+                            value: format.key,
+                            label: format.displayName,
+                        }))}
+                        value={fileType}
+                        onChange={setFileType}
+                    />
+                    <Button
+                        rightIcon={<ExcelBold />}
+                        onClick={sendFiles}
+                        disabled={state === 'preparing'}
+                    >
+                        Convert to one{' '}
+                        {fileFormats.find(format => format.key === fileType)?.displayName}
+                    </Button>
+                </>
             )}
             {state === 'uploading' && (
                 <Button rightIcon={<LoadingSpinner color='white' />}>Converting...</Button>
             )}
             {state === 'uploaded' && (
                 <Button rightIcon={<DownloadIcon />} onClick={downloadFile}>
-                    Download CSV
+                    Download one {fileFormats.find(format => format.key === fileType)?.displayName}
                 </Button>
             )}
         </Flex>

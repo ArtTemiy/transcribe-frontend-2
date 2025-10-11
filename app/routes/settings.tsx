@@ -1,5 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
 
 import Button from '@/components/ui/Button';
 import TextInput from '@/components/ui/input/TextInput/TextInput';
@@ -20,6 +21,13 @@ const Page = () => {
         navigator.clipboard.writeText(userInfoQ.data?.data?.api_token ?? '');
         alert.showSuccess('Coppied', { autoHide: 0.5 });
     }, [userInfoQ.data?.data?.api_token, alert]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userInfoQ.data?.data === undefined) {
+            navigate('/');
+        }
+    }, [userInfoQ.data?.data, navigate]);
 
     const reviewModal = useModal();
 
@@ -32,7 +40,11 @@ const Page = () => {
             <div className={styles.apiKeySection}>
                 <Text variant='header'> API Key</Text>
                 <div className={styles.apiKeyCopySection}>
-                    <TextInput disabled value={userInfoQ.data?.data?.api_token} />
+                    <TextInput
+                        disabled
+                        value={userInfoQ.data?.data?.api_token}
+                        className={styles.apiTokenField}
+                    />
                     <Button
                         variant='secondary'
                         onClick={copyKey}

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Component Demo</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        h1, h3 {
+            color: #313131;
+            margin: 0 0 10px 0;
+        }
+
+        .select {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #fff;
+            border: 2px solid #0466c8;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 48px;
+            user-select: none;
+            box-sizing: border-box;
+        }
+
+        .trigger:hover {
+            border-color: #0353a4;
+        }
+
+        .trigger.open {
+            border-color: #0353a4;
+            box-shadow: 0 0 0 3px rgba(4, 102, 200, 0.1);
+        }
+
+        .text {
+            font-size: 16px;
+            font-weight: 400;
+            color: #313131;
+            flex: 1;
+            text-align: left;
+        }
+
+        .text.placeholder {
+            color: #a1a9b8;
+        }
+
+        .arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            color: #313131;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .arrow.up {
+            transform: rotate(180deg);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 8px 8px 0px rgba(161, 169, 184, 0.3);
+            z-index: 1000;
+            max-height: 240px;
+            overflow-y: auto;
+            border: 1px solid rgba(68, 83, 113, 0.2);
+            display: none;
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .option {
+            padding: 12px 16px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #313131;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid rgba(68, 83, 113, 0.2);
+        }
+
+        .option:last-child {
+            border-bottom: none;
+        }
+
+        .option:hover {
+            background-color: #ecf6ff;
+        }
+
+        .option:first-child {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .option:last-child {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .option.selected {
+            background-color: rgba(79, 81, 229, 0.05);
+            color: #4345c3;
+            font-weight: 500;
+        }
+
+        .option.selected:hover {
+            background-color: rgba(79, 81, 229, 0.05);
+        }
+
+        .disabled .trigger {
+            background-color: rgba(68, 83, 113, 0.05);
+            border-color: rgba(68, 83, 113, 0.2);
+            cursor: not-allowed;
+        }
+
+        .disabled .text {
+            color: rgba(68, 83, 113, 0.5);
+        }
+
+        .disabled .arrow {
+            color: rgba(68, 83, 113, 0.5);
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #565656;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Component Demo</h1>
+        
+        <div>
+            <h3>Базовый селектор</h3>
+            <div class="select" id="select1">
+                <div class="trigger">
+                    <span class="text placeholder">Content</span>
+                    <div class="arrow">
+                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                            <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <div class="option" data-value="option1">Label</div>
+                    <div class="option" data-value="option2">Label</div>
+                    <div class="option" data-value="option3">Label</div>
+                    <div class="option" data-value="option4">Label</div>
+                    <div class="option" data-value="option5">Label</div>
+                    <div class="option" data-value="option6">Label</div>
+                    <div class="option" data-value="option7">Label</div>
+                </div>
+            </div>
+            <div class="result" id="result1">Выбранное значение: не выбрано</div>
+        </div>
+
+        <div>
+            <h3>Селектор с предустановленным значением</h3>
+            <div class="select" id="select2">
+                <div class="trigger">
+                    <span class="text">Label</span>
+                    <div class="arrow">
+                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                            <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <div class="option" data-value="option1">Label</div>
+                    <div class="option selected" data-value="option2">Label</div>
+                    <div class="option" data-value="option3">Label</div>
+                    <div class="option" data-value="option4">Label</div>
+                    <div class="option" data-value="option5">Label</div>
+                    <div class="option" data-value="option6">Label</div>
+                    <div class="option" data-value="option7">Label</div>
+                </div>
+            </div>
+            <div class="result" id="result2">Выбранное значение: option2</div>
+        </div>
+
+        <div>
+            <h3>Отключенный селектор</h3>
+            <div class="select disabled">
+                <div class="trigger">
+                    <span class="text">Label</span>
+                    <div class="arrow">
+                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                            <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Простая JavaScript логика для демонстрации
+        function initSelect(selectId, resultId) {
+            const select = document.getElementById(selectId);
+            const trigger = select.querySelector('.trigger');
+            const dropdown = select.querySelector('.dropdown');
+            const arrow = select.querySelector('.arrow');
+            const text = select.querySelector('.text');
+            const result = document.getElementById(resultId);
+            const options = select.querySelectorAll('.option');
+
+            let isOpen = false;
+            let selectedValue = '';
+
+            // Инициализация с предустановленным значением
+            const selectedOption = select.querySelector('.option.selected');
+            if (selectedOption) {
+                selectedValue = selectedOption.dataset.value;
+                text.textContent = selectedOption.textContent;
+                text.classList.remove('placeholder');
+            }
+
+            trigger.addEventListener('click', () => {
+                if (select.classList.contains('disabled')) return;
+                
+                isOpen = !isOpen;
+                dropdown.classList.toggle('show', isOpen);
+                arrow.classList.toggle('up', isOpen);
+                trigger.classList.toggle('open', isOpen);
+            });
+
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Убираем выделение с предыдущей опции
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Выделяем новую опцию
+                    option.classList.add('selected');
+                    
+                    selectedValue = option.dataset.value;
+                    text.textContent = option.textContent;
+                    text.classList.remove('placeholder');
+                    
+                    // Закрываем dropdown
+                    isOpen = false;
+                    dropdown.classList.remove('show');
+                    arrow.classList.remove('up');
+                    trigger.classList.remove('open');
+                    
+                    // Обновляем результат
+                    if (result) {
+                        result.textContent = `Выбранное значение: ${selectedValue}`;
+                    }
+                });
+            });
+
+            // Закрытие при клике вне селекта
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    isOpen = false;
+                    dropdown.classList.remove('show');
+                    arrow.classList.remove('up');
+                    trigger.classList.remove('open');
+                }
+            });
+        }
+
+        // Инициализация селектов
+        initSelect('select1', 'result1');
+        initSelect('select2', 'result2');
+    </script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Test</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        h1, h3 {
+            color: #313131;
+            margin: 0 0 10px 0;
+        }
+
+        /* Button styles from the project */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 30px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, border 0.2s;
+            position: relative;
+            min-height: 44px;
+            min-width: 120px;
+            user-select: none;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .primary {
+            background: #0466c8;
+            color: #fff;
+        }
+
+        .primary:hover {
+            background: #0353a4;
+            color: #fff;
+        }
+
+        .secondary {
+            color: #0466c8;
+            border: 1px solid #0466c8;
+            background-color: transparent;
+        }
+
+        .secondary:hover {
+            background: #0353a4;
+            color: #fff;
+        }
+
+        .success {
+            background: transparent;
+            color: #12b811;
+            border: 1px solid #12b811;
+        }
+
+        .success:hover {
+            background: #12b811;
+            color: #fff;
+        }
+
+        .disabled {
+            background: #a1a9b866;
+            color: #fff;
+            cursor: not-allowed;
+            border: 0;
+        }
+
+        /* File view simulation */
+        .file-view {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: #0466c8;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .file-details h4 {
+            margin: 0;
+            font-size: 16px;
+            color: #313131;
+        }
+
+        .file-details p {
+            margin: 4px 0 0 0;
+            font-size: 14px;
+            color: #565656;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+        }
+
+        /* Excel icon simulation */
+        .excel-icon {
+            background: #12b811;
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .excel-icon::after {
+            content: 'XL';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #565656;
+            padding: 5px;
+        }
+
+        .close-btn:hover {
+            color: #313131;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Button Test - Convert to CSV</h1>
+        
+        <div>
+            <h3>Имитация загруженного файла с кнопкой Convert to CSV</h3>
+            
+            <div class="file-view">
+                <div class="file-info">
+                    <div class="file-icon">PDF</div>
+                    <div class="file-details">
+                        <h4>Invoice.pdf</h4>
+                        <p>95.9 KB, 3 Pages</p>
+                    </div>
+                </div>
+                
+                <div class="file-actions">
+                    <button class="btn primary">
+                        Convert to Excel
+                        <div class="icon excel-icon"></div>
+                    </button>
+                    <button class="close-btn">×</button>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h3>Различные варианты кнопок</h3>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                <button class="btn primary">
+                    Primary Button
+                    <div class="icon excel-icon"></div>
+                </button>
+                
+                <button class="btn secondary">
+                    Secondary Button
+                    <div class="icon excel-icon"></div>
+                </button>
+                
+                <button class="btn success">
+                    Success Button
+                    <div class="icon excel-icon"></div>
+                </button>
+                
+                <button class="btn disabled" disabled>
+                    Disabled Button
+                    <div class="icon excel-icon"></div>
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <h3>Кнопки с длинным текстом</h3>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button class="btn primary">
+                    Convert to CSV Format
+                    <div class="icon excel-icon"></div>
+                </button>
+                
+                <button class="btn primary">
+                    Download Excel File
+                    <div class="icon excel-icon"></div>
+                </button>
+                
+                <button class="btn primary">
+                    Process Document
+                    <div class="icon excel-icon"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

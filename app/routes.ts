@@ -8,6 +8,7 @@ export default [
     route('test', 'routes/test.tsx'),
     route('alert-test', 'routes/alert-test.tsx'),
     route('global-alert-test', 'routes/global-alert-test.tsx'),
+    route('select-test', 'routes/select-test.tsx'),
 
     route('auth/google', 'routes/auth/google.tsx'),
 ] satisfies RouteConfig;

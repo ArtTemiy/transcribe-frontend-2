@@ -1,10 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
-import type { AxiosError } from 'axios';
 
 import type { UserFile } from '@/context/FilesContext';
 import { apiClient } from '@/utils/apiClient';
 
 import type { Response } from '../../types/response';
+
+export type Payload = {
+    files: UserFile[];
+    fileType: string;
+};
 
 export type UploadingFileResponse = {
     id: string;
@@ -20,9 +24,10 @@ export type JobStatusResponse = {
 };
 
 export const useConvertFilesMutation = (key: string) => {
-    return useMutation<string, AxiosError, UserFile[]>({
+    return useMutation({
         mutationKey: ['uploadFile', key],
-        mutationFn: async (files: UserFile[]) => {
+        mutationFn: async (payload: Payload) => {
+            const { files, fileType } = payload;
             const fileUploadTasks = files.map(async file => {
                 const formData = new FormData();
                 formData.append('file', file.file);
@@ -42,7 +47,7 @@ export const useConvertFilesMutation = (key: string) => {
             const fileServerIds = await Promise.all(fileUploadTasks);
 
             const response = await apiClient.post('/convert', {
-                result_file_type: 'csv',
+                result_file_type: fileType || 'csv',
                 file_ids: fileServerIds,
             });
             const { id: jobId } = (response.data as Response<ConvertFileResponse>).data || {

@@ -20,9 +20,11 @@ import { useFilesContext, type UserFile } from '@/context/FilesContext';
 import { useConvertFilesMutation } from '@/mutations/files/convertFile';
 import { procesFile } from '~/utils/fileProcessor';
 
+import { fileFormats } from '../../../../types/files/formats';
 import type { Response } from '../../../../types/response';
 import { formatSize } from '../../../../utils/formatSize';
 import TextInput from '../../input/TextInput/TextInput';
+import Select from '../../Select';
 
 import styles from './style.module.scss';
 
@@ -33,6 +35,7 @@ type FileLoaderProps = {
 const FileView: React.FC<FileLoaderProps> = ({ file }) => {
     const [pagesCount, setPagesCount] = useState<number | undefined>(undefined);
     const { updateFile, removeFile } = useFilesContext();
+    const [fileType, setFileType] = useState<string>(fileFormats[0].key);
 
     const uploadMutation = useConvertFilesMutation(file.id);
 
@@ -61,8 +64,8 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
             state: 'uploading',
             error: undefined,
         });
-        uploadMutation.mutate([file]);
-    }, [updateFile, file, uploadMutation]);
+        uploadMutation.mutate({ files: [file], fileType });
+    }, [updateFile, file, uploadMutation, fileType]);
 
     const downloadFile = useCallback(() => {
         open(`/api/v1/download/${uploadMutation.data}`, '_blank');
@@ -234,20 +237,35 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                         file.state === 'loaded' ||
                         file.state === 'error') &&
                         (file.passwordState === undefined || file.passwordState.correct) && (
-                            <Button
-                                rightIcon={<ExcelBold />}
-                                onClick={sendFile}
-                                disabled={file.state === 'loading'}
-                            >
-                                Convert to Excel
-                            </Button>
+                            <>
+                                <Select
+                                    options={fileFormats.map(format => ({
+                                        value: format.key,
+                                        label: format.displayName,
+                                    }))}
+                                    value={fileType}
+                                    onChange={setFileType}
+                                />
+                                <Button
+                                    rightIcon={<ExcelBold />}
+                                    onClick={sendFile}
+                                    disabled={file.state === 'loading'}
+                                >
+                                    Convert to{' '}
+                                    {
+                                        fileFormats.find(format => format.key === fileType)
+                                            ?.displayName
+                                    }
+                                </Button>
+                            </>
                         )}
                     {file.state === 'uploading' && (
                         <Button rightIcon={<LoadingSpinner color='white' />}>Converting...</Button>
                     )}
                     {file.state === 'uploaded' && (
                         <Button rightIcon={<DownloadIcon />} onClick={downloadFile}>
-                            Download CSV
+                            Download{' '}
+                            {fileFormats.find(format => format.key === fileType)?.displayName}
                         </Button>
                     )}
                 </div>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileView Test</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        h1, h3 {
+            color: #313131;
+            margin: 0 0 10px 0;
+        }
+
+        /* FileView styles */
+        .fileLoader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border-radius: 8px;
+            background-color: #fff;
+            width: 100%;
+            align-items: flex-start;
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .contentContainer {
+            flex-grow: 1;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 20px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .content__state {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .stateIcon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            background: #0466c8;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .content__state__fileInfo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .content__state__fileInfo__name {
+            font-size: 16px;
+            font-weight: 500;
+            color: #313131;
+            margin: 0 0 4px 0;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .file-details {
+            font-size: 14px;
+            color: #565656;
+            margin: 0;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            min-width: 0;
+        }
+
+        .closeContainer {
+            flex-shrink: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #565656;
+            padding: 5px;
+        }
+
+        .close-btn:hover {
+            color: #313131;
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 30px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, border 0.2s;
+            position: relative;
+            min-height: 44px;
+            min-width: 120px;
+            user-select: none;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .primary {
+            background: #0466c8;
+            color: #fff;
+        }
+
+        .primary:hover {
+            background: #0353a4;
+            color: #fff;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            background: #12b811;
+            border-radius: 3px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .icon::after {
+            content: 'XL';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        /* Select styles */
+        .select {
+            position: relative;
+            width: 100%;
+            max-width: 120px;
+            min-width: 80px;
+        }
+
+        .select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #fff;
+            border: 2px solid #0466c8;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 44px;
+            user-select: none;
+            font-size: 16px;
+            color: #313131;
+        }
+
+        .select-arrow {
+            width: 12px;
+            height: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .contentContainer {
+                flex-direction: column;
+            }
+            
+            .actions {
+                justify-content: flex-start;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .select {
+                max-width: none;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .contentContainer {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .actions {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FileView Test - Реальная ситуация с файлом</h1>
+        
+        <div>
+            <h3>Файл с коротким форматом</h3>
+            <div class="fileLoader">
+                <div class="contentContainer">
+                    <div class="content__state">
+                        <div class="stateIcon">PDF</div>
+                        <div class="content__state__fileInfo">
+                            <div class="content__state__fileInfo__name">Invoice.pdf</div>
+                            <p class="file-details">95.9 KB, 3 Pages</p>
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <div class="select">
+                            <div class="select-trigger">
+                                CSV
+                                <svg class="select-arrow" viewBox="0 0 12 8" fill="none">
+                                    <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <button class="btn primary">
+                            Convert to CSV
+                            <div class="icon"></div>
+                        </button>
+                    </div>
+                </div>
+                <div class="closeContainer">
+                    <button class="close-btn">×</button>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h3>Файл с длинным форматом</h3>
+            <div class="fileLoader">
+                <div class="contentContainer">
+                    <div class="content__state">
+                        <div class="stateIcon">PDF</div>
+                        <div class="content__state__fileInfo">
+                            <div class="content__state__fileInfo__name">Very-long-filename-document.pdf</div>
+                            <p class="file-details">1.2 MB, 15 Pages</p>
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <div class="select">
+                            <div class="select-trigger">
+                                Excel
+                                <svg class="select-arrow" viewBox="0 0 12 8" fill="none">
+                                    <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <button class="btn primary">
+                            Convert to Excel
+                            <div class="icon"></div>
+                        </button>
+                    </div>
+                </div>
+                <div class="closeContainer">
+                    <button class="close-btn">×</button>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h3>Файл с очень длинным форматом</h3>
+            <div class="fileLoader">
+                <div class="contentContainer">
+                    <div class="content__state">
+                        <div class="stateIcon">PDF</div>
+                        <div class="content__state__fileInfo">
+                            <div class="content__state__fileInfo__name">Document.pdf</div>
+                            <p class="file-details">500 KB, 8 Pages</p>
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <div class="select">
+                            <div class="select-trigger">
+                                JSON
+                                <svg class="select-arrow" viewBox="0 0 12 8" fill="none">
+                                    <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <button class="btn primary">
+                            Convert to Structured JSON Format
+                            <div class="icon"></div>
+                        </button>
+                    </div>
+                </div>
+                <div class="closeContainer">
+                    <button class="close-btn">×</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
