@@ -6,22 +6,16 @@ import { apiClient } from '@/utils/apiClient';
 
 type Response = {
     data?: UserInfo;
+    error?: string;
+    humanError?: string;
 };
 export const useUserInfoQuery = () => {
     return useQuery<Response>({
         queryKey: ['userInfo'],
         queryFn: async (): Promise<Response> => {
             try {
-                // return {
-                //     data: undefined,
-                //     // data: {
-                //     //     pages: 10,
-                //     //     plan: 'personal',
-                //     //     api_token: 'asdadsasd',
-                //     // },
-                // };
-                const response = await apiClient.get('/auth/user');
-                return { data: response.data as UserInfo };
+                const response = (await apiClient.get('/auth/user')).data as Response;
+                return response;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     const status = error.response?.status ?? 0;

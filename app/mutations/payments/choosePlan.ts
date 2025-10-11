@@ -3,6 +3,7 @@ import { isAxiosError } from 'axios';
 
 import { useAlert } from '../../context/AlertContext';
 import type { PricingPlan } from '../../types/PricingPlan';
+import type { Response } from '../../types/response';
 import { apiClient } from '../../utils/apiClient';
 
 type CheckoutSessionResponse = {
@@ -24,7 +25,7 @@ export const useChoosePlanMutation = (plan: PricingPlan) => {
             console.error(error);
             let errorMessage = 'Unknown Error';
             if (isAxiosError(error)) {
-                errorMessage = error.response?.data?.message || 'Unknown Error';
+                errorMessage = (error.response?.data as Response).humanError || 'Unknown Error';
             }
             alert.showError(errorMessage, { autoHide: 10 });
         },

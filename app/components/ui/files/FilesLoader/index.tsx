@@ -9,6 +9,7 @@ import { useConvertFilesMutation } from '@/mutations/files/convertFile';
 
 // Icons
 
+import type { Response } from '../../../../types/response';
 import { useAlert } from '../../Alert';
 import Flex from '../../Flex';
 import LoadingSpinner from '../../LoadingSpinner';
@@ -65,7 +66,7 @@ const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
             const error = uploadMutation.error;
             alert.showError(
                 isAxiosError(error)
-                    ? (error.response?.data as { message?: string })?.message || 'Unknown Error'
+                    ? (error.response?.data as Response).humanError || 'Unknown Error'
                     : 'Unknown Error',
             );
             setState('prepared');

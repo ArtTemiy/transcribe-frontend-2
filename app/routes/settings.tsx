@@ -56,7 +56,7 @@ const Page = () => {
                         title: 'Your Feedback',
                         placeholder: 'Share your experience working with us...',
                     }}
-                    withFiles
+                    variant='feedback'
                 />
             </reviewModal.Component>
         </Container>

@@ -20,7 +20,6 @@ import styles from './index.module.scss';
 const menuItems = [
     { label: 'Pricing', href: '/pricing' },
     { label: 'Documents', href: '/documents' },
-    { label: 'Settings', href: '/settings' },
 ];
 
 const NavBar: React.FC = () => {
@@ -76,7 +75,7 @@ const NavBar: React.FC = () => {
                     <Navbar.Toggle aria-controls='main-navbar' />
                     <Navbar.Collapse id='main-navbar'>
                         <Nav className='mx-auto gap-4 mb-5 mb-lg-0 mt-4 mt-lg-0'>
-                            {userInfoQuery.data?.data?.pages !== undefined && (
+                            {userInfoQuery.data?.data !== undefined && (
                                 <Nav.Item className={styles.navlink}>
                                     <Link variant='body-s' href='/pages'>
                                         Pages{' '}
@@ -93,6 +92,13 @@ const NavBar: React.FC = () => {
                                     </Link>
                                 </Nav.Item>
                             ))}
+                            {userInfoQuery.data?.data && (
+                                <Nav.Item className={styles.navlink}>
+                                    <Link variant='body-s' href='/settings'>
+                                        Settings
+                                    </Link>
+                                </Nav.Item>
+                            )}
                         </Nav>
                         <Nav className='gap-3 mb-3 mb-lg-0'>
                             {userInfoQuery.data?.data ? (

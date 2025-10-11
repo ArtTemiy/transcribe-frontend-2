@@ -46,6 +46,7 @@ const PricingSection = () => {
                         placeholder:
                             'Tell us about your needs, team size, and any specific requirements you have',
                     }}
+                    variant='contact'
                 />
             </contactUsModal.Component>
         </>

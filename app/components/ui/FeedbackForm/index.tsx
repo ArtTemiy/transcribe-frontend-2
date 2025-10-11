@@ -11,6 +11,7 @@ import FileRemove from '@/../src/icons/feedback/fileRemove.svg';
 import {
     useFeedbackMutation,
     type FeedbackData,
+    type FeedbackType,
 } from '../../../mutations/feedback/useFeedbackMutation';
 import { formatSize } from '../../../utils/formatSize';
 import Button from '../Button';
@@ -30,19 +31,19 @@ type Props = {
         title: string;
         placeholder: string;
     };
-    withFiles?: boolean;
+    variant: FeedbackType;
 };
 
-const FeedbackForm = ({ header, onClose, messageSettings, withFiles = false }: Props) => {
+const FeedbackForm = ({ header, onClose, messageSettings, variant }: Props) => {
     const { register, handleSubmit, watch, formState, getValues, setValue, reset } =
         useForm<FeedbackData>();
     const feedbackMutation = useFeedbackMutation();
 
     const onSubmit = useCallback(
         (data: FeedbackData) => {
-            feedbackMutation.mutate(data);
+            feedbackMutation.mutate({ data, variant });
         },
-        [feedbackMutation],
+        [feedbackMutation, variant],
     );
 
     useEffect(() => console.log('init component'), []);
@@ -150,7 +151,7 @@ const FeedbackForm = ({ header, onClose, messageSettings, withFiles = false }: P
                             }
                         />
                     </Flex>
-                    {withFiles && (
+                    {variant === 'feedback' && (
                         <Flex direction='column' gap='sm'>
                             <Text variant='small'>
                                 Attach the statement file that didn’t upload

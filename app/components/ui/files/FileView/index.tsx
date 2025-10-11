@@ -82,6 +82,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                         correct: true,
                     },
                 });
+                setPagesCount(checkResult.pages);
             } else {
                 updateFile({
                     ...file,
