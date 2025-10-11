@@ -18,8 +18,13 @@ export const useChoosePlanMutation = (plan: PricingPlan) => {
         mutationFn: async () => {
             const sessionResponse = (
                 await apiClient.post(`/payments/create-checkout-session?plan_id=${plan.key}`)
-            ).data as CheckoutSessionResponse;
-            window.location.href = sessionResponse.checkout_url;
+            ).data as Response<CheckoutSessionResponse>;
+            const url = sessionResponse.data?.checkout_url;
+            if (!url) {
+                alert.showError('Something went wrong', { autoHide: 10 });
+                return;
+            }
+            window.location.href = url;
         },
         onError: error => {
             console.error(error);

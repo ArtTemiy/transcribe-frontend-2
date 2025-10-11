@@ -20,6 +20,7 @@ import { useFilesContext, type UserFile } from '@/context/FilesContext';
 import { useConvertFilesMutation } from '@/mutations/files/convertFile';
 import { procesFile } from '~/utils/fileProcessor';
 
+import type { Response } from '../../../../types/response';
 import { formatSize } from '../../../../utils/formatSize';
 import TextInput from '../../input/TextInput/TextInput';
 
@@ -177,7 +178,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                 let msg = 'Error while loading';
                 const error = uploadMutation.error;
                 if (isAxiosError(error)) {
-                    msg = (error.response?.data as { message?: string }).message || msg;
+                    msg = (error.response?.data as Response).humanError || msg;
                 }
                 updateFile({
                     ...file,

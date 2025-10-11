@@ -4,6 +4,8 @@ import type { AxiosError } from 'axios';
 import type { UserFile } from '@/context/FilesContext';
 import { apiClient } from '@/utils/apiClient';
 
+import type { Response } from '../../types/response';
+
 export type UploadingFileResponse = {
     id: string;
 };
@@ -32,7 +34,9 @@ export const useConvertFilesMutation = (key: string) => {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
 
-                const { id: serverFileId } = response.data as UploadingFileResponse;
+                const serverFileId = (response.data as Response<UploadingFileResponse>).data?.id;
+                console.log('serverFileId', serverFileId);
+
                 return serverFileId;
             });
             const fileServerIds = await Promise.all(fileUploadTasks);
@@ -41,7 +45,9 @@ export const useConvertFilesMutation = (key: string) => {
                 result_file_type: 'csv',
                 file_ids: fileServerIds,
             });
-            const { id: jobId } = response.data as ConvertFileResponse;
+            const { id: jobId } = (response.data as Response<ConvertFileResponse>).data || {
+                id: '-',
+            };
 
             let jobStatus: JobStatusResponse = { id: jobId, status: 'unknown' };
 
@@ -49,7 +55,9 @@ export const useConvertFilesMutation = (key: string) => {
                 if (jobStatus.status !== 'unknown') {
                     await new Promise(resolve => setTimeout(resolve, 1000));
                 }
-                jobStatus = (await apiClient.get(`/jobs/${jobId}`)).data as JobStatusResponse;
+                jobStatus = (
+                    (await apiClient.get(`/jobs/${jobId}`)).data as Response<JobStatusResponse>
+                ).data || { status: 'failed', id: '-' };
             }
             if (jobStatus.status !== 'completed') {
                 throw new Error(`Job failed: ${jobStatus}`);
