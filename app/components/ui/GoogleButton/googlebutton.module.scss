@@ -1,6 +1,7 @@
 @use '../../../styles/variables.scss' as *;
 
-.googleButton {
+// Используем более специфичный селектор для переопределения стилей Button
+.googleButton.googleButton {
     display: flex;
     align-items: center;
     justify-content: space-between;

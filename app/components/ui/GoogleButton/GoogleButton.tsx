@@ -1,15 +1,17 @@
 import classNames from 'classnames';
-import { Button, type ButtonProps } from '../Button';
-import styles from './googlebutton.module.scss';
 
 import GoogleIcon from '@/../src/icons/google.svg';
+
+import { Button, type ButtonProps } from '../Button';
 import { Text } from '../Text';
+
+import styles from './googlebutton.module.scss';
 
 const GoogleButton = ({ children, className, ...props }: ButtonProps) => {
     return (
         <Button
             variant='secondary'
-            className={classNames(className, styles.googleButton)}
+            className={classNames(styles.googleButton, className)}
             {...props}
         >
             <GoogleIcon />
