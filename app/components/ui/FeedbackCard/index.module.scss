@@ -7,14 +7,14 @@
 .content {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: $spacing-30;
     width: 100%;
 }
 
 .header {
     display: flex;
     flex-direction: row;
-    gap: 30px;
+    gap: $spacing-30;
     align-items: center;
     width: 100%;
 }
@@ -32,7 +32,7 @@
 .userInfo {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: $spacing-1;
     flex: 1;
     min-width: 0;
 }

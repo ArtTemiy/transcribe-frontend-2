@@ -20,30 +20,30 @@
     font-size: 60px;
     font-weight: 500;
     color: $color-black;
-    margin-bottom: 20px;
+    margin-bottom: $spacing-2-5;
 }
 
 .heroSubtitle {
-    font-size: 30px;
+    font-size: $font-size-30;
     color: $color-grey;
     margin-bottom: 40px;
     max-width: 580px;
 }
 
 .dropzoneTitle {
-    font-size: 30px;
+    font-size: $font-size-30;
     color: $color-black;
-    margin: 20px 0 8px 0;
+    margin: $spacing-2-5 0 $spacing-1 0;
 }
 
 .dropzoneDesc {
-    font-size: 16px;
+    font-size: $font-size-16;
     color: $color-grey;
 }
 
 /* Why trust us section */
 .whyTrustUsSection {
-    padding: 60px 80px;
+    padding: 60px $spacing-80;
     background: $color-bg-surface-1;
     text-align: left;
 }
@@ -59,7 +59,7 @@
 .featuresList {
     display: flex;
     flex-direction: row;
-    gap: 24px;
+    gap: $spacing-3;
     flex-wrap: nowrap;
     align-items: stretch;
     justify-content: flex-start;
@@ -67,7 +67,7 @@
 
 /* Pricing section */
 .pricingSection {
-    padding: 60px 80px;
+    padding: 60px $spacing-80;
     background: $color-bg-surface-1;
     text-align: left;
 }
@@ -83,7 +83,7 @@
 .pricingList {
     display: flex;
     flex-direction: row;
-    gap: 24px;
+    gap: $spacing-3;
     flex-wrap: nowrap;
     align-items: stretch;
     justify-content: flex-start;
@@ -91,7 +91,7 @@
 
 /* Feedback section */
 .feedbackSection {
-    padding: 80px 0;
+    padding: $spacing-80 0;
     background: $color-grey-bg;
 }
 
@@ -106,7 +106,7 @@
 .feedbackList {
     display: flex;
     flex-direction: row;
-    gap: 24px;
+    gap: $spacing-3;
     flex-wrap: nowrap;
     align-items: stretch;
     justify-content: flex-start;
@@ -114,11 +114,11 @@
 
 /* Footer */
 .footerSection {
-    padding: 40px 80px;
+    padding: 40px $spacing-80;
     background: $color-bg-surface-1;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: $spacing-3;
     align-items: stretch;
 }
 
@@ -126,20 +126,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
+    font-size: $font-size-16;
     color: $color-black;
 }
 
 .footerLinks {
     display: flex;
-    gap: 24px;
+    gap: $spacing-3;
 }
 
 .footerBottom {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: $spacing-1-5;
     font-weight: 600;
-    font-size: 18px;
+    font-size: $font-size-18;
     color: $color-black;
 }

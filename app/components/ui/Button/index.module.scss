@@ -50,19 +50,19 @@
 .success {
     @extend .btn;
     background: transparent;
-    color: #12b811;
-    border: 1px solid #12b811;
+    color: $color-success;
+    border: 1px solid $color-success;
 
     &:hover {
-        background: #12b811;
-        color: #fff;
+        background: $color-success;
+        color: $color-white;
     }
 }
 
 .disabled {
     @extend .btn;
-    background: #a1a9b866;
-    color: #fff;
+    background: $color-bg-disabled-light;
+    color: $color-content-disabled;
     cursor: not-allowed;
     border: 0;
 }
