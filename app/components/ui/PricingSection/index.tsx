@@ -6,7 +6,7 @@ import { useUserInfoQuery } from '@/queries/userInfo';
 
 import type { PricingPlan } from '../../../types/PricingPlan';
 import FeedbackForm from '../FeedbackForm';
-import { useModal } from '../Modal/useModal';
+import { useModal } from '../../../hooks/useModal';
 
 import PricingCard from './PricingCard';
 

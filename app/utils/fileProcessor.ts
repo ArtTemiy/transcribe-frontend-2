@@ -6,7 +6,7 @@ type FileInfo = {
     pages: number;
 };
 
-export const procesFile = async (file: File, password?: string): Promise<FileInfo> => {
+export const processFile = async (file: File, password?: string): Promise<FileInfo> => {
     try {
         // Получаем pdfjs с уже настроенным worker'ом
         const pdfjs = await getPdfjs();

@@ -46,7 +46,7 @@ const FeedbackForm = ({ header, onClose, messageSettings, variant }: Props) => {
         [feedbackMutation, variant],
     );
 
-    useEffect(() => console.log('init component'), []);
+    // Component initialization effect removed - not needed
 
     useEffect(() => {
         if (feedbackMutation.isSuccess) {

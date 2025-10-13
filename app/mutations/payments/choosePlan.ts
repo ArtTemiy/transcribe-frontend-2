@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 
-import { useAlert } from '../../context/AlertContext';
+import { useAlert } from '../../hooks/useAlert';
 import type { PricingPlan } from '../../types/PricingPlan';
 import type { Response } from '../../types/response';
 import { apiClient } from '../../utils/apiClient';

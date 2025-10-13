@@ -16,9 +16,10 @@ import Button from '@/components/ui/Button';
 import ButtonBase from '@/components/ui/ButtonBase';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Text } from '@/components/ui/Text';
-import { useFilesContext, type UserFile } from '@/context/FilesContext';
+import { useFilesContext } from '@/hooks/useFilesContext';
+import type { UserFile } from '@/context/FilesContext';
 import { useConvertFilesMutation } from '@/mutations/files/convertFile';
-import { procesFile } from '~/utils/fileProcessor';
+import { processFile } from '@/utils/fileProcessor';
 
 import { fileFormats } from '../../../../types/files/formats';
 import type { Response } from '../../../../types/response';
@@ -76,7 +77,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
     });
     const checkPassword = useCallback(async () => {
         try {
-            const checkResult = await procesFile(file.file, getValues('password'));
+            const checkResult = await processFile(file.file, getValues('password'));
             if (checkResult.passwordValid) {
                 updateFile({
                     ...file,
@@ -109,7 +110,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
             if (file.state === 'loading') {
                 try {
                     const password = file.passwordState?.password;
-                    const fileInfo = await procesFile(file.file, password);
+                    const fileInfo = await processFile(file.file, password);
 
                     setPagesCount(fileInfo.pages);
 
@@ -168,7 +169,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                 }
             }
         })();
-    }, [file, updateFile, removeFile, alert]);
+    }, [file, updateFile]);
 
     useEffect(() => {
         if (file.state === 'uploading') {

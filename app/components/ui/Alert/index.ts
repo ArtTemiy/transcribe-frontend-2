@@ -1,8 +1,10 @@
-// Экспортируем все компоненты и типы
-export { Alert, type AlertProps } from './Alert';
-export { AlertContainer, type AlertContainerProps } from './AlertContainer';
-export { AlertExample } from './AlertExample';
-export { type AlertConfig, type AlertItem } from './types';
+// Re-export Alert hooks from hooks folder
+export { useAlert, useAlertState } from '../../../hooks/useAlert';
 
-// Экспортируем глобальную систему алертов
-export { AlertProvider, useAlert } from '../../../context/AlertContext';
+// Export Alert components
+export { default as Alert } from './Alert';
+export { AlertContainer } from './AlertContainer';
+export { AlertExample } from './AlertExample';
+
+// Export types
+export type { AlertConfig, AlertItem } from '../../../context/AlertContext';

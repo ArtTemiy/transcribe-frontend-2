@@ -37,7 +37,7 @@ const STYLE_CLASSES_MAPPING: Record<Style, string> = {
 const COLOR_CLASSES_MAPPING: Record<Color, string> = {
     standard: styles.color_standard,
     light: styles.color_light,
-    white: styles.color_whight,
+    white: styles.color_white,
     alarm: styles.color_alarm,
     accent: styles.color_accent,
 };

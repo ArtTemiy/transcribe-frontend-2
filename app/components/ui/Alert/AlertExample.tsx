@@ -1,12 +1,12 @@
 import React from 'react';
 import { Alert } from './Alert';
 import { AlertContainer } from './AlertContainer';
-import { useAlert } from './useAlert';
+import { useAlert } from '../../../hooks/useAlert';
 import { Button } from '../Button';
 import styles from './AlertExample.module.scss';
 
 export const AlertExample: React.FC = () => {
-    const { alerts, showError, showWarning, showSuccess, showInfo, hideAlert } = useAlert({});
+    const { showError, showWarning, showSuccess, showInfo } = useAlert();
 
     const handleShowError = () => {
         showError('Maximum of 20 files allowed', {
@@ -77,8 +77,8 @@ export const AlertExample: React.FC = () => {
                 />
             </div>
 
-            {/* Контейнер для динамических алертов */}
-            <AlertContainer alerts={alerts} onClose={hideAlert} />
+            {/* Контейнер для динамических алертов - теперь управляется глобально */}
+            <AlertContainer alerts={[]} onClose={() => {}} />
         </div>
     );
 };

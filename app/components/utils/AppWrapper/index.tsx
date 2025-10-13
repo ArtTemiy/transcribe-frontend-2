@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { PropsWithChildren } from 'react';
+import { useMemo } from 'react';
 
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder/LoadingPlaceholder';
 import { useUserInfoQuery } from '@/queries/userInfo';
@@ -17,10 +18,20 @@ const RequiresWrapper = ({ children }: PropsWithChildren) => {
 };
 
 const ComponentsWrapper = ({ children }: PropsWithChildren) => {
-    return <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>;
+    // Создаем QueryClient только один раз с помощью useMemo
+    const queryClient = useMemo(() => new QueryClient({
+        defaultOptions: {
+            queries: {
+                staleTime: 5 * 60 * 1000, // 5 минут
+                retry: 1,
+            },
+        },
+    }), []);
+
+    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
 
-export default function ({ children }: PropsWithChildren) {
+export default function AppWrapper({ children }: PropsWithChildren) {
     return (
         <ComponentsWrapper>
             <RequiresWrapper>{children}</RequiresWrapper>

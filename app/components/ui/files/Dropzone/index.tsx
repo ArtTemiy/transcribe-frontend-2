@@ -2,7 +2,8 @@ import classNames from 'classnames';
 import React, { useCallback, useRef } from 'react';
 
 import FilesLoader from '@/components/ui/files/FilesLoader';
-import { FilesProvider, useFilesContext } from '@/context/FilesContext';
+import { FilesProvider } from '@/context/FilesContext';
+import { useFilesContext } from '@/hooks/useFilesContext';
 import type { PropsWithClassName } from '@/types/helpers/PropsWithClassName';
 
 import { useAlert } from '../../Alert';

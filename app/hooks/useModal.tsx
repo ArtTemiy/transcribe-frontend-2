@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Modal, { type ModalProps } from './Modal';
+import Modal, { type ModalProps } from '../components/ui/Modal/Modal';
 
 export const useModal = () => {
     const [isOpen, setIsOpen] = useState(false);

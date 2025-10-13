@@ -63,7 +63,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSubmit, onRegisterClic
             }
             alert.showError(errorMessage, { autoHide: 2 });
         }
-    }, [loginMutation.isError, loginMutation.error, alert.showError, alert]);
+    }, [loginMutation.isError, loginMutation.error, alert]);
 
     return (
         <div className={styles.container}>

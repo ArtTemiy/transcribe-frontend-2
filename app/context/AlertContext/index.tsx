@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useState, useCallback, useMemo, useRef } from 'react';
+import React, { createContext, useState, useCallback, useMemo, useRef } from 'react';
 
 import { AlertContainer } from '../../components/ui/Alert/AlertContainer';
 
 // Определяем типы напрямую, чтобы избежать проблем с импортом
-interface AlertConfig {
+export interface AlertConfig {
     id?: string;
     variant?: 'error' | 'warning' | 'success' | 'info';
     message: string;
@@ -13,7 +13,7 @@ interface AlertConfig {
     icon?: React.ReactNode;
 }
 
-interface AlertItem extends Required<Omit<AlertConfig, 'icon'>> {
+export interface AlertItem extends Required<Omit<AlertConfig, 'icon'>> {
     icon?: React.ReactNode;
     show: boolean;
 }
@@ -43,7 +43,7 @@ interface AlertProviderProps {
 
 export const AlertProvider: React.FC<AlertProviderProps> = ({ children, maxAlerts = 5 }) => {
     const [alerts, setAlerts] = useState<AlertItem[]>([]);
-    
+
     // Используем useRef для стабильных методов
     const setAlertsRef = useRef(setAlerts);
     setAlertsRef.current = setAlerts;
@@ -153,22 +153,7 @@ export const AlertProvider: React.FC<AlertProviderProps> = ({ children, maxAlert
     );
 };
 
-// Хук для использования методов алертов (не вызывает перерендер при изменении состояния)
-export const useAlert = () => {
-    const context = useContext(AlertMethodsContext);
-    if (context === undefined) {
-        throw new Error('useAlert must be used within an AlertProvider');
-    }
-    return context;
-};
-
-// Хук для использования состояния алертов (только для компонентов, которые отображают алерты)
-export const useAlertState = () => {
-    const context = useContext(AlertStateContext);
-    if (context === undefined) {
-        throw new Error('useAlertState must be used within an AlertProvider');
-    }
-    return context;
-};
+// Экспортируем контексты для использования в хуках
+export { AlertMethodsContext, AlertStateContext };
 
 export default AlertProvider;

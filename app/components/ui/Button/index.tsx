@@ -39,14 +39,20 @@ export const Button: React.FC<ButtonProps> = ({
     rightIcon,
     variant = 'primary',
     fullWidth = false,
-    disabled,
+    disabled = false,
     href,
     className,
     ...props
 }) => {
-    const styleClass = disabled ? styles.disabled : VARIANT_CLASSES[variant];
+    // Более явная логика определения стилей
+    const getVariantClass = () => {
+        if (disabled) {
+            return styles.disabled;
+        }
+        return VARIANT_CLASSES[variant] || VARIANT_CLASSES.primary;
+    };
 
-    const buttonClass = classNames(styles.btn, className, styleClass, {
+    const buttonClass = classNames(styles.btn, className, getVariantClass(), {
         [styles.fullWidth]: fullWidth,
     });
 

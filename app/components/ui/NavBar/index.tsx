@@ -11,7 +11,7 @@ import type { AuthResponse } from '@/types/auth/authResponse';
 import LoginForm from '../forms/LoginForm';
 import RegisterForm from '../forms/RegisterForm';
 import Link from '../Link';
-import { useModal } from '../Modal/useModal';
+import { useModal } from '../../../hooks/useModal';
 import RoundLabel from '../RoundLabel';
 import { Text } from '../Text';
 

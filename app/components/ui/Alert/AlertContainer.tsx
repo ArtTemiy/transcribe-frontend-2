@@ -3,7 +3,7 @@ import { Alert } from './Alert';
 import styles from './AlertContainer.module.scss';
 import type { AlertItem } from './types';
 import classNames from 'classnames';
-import { useAlertState } from '../../../context/AlertContext';
+import { useAlertState } from '../../../hooks/useAlert';
 
 export interface AlertContainerProps {
     alerts: AlertItem[];

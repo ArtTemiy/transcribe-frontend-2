@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import LoadingPlaceholder from '../../components/ui/LoadingPlaceholder/LoadingPlaceholder';
 import axios from 'axios';
 import { useGoogleAuthMutation } from '../../mutations/auth/googleAuth';
-import { useAlert } from '../../context/AlertContext';
+import { useAlert } from '../../hooks/useAlert';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 

@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router';
 import Button from '@/components/ui/Button';
 import TextInput from '@/components/ui/input/TextInput/TextInput';
 import Link from '@/components/ui/Link';
-import { useModal } from '@/components/ui/Modal/useModal';
+import { useModal } from '@/hooks/useModal';
 import { Text } from '@/components/ui/Text';
 import { useUserInfoQuery } from '@/queries/userInfo';
 
 import FeedbackForm from '../components/ui/FeedbackForm';
-import { useAlert } from '../context/AlertContext';
+import { useAlert } from '../hooks/useAlert';
 
 import styles from './settings.module.scss';
 

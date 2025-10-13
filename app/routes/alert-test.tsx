@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Alert } from '../components/ui/Alert/Alert';
 import { Button } from '../components/ui/Button';
-import { useAlert } from '../context/AlertContext';
+import { useAlert } from '../hooks/useAlert';
 
 export default function AlertTestPage() {
     const [showAlert, setShowAlert] = useState(true);
