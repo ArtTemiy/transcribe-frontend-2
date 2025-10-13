@@ -11,16 +11,16 @@ import ExcelBold from '@/../src/icons/files/excel_bold.svg';
 import LoadedIcon from '@/../src/icons/files/loaded.svg';
 import LockedIcon from '@/../src/icons/files/locked.svg';
 import UploadedIcon from '@/../src/icons/files/uploaded.svg';
-import { useAlert } from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import ButtonBase from '@/components/ui/ButtonBase';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Text } from '@/components/ui/Text';
-import { useFilesContext } from '@/hooks/useFilesContext';
 import type { UserFile } from '@/context/FilesContext';
+import { useFilesContext } from '@/hooks/useFilesContext';
 import { useConvertFilesMutation } from '@/mutations/files/convertFile';
 import { processFile } from '@/utils/fileProcessor';
 
+import { useUserInfoQuery } from '../../../../queries/userInfo';
 import { fileFormats } from '../../../../types/files/formats';
 import type { Response } from '../../../../types/response';
 import { formatSize } from '../../../../utils/formatSize';
@@ -37,10 +37,9 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
     const [pagesCount, setPagesCount] = useState<number | undefined>(undefined);
     const { updateFile, removeFile } = useFilesContext();
     const [fileType, setFileType] = useState<string>(fileFormats[0].key);
+    const userInfoQ = useUserInfoQuery();
 
     const uploadMutation = useConvertFilesMutation(file.id);
-
-    const alert = useAlert();
 
     const StateIcon = useMemo(() => {
         if (file.passwordState !== undefined && file.passwordState.correct === undefined) {
@@ -110,6 +109,14 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
             if (file.state === 'loading') {
                 try {
                     const password = file.passwordState?.password;
+                    if (userInfoQ.data?.data === undefined) {
+                        updateFile({
+                            ...file,
+                            state: 'error',
+                            error: "You're not logged in",
+                        });
+                        return;
+                    }
                     const fileInfo = await processFile(file.file, password);
 
                     setPagesCount(fileInfo.pages);
