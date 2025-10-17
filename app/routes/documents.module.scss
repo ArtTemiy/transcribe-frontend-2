@@ -1,0 +1,41 @@
+@use '../styles/variables.scss' as *;
+
+.documents {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.documentsList {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-grey-bg;
+    gap: 20px;
+    padding: 40px;
+}
+
+.documentItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.documentInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+}
