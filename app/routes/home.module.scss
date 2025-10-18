@@ -30,6 +30,12 @@
     max-width: 580px;
 }
 
+@media (max-width: 768px) {
+    .heroTitle {
+        font-size: 50px;
+    }
+}
+
 .dropzoneTitle {
     font-size: $font-size-30;
     color: $color-black;

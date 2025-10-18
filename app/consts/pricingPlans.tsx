@@ -42,7 +42,7 @@ export const pricingPlans: PricingPlan[] = [
         key: 'enterprise',
         title: 'Enterprise',
         price: 'Custom pricing',
-        subtext: 'Unlimited pages /month',
+        subtext: 'Unlimited pages/month',
         features: [
             'All features from Business',
             'Tailored integrations',
