@@ -8,19 +8,16 @@ import { useAuthLogoutMutation } from '@/mutations/auth/logout';
 import { useUserInfoQuery } from '@/queries/userInfo';
 import type { AuthResponse } from '@/types/auth/authResponse';
 
+import { useModal } from '../../../hooks/useModal';
 import LoginForm from '../forms/LoginForm';
 import RegisterForm from '../forms/RegisterForm';
 import Link from '../Link';
-import { useModal } from '../../../hooks/useModal';
 import RoundLabel from '../RoundLabel';
 import { Text } from '../Text';
 
 import styles from './index.module.scss';
 
-const menuItems = [
-    { label: 'Pricing', href: '/pricing' },
-    { label: 'Documents', href: '/documents' },
-];
+const menuItems = [{ label: 'Pricing', href: '/pricing' }];
 
 const NavBar: React.FC = () => {
     const queryClient = useQueryClient();
@@ -92,6 +89,13 @@ const NavBar: React.FC = () => {
                                     </Link>
                                 </Nav.Item>
                             ))}
+                            {userInfoQuery.data?.data && (
+                                <Nav.Item className={styles.navlink}>
+                                    <Link variant='body-s' href='/documents'>
+                                        Documents
+                                    </Link>
+                                </Nav.Item>
+                            )}
                             {userInfoQuery.data?.data && (
                                 <Nav.Item className={styles.navlink}>
                                     <Link variant='body-s' href='/settings'>

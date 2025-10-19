@@ -40,7 +40,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                         {typeof pricingInfo.price === 'number' ? (
                             <>
                                 <Text className={styles.priceValue}>${pricingInfo.price}</Text>
-                                <Text variant='caption'>/mounth</Text>
+                                <Text variant='caption'>/month</Text>
                             </>
                         ) : (
                             <Text className={styles.priceValue_custom}>{pricingInfo.price}</Text>

@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
 
 import DownloadIcon from '@/../src/icons/download.svg';
 import ErrorIcon from '@/../src/icons/files/error.svg';
@@ -10,6 +12,7 @@ import Button from '../components/ui/Button';
 import LoadingPlaceholder from '../components/ui/LoadingPlaceholder/LoadingPlaceholder';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { useDocumentsQuery } from '../queries/documents';
+import { useUserInfoQuery } from '../queries/userInfo';
 
 import styles from './documents.module.scss';
 
@@ -27,6 +30,14 @@ const chooseIcon = (status: JobStatus) => {
 };
 
 const DocumentsPage = () => {
+    const userInfoQ = useUserInfoQuery();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (userInfoQ.data?.data === undefined) {
+            navigate('/');
+        }
+    }, [userInfoQ.data?.data, navigate]);
+
     const documentssQ = useDocumentsQuery();
     const documents = documentssQ.data || [];
 
