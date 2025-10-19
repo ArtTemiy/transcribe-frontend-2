@@ -51,7 +51,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                 <div className={styles.features}>
                     {pricingInfo.features.map((f, i) => (
                         <div key={i} className={styles.feature}>
-                            <CheckIcon />
+                            <CheckIcon style={{ flexShrink: 0 }} />
                             <Text variant='body-s'>{f}</Text>
                         </div>
                     ))}

@@ -4,11 +4,12 @@ import DownloadIcon from '@/../src/icons/download.svg';
 import ErrorIcon from '@/../src/icons/files/error.svg';
 import UploadedIcon from '@/../src/icons/files/uploaded.svg';
 import { Text } from '@/components/ui/Text';
-import { useJobsQuery, type JobStatus } from '@/queries/jobs';
+import { type JobStatus } from '@/queries/jobs';
 
 import Button from '../components/ui/Button';
 import LoadingPlaceholder from '../components/ui/LoadingPlaceholder/LoadingPlaceholder';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { useDocumentsQuery } from '../queries/documents';
 
 import styles from './documents.module.scss';
 
@@ -26,12 +27,12 @@ const chooseIcon = (status: JobStatus) => {
 };
 
 const DocumentsPage = () => {
-    const jobsQ = useJobsQuery();
-    const jobs = jobsQ.data || [];
+    const documentssQ = useDocumentsQuery();
+    const documents = documentssQ.data || [];
 
     return (
         <Container className={styles.documents}>
-            {jobsQ.isLoading ? (
+            {documentssQ.isLoading ? (
                 <LoadingPlaceholder />
             ) : (
                 <>
@@ -41,22 +42,20 @@ const DocumentsPage = () => {
                     </div>
 
                     <Container className={styles.documentsList}>
-                        {jobs.map(job => (
-                            <div key={job.id} className={styles.documentItem}>
+                        {documents.map(document => (
+                            <div key={document.id} className={styles.documentItem}>
                                 <div className={styles.documentInfo}>
-                                    {chooseIcon(job.status)}
-                                    <Text variant='caption'>{job.id}</Text>
+                                    {chooseIcon(document.status)}
+                                    <Text variant='caption'>{document.file_name || '-'}</Text>
                                 </div>
 
                                 <div className={styles.documentInfo}>
                                     <Text variant='caption' typColor='light'>
-                                        Used {job.pages_used} pages
+                                        Used {document.pages_used} pages
                                     </Text>
-                                    {job.status === 'completed' && (
+                                    {document.status === 'completed' && (
                                         <Button
-                                            onClick={() =>
-                                                open(`/api/v1/download/${job.id}`, '_blank')
-                                            }
+                                            onClick={() => open(document.download_url, '_blank')}
                                         >
                                             <DownloadIcon />
                                             Download

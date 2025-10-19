@@ -50,9 +50,9 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => (
                         <Link variant='caption' className={styles.link} href='/terms'>
                             Terms
                         </Link>
-                        <Link variant='caption' className={styles.link} href='/privacy'>
+                        {/* <Link variant='caption' className={styles.link} href='/privacy'>
                             Privacy
-                        </Link>
+                        </Link> */}
                     </div>
                 </Col>
             </Row>
