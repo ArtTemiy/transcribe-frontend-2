@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router';
 import Button from '@/components/ui/Button';
 import TextInput from '@/components/ui/input/TextInput/TextInput';
 import Link from '@/components/ui/Link';
-import { useModal } from '@/hooks/useModal';
 import { Text } from '@/components/ui/Text';
+import { useModal } from '@/hooks/useModal';
 import { useUserInfoQuery } from '@/queries/userInfo';
 
 import FeedbackForm from '../components/ui/FeedbackForm';
@@ -53,7 +53,7 @@ const Page = () => {
                         Copy
                     </Button>
                 </div>
-                <Link href='/ducs/api' className={styles.apiKeyLink} typColor='accent'>
+                <Link href='/api-docs' className={styles.apiKeyLink} typColor='accent'>
                     Read API Documentation
                 </Link>
             </div>

@@ -176,7 +176,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                 }
             }
         })();
-    }, [file, updateFile]);
+    }, [file, updateFile, userInfoQ.data?.data]);
 
     useEffect(() => {
         if (file.state === 'uploading') {
@@ -188,6 +188,8 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
             } else if (uploadMutation.isError) {
                 let msg = 'Error while loading';
                 const error = uploadMutation.error;
+                console.error(error);
+
                 if (isAxiosError(error)) {
                     msg = (error.response?.data as Response).humanError || msg;
                 }

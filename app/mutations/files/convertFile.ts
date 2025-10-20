@@ -56,12 +56,12 @@ export const useConvertFilesMutation = (key: string) => {
             const maxAttempts = 60; // Максимум 60 попыток (1 минута)
             let attempts = 0;
 
-            while (['unknown', 'pending'].includes(jobStatus.status) && attempts < maxAttempts) {
+            while (['unknown', 'processing'].includes(jobStatus.status) && attempts < maxAttempts) {
                 if (jobStatus.status !== 'unknown') {
                     await new Promise(resolve => setTimeout(resolve, 1000));
                 }
                 attempts++;
-                
+
                 try {
                     jobStatus = (
                         (await apiClient.get(`/jobs/${jobId}`)).data as Response<JobStatusResponse>
@@ -71,11 +71,11 @@ export const useConvertFilesMutation = (key: string) => {
                     throw new Error('Failed to check job status');
                 }
             }
-            
+
             if (attempts >= maxAttempts) {
                 throw new Error('Job timeout: Processing took too long');
             }
-            
+
             if (jobStatus.status !== 'completed') {
                 throw new Error(`Job failed with status: ${jobStatus.status}`);
             }
