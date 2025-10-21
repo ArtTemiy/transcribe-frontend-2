@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 
 import { useAlert } from '../../hooks/useAlert';
@@ -13,6 +13,7 @@ type CheckoutSessionResponse = {
 
 export const useChoosePlanMutation = (plan: PricingPlan) => {
     const alert = useAlert();
+    const queryClient = useQueryClient();
     const mutation = useMutation({
         mutationKey: ['choosePlan', plan.key],
         mutationFn: async () => {
@@ -21,7 +22,7 @@ export const useChoosePlanMutation = (plan: PricingPlan) => {
             ).data as Response<CheckoutSessionResponse>;
             const url = sessionResponse.data?.checkout_url;
             if (!url) {
-                alert.showError('Something went wrong', { autoHide: 10 });
+                queryClient.invalidateQueries({ queryKey: ['userInfo'] });
                 return;
             }
             window.location.href = url;
