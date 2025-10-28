@@ -28,7 +28,7 @@ export const useJobsQuery = () => {
                 console.error(error);
                 if (isAxiosError(error)) {
                     alert.showError(
-                        (error.response?.data as Response).humanError || 'Unknown Error',
+                        (error.response?.data as Response)?.humanError || 'Unknown Error',
                         {
                             autoHide: 10,
                         },

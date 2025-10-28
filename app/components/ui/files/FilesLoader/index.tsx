@@ -69,7 +69,7 @@ const FilesLoader: React.FC<FilesLoaderProps> = (_: FilesLoaderProps) => {
             const error = uploadMutation.error;
             alert.showError(
                 isAxiosError(error)
-                    ? (error.response?.data as Response).humanError || 'Unknown Error'
+                    ? (error.response?.data as Response)?.humanError || 'Unknown Error'
                     : 'Unknown Error',
             );
             setState('prepared');

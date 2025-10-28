@@ -5,7 +5,6 @@ import type { AuthResponse } from '@/types/auth/authResponse';
 // Создаем экземпляр axios с базовой конфигурацией
 export const apiClient = axios.create({
     baseURL: '/api/v1',
-    timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
     },

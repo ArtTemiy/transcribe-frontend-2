@@ -191,7 +191,7 @@ const FileView: React.FC<FileLoaderProps> = ({ file }) => {
                 console.error(error);
 
                 if (isAxiosError(error)) {
-                    msg = (error.response?.data as Response).humanError || msg;
+                    msg = (error.response?.data as Response)?.humanError || msg;
                 }
                 updateFile({
                     ...file,
